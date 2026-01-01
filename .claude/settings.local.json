@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p phase-1-console-app phase-2-web-app phase-3-ai-chatbot phase-4-kubernetes phase-5-cloud-deployment bonus-features .specify/memory history/prompts)",
+      "Bash(mkdir:*)",
+      "Bash(touch:*)",
+      "Bash(find:*)",
+      "Bash(done)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(uv:*)",
+      "Bash(tree:*)",
+      "Bash(python:*)",
+      "Bash(\"C:\\\\Users\\\\Coders\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13\\\\python.exe\" -c:*)",
+      "Bash(.specify/scripts/bash/create-phr.sh:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
