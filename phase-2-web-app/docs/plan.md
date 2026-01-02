@@ -69,7 +69,7 @@ Full-stack web application with monorepo structure. Frontend (Next.js) communica
 | Component | Technology |
 |-----------|-------------|
 | Deployment (Frontend) | Vercel |
-| Deployment (Backend) | Render/Railway |
+| Deployment (Backend) | Hugging Face Spaces / Render / Railway |
 | Database | Neon Serverless |
 | Package Manager | UV (Python), npm (Node) |
 | Spec Management | Spec-Kit Plus |
@@ -424,11 +424,39 @@ Deploy to Edge Network
 URL: https://your-app.vercel.app
 ```
 
-### Backend (Render/Railway)
+### Backend (Choose One)
+
+#### Option 1: Hugging Face Spaces (Recommended for Free Tier)
+```
+Git Push → GitHub → Hugging Face Space
+    ↓
+Auto-Deploy FastAPI App
+    ↓
+Build Python Environment
+    ↓
+Deploy to HF Inference
+    ↓
+URL: https://username-todo-backend.hf.space
+```
+
+**Pros:**
+- Free tier with good resources
+- Easy FastAPI deployment
+- Built-in authentication
+- Good for AI/ML apps
+
+**Setup:**
+1. Create Space on Hugging Face
+2. Choose "Docker" SDK
+3. Add Dockerfile for FastAPI
+4. Connect GitHub repo
+5. Set environment variables (DATABASE_URL, BETTER_AUTH_SECRET)
+
+#### Option 2: Render
 ```
 Git Push → GitHub
     ↓
-Render/Railway Auto-Deploy
+Render Auto-Deploy
     ↓
 Build Python App
     ↓
@@ -436,6 +464,39 @@ Deploy to Cloud VM
     ↓
 URL: https://your-api.onrender.com
 ```
+
+**Pros:**
+- Free tier available
+- Auto SSL certificates
+- Easy configuration
+- Good docs
+
+**Cons:**
+- Free tier spins down after inactivity
+- Slower cold starts
+
+#### Option 3: Railway
+```
+Git Push → GitHub
+    ↓
+Railway Auto-Deploy
+    ↓
+Build Python App
+    ↓
+Deploy to Railway Cloud
+    ↓
+URL: https://your-api.up.railway.app
+```
+
+**Pros:**
+- $5 free credits monthly
+- Fast deployments
+- Modern UI
+- Good DX
+
+**Cons:**
+- Requires credit card
+- Credits expire monthly
 
 ### Database (Neon)
 ```
@@ -497,198 +558,67 @@ npm run dev
 - **Business Logic**: Same concepts (CRUD operations)
 - **Status Management**: Same completion toggle
 
-### Data Migration
+
+### Data Migration & Model Evolution
+
+**Phase I Reference**: `phase-1-console-app/src/models.py`
+
+**Phase I Task Model (dataclass - In-Memory Storage):**
 ```python
-# Phase I Task model
+# phase-1-console-app/src/models.py:15-45
+@dataclass
 class Task:
+    """Represents a todo task with all required attributes."""
     id: int
-    title: str
-    description: str
-    completed: bool
+    title: str  # 1-200 chars, validated in __post_init__
+    description: str = ""  # 0-1000 chars, validated
+    completed: bool = False
     created_at: datetime
     updated_at: datetime
 
-# Phase II Task model (SQLModel)
-class Task(SQLModel, table=True):
-    id: int
-    user_id: str        # NEW
-    title: str
-    description: str
-    completed: bool
-    created_at: datetime
-    updated_at: datetime
+    def __post_init__(self) -> None:
+        """Validate task attributes after initialization."""
+        if not self.title or len(self.title) < 1:
+            raise ValueError("Title must be at least 1 character")
+        if len(self.title) > 200:
+            raise ValueError("Title cannot exceed 200 characters")
+        if len(self.description) > 1000:
+            raise ValueError("Description cannot exceed 1000 characters")
 ```
 
-## Preparation for Phase III
-
-### Foundation for Chatbot
-- **Database**: Add `conversations` and `messages` tables
-- **API**: Add `/api/{user_id}/chat` endpoint
-- **Backend**: Prepare for OpenAI Agents SDK integration
-- **Frontend**: Prepare for ChatKit integration
-
-### MCP Server Foundation
-- **Tool Structure**: Task operations already modular (service layer)
-- **Statelessness**: Current API design is stateless
-- **Database Ready**: Message model prepared
-
-## Decision Records
-
-### DR-001: Better Auth vs Custom Auth
-**Decision**: Use Better Auth
-**Rationale**:
-- Built-in session management
-- JWT token support out of the box
-- Social login ready (future)
-- Next.js native integration
-- Security best practices handled
-
-**Trade-offs**:
-- Learning curve for Better Auth
-- Slightly more complex than simple JWT
-
-### DR-002: Monorepo vs Separate Repos
-**Decision**: Use monorepo
-**Rationale**:
-- Single CLAUDE.md context for Claude Code
-- Easier cross-cutting changes
-- Simpler for hackathon submission
-- Shared documentation
-
-**Trade-offs**:
-- Larger repository
-- Independent deployment requires careful CI/CD
-
-### DR-003: SQLModel vs SQLAlchemy
-**Decision**: Use SQLModel
-**Rationale**:
-- Pydantic integration (same as FastAPI)
-- Automatic schema generation
-- Type safety
-- Modern and maintained
-- Recommended by FastAPI
-
-**Trade-offs**:
-- Less mature than SQLAlchemy
-- Fewer community resources
-
-### DR-004: UUID vs String user_id
-**Decision**: Use string user_id from Better Auth
-**Rationale**:
-- Better Auth uses string IDs
-- Maintain consistency with auth system
-- No need to convert
-
-**Trade-offs**:
-- Slightly larger than integer
-- Not as performant as integer
-
-## Risk Analysis
-
-### Risk 1: JWT Secret Exposure
-**Likelihood**: Low
-**Impact**: High (security breach)
-**Mitigation**:
-- Store in environment variables
-- Never commit to Git
-- Use strong secrets
-- Rotate periodically
-
-### Risk 2: Database Connection Exhaustion
-**Likelihood**: Medium
-**Impact**: High (app unavailable)
-**Mitigation**:
-- Use connection pooling
-- Set connection limits
-- Monitor database metrics
-
-### Risk 3: CORS Issues
-**Likelihood**: High (common dev issue)
-**Impact**: Medium (frontend can't access API)
-**Mitigation**:
-- Proper CORS configuration
-- Test in development environment
-- Document deployment URLs
-
-## Success Criteria
-
-- [ ] All 5 Basic Level features as web app
-- [ ] Multi-user support with data isolation
-- [ ] JWT authentication working
-- [ ] Frontend deployed to Vercel
-- [ ] Backend deployed and accessible
-- [ ] Database connected and persisting data
-- [ ] Demo video under 90 seconds
-
-## Clarifications & Decisions
-
-### CLR-001: Monorepo Directory Layout
-**Decision**: Single directory with frontend/ and backend/ subdirectories
-**Rationale**: Clear separation, easier to navigate, standard for monorepos
-**Implementation**:
-```
-phase-2-web-app/
-├── frontend/          # Next.js app
-│   ├── app/
-│   ├── components/
-│   ├── lib/
-│   └── package.json
-├── backend/           # FastAPI app
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── models.py
-│   │   ├── db.py
-│   │   ├── auth.py
-│   │   └── routes/
-│   ├── tests/
-│   └── pyproject.toml
-└── README.md
-```
-
-### CLR-002: CORS Configuration
-**Decision**: Allow all origins in development, restrict to Vercel domain in production
-**Rationale**: Secure for production, flexible for development
-**Implementation**:
+**Phase II Task Model (SQLModel - Persistent Database with Multi-User Support):**
 ```python
-from fastapi.middleware.cors import CORSMiddleware
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Development
-    # allow_origins=["https://your-app.vercel.app"],  # Production
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Evolved from Phase I with user_id for multi-user support
+class Task(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: str        # NEW: Foreign key to users.id for multi-user support
+    title: str          # Inherited: 1-200 chars (validated via Field constraints)
+    description: str | None = None  # Inherited: 0-1000 chars
+    completed: bool = Field(default=False)  # Inherited
+    created_at: datetime = Field(default_factory=datetime.utcnow)  # Inherited
+    updated_at: datetime = Field(default_factory=datetime.utcnow)  # Inherited
 ```
 
-### CLR-003: Database Connection Strategy
-**Decision**: Single connection pool with session management
-**Rationale**: Efficient resource usage, connection reuse, prevents connection exhaustion
-**Implementation**:
-- Use SQLModel's Session factory with engine
-- Dependency injection for request-scoped sessions
-- Automatic cleanup after request
-- Connection pooling configured in `db.py`
+**Evolution Summary:**
+| Aspect | Phase I | Phase II |
+|--------|----------|----------|
+| **Model Type** | Python `@dataclass` | `SQLModel(table=True)` |
+| **Storage** | In-memory (dict/list) | Neon PostgreSQL (persistent) |
+| **Validation** | `__post_init__` method | SQLModel Field constraints + Pydantic |
+| **User Support** | Single user | Multi-user via `user_id` field |
+| **Persistence** | Lost on restart | Persistent across restarts |
+| **Access Pattern** | Direct method calls | REST API endpoints |
 
-### CLR-004: Deployment Order
-**Decision**: Deploy backend first, then frontend
-**Rationale**: Backend URL needed for frontend configuration, simpler to verify backend working
-**Implementation**:
-1. Deploy backend (get production URL)
-2. Add backend URL to frontend environment variables
-3. Deploy frontend (auto-configures to use backend URL)
-4. Test end-to-end
+**What's Inherited from Phase I:**
+- ✓ Task structure (id, title, description, completed, timestamps)
+- ✓ Validation rules (title 1-200, description 0-1000 characters)
+- ✓ Business logic concepts (CRUD operations)
+- ✓ Status management (complete/incomplete toggle)
 
-## Next Steps
+**What's New in Phase II:**
+- ➕ `user_id` field for multi-user data isolation
+- ➕ Database persistence via SQLModel
+- ➕ RESTful API endpoints
+- ➕ JWT authentication
+- ➕ User registration and login
 
-1. Set up monorepo structure
-2. Initialize Next.js frontend
-3. Initialize FastAPI backend
-4. Implement database models
-5. Create API endpoints
-6. Build frontend UI
-7. Integrate authentication
-8. Test end-to-end
-9. Deploy to production
-10. Prepare for Phase III

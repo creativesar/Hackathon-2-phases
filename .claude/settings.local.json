@@ -14,7 +14,31 @@
       "Bash(.specify/scripts/bash/create-phr.sh:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(cat:*)",
+      "Bash(mv temp_plan.md \"phase-2-web-app/docs/plan.md\")",
+      "Bash(mv:*)",
+      "Bash(rm:*)",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(ls:*)",
+      "Bash(timeout 5 uv run:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(\"C:\\\\Users\\\\Coders\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13\\\\python.exe\" -c \"from app.main import app; print\\(''Backend app imported successfully''\\); print\\(f''App title: {app.title}''\\)\")",
+      "Bash(timeout 10s npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(\"C:\\\\Users\\\\Coders\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13\\\\python.exe\" -m uv pip install -e .)",
+      "Bash(dir \"C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\phase-2-web-app\\\\frontend\\\\app\\\\\\(auth\\\\\\)\")",
+      "Bash(dir)",
+      "Bash(\"C:\\\\Users\\\\Coders\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13\\\\python.exe\" -m uv run --help)",
+      "Bash(\"C:\\\\Users\\\\Coders\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\PythonSoftwareFoundation.Python.3.13\\\\python.exe\" --version)",
+      "Bash(where python)",
+      "Bash(# Stopping the server by killing the background process is not supported in this interface)",
+      "Bash(timeout 10s uv run uvicorn app.main:app --host 0.0.0.0 --port 8000)",
+      "Bash(npx tailwindcss init -p)",
+      "Bash(./node_modules/.bin/tailwindcss init -p)",
+      "Bash(npm run dev)"
     ]
   }
 }

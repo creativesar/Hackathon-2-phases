@@ -368,213 +368,216 @@ Create spec-driven deployment blueprints via Agent Skills
 
 **Relevance**: High - core to this phase
 
-## Integration with Phase III
 
-### Inherited from Phase III
-- **Complete Application**: Next.js + FastAPI + Agents SDK + MCP
-- **Database Models**: Task, Conversation, Message
-- **Authentication**: Better Auth + JWT
-- **API Endpoints**: Chat endpoint + task CRUD
+## Integration with Phase III (Detailed)
 
-### New in Phase IV
-- **Containerization**: Docker images
-- **Orchestration**: Kubernetes deployment
-- **Packaging**: Helm charts
-- **Operations**: AIOps tools
-- **Infrastructure**: Minikube cluster
+**Phase III Reference**: 
+- `phase-3-ai-chatbot/backend/app/main.py` - Complete FastAPI + Agents SDK + MCP
+- `phase-3-ai-chatbot/frontend/app/page.tsx` - ChatKit chat interface
+- `phase-3-ai-chatbot/backend/app/models.py` - Database models
 
-## Preparation for Phase V
+### Inherited from Phase III (Complete Stack)
 
-### Deliverables for Phase V
-- Containerized application
-- Working Kubernetes manifests
-- Helm charts
-- AIOps workflows
-- Minikube deployment tested
-
-### Key Changes for Phase V
-- Local K8s (Minikube) → Cloud K8s (AKS/GKE/OKE)
-- Helm only → Helm + Kafka + Dapr
-- Local operations → CI/CD pipelines
-- Basic deployment → Advanced cloud-native deployment
-
-## Constraints
-
-- Must use Spec-Driven Development
-- No manual coding allowed
-- Must use Docker (multi-stage builds)
-- Must deploy to Minikube locally
-- Must use Helm for packaging
-- Must use AIOps tools (kubectl-ai, kagent, Gordon)
-
-## Success Metrics
-
-- All containers built and optimized
-- Application runs on Minikube
-- Helm charts functional
-- AIOps tools integrated
-- Demo video under 90 seconds
-- Complete specification files
-
-## Local Development Setup
-
-### Prerequisites
-- Docker Desktop installed
-- Minikube installed
-- kubectl installed
-- Helm installed
-- Gordon enabled (Docker AI)
-- kubectl-ai installed
-- kagent installed
-
-### Installation Commands
-```bash
-# Minikube
-minikube start --cpus=4 --memory=4096
-
-# Enable ingress
-minikube addons enable ingress
-
-# Docker AI (Gordon)
-# Enable in Docker Desktop Settings → Beta features
-
-# kubectl-ai
-npm install -g kubectl-ai
-
-# kagent
-npm install -g @kagent-dev/kagent
+**Backend Stack (from `phase-3-ai-chatbot/backend/`):**
+```python
+# phase-3-ai-chatbot/backend/app/main.py
+# Complete FastAPI application with:
+#   - JWT authentication (inherited from Phase II)
+#   - Task CRUD endpoints (inherited from Phase II)
+#   - Chat endpoint (NEW in Phase III)
+#   - MCP Server integration (NEW in Phase III)
+#   - OpenAI Agents SDK (NEW in Phase III)
+#   - SQLModel database (Task, Conversation, Message models)
 ```
 
-## Deployment Workflow
-
-### 1. Build Images
-```bash
-# Frontend
-docker build -t todo-frontend:latest ./frontend
-
-# Backend
-docker build -t todo-backend:latest ./backend
+**Frontend Stack (from `phase-3-ai-chatbot/frontend/`):**
+```typescript
+// phase-3-ai-chatbot/frontend/app/page.tsx
+// Complete Next.js application with:
+//   - Better Auth authentication (inherited from Phase II)
+//   - ChatKit chat interface (NEW in Phase III)
+//   - Task management UI (inherited from Phase II)
 ```
 
-### 2. Load into Minikube
-```bash
-minikube image load todo-frontend:latest
-minikube image load todo-backend:latest
+**Database Models (from `phase-3-ai-chatbot/backend/app/models.py`):**
+```python
+# Phase I → II → III Evolution
+
+# Task model (Phase I → II → III)
+class Task(SQLModel, table=True):
+    # Phase I: Inherited from dataclass
+    # Phase II: Added user_id for multi-user
+    # Phase III: Used by MCP tools for AI operations
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: str          # Phase II addition
+    title: str            # Phase I inheritance
+    description: str | None = None
+    completed: bool = Field(default=False)
+    created_at: datetime
+    updated_at: datetime
+
+# Conversation model (NEW in Phase III)
+class Conversation(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: str          # Links to Phase II user model
+    created_at: datetime
+    updated_at: datetime
+
+# Message model (NEW in Phase III)
+class Message(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: str
+    conversation_id: int
+    role: str  # "user" or "assistant"
+    content: str
+    tool_calls: JSON | None = None
+    created_at: datetime
 ```
 
-### 3. Deploy with Helm
-```bash
-helm install todo-app ./helm/todo-app --values values-dev.yaml
+**Application Evolution Table:**
+| Component | Phase I | Phase II | Phase III | Phase IV (This) |
+|-----------|----------|----------|------------|------------------|
+| **Storage** | In-memory | PostgreSQL | PostgreSQL | PostgreSQL (K8s) |
+| **Model** | dataclass | SQLModel | SQLModel | SQLModel (unchanged) |
+| **Frontend** | CLI | Next.js Web | Next.js + ChatKit | Next.js Container |
+| **Backend** | Python script | FastAPI | FastAPI + Agents + MCP | FastAPI Container |
+| **Auth** | None | Better Auth | Better Auth | Better Auth (K8s secrets) |
+| **AI** | None | None | OpenAI Agents | OpenAI Agents (Container) |
+| **MCP** | None | None | MCP Server | MCP Server (Container) |
+
+### New in Phase IV (Containerization & Orchestration)
+
+**Container Images (from Phase III source):**
+```dockerfile
+# phase-4-kubernetes/Dockerfile.frontend
+# Built from: phase-3-ai-chatbot/frontend/
+FROM node:20-alpine
+WORKDIR /app
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend/ ./
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]
+
+# phase-4-kubernetes/Dockerfile.backend  
+# Built from: phase-3-ai-chatbot/backend/
+FROM python:3.13-slim
+WORKDIR /app
+COPY backend/pyproject.toml ./
+RUN pip install uv && uv sync
+COPY backend/ ./
+EXPOSE 8000
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0.0", "--port", "8000"]
 ```
 
-### 4. Access Application
-```bash
-# Get Minikube IP
-minikube ip
-
-# Update /etc/hosts
-echo "192.168.49.2 todo.local" | sudo tee -a /etc/hosts
-
-# Access
-open http://todo.local
-```
-
-## Troubleshooting
-
-### Pods Not Starting
-```bash
-kubectl describe pod <pod-name>
-kubectl logs <pod-name>
-kubectl-ai "Check why the pods are failing"
-```
-
-### Service Not Accessible
-```bash
-kubectl get svc
-minikube service <service-name>
-kubectl-ai "Debug the service connectivity"
-```
-
-### Image Pull Issues
-```bash
-kubectl get events
-docker images | grep todo
-minikube image ls
-```
-
-## Clarifications & Decisions
-
-### CLR-001: Minikube Resource Allocation
-**Decision**: 4 CPUs, 4096MB memory for Minikube
-**Rationale**: Sufficient for 4 pods (2 frontend + 2 backend), reasonable for local development
-**Implementation**:
-```bash
-minikube start --cpus=4 --memory=4096 --driver=docker
-```
-
-### CLR-002: Image Tagging Strategy
-**Decision**: Use `latest` for local development, commit SHA for production
-**Rationale**: Simpler for local workflow, version control for production
-**Implementation**:
-- Development: `docker build -t todo-frontend:latest ./frontend`
-- Production: `docker build -t todo-frontend:${GIT_SHA} ./frontend`
-- Minikube load: `minikube image load todo-frontend:latest`
-
-### CLR-003: Health Probe Configuration
-**Decision**: Liveness: check root path every 10s, Readiness: check health endpoint every 5s
-**Rationale**: Fast failure detection, graceful restarts, minimal overhead
-**Implementation**:
+**Kubernetes Resources:**
 ```yaml
-livenessProbe:
-  httpGet:
-    path: /
-    port: 3000  # frontend
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
-
-readinessProbe:
-  httpGet:
-    path: /health
-    port: 8000  # backend
-  initialDelaySeconds: 5
-  periodSeconds: 5
-  failureThreshold: 3
-```
-
-### CLR-004: Ingress TLS Strategy
-**Decision**: Self-signed certificate for local Minikube, documented for production
-**Rationale**: Works locally without Let's Encrypt, clear migration path to cloud
-**Implementation**:
-```bash
-# Create self-signed cert
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout tls.key -out tls.crt
-
-# Create secret
-kubectl create secret tls todo-tls --cert=tls.crt --key=tls.key
-
-# Reference in ingress
+# phase-4-kubernetes/deployments/frontend.yaml
+# Deploying: phase-3-ai-chatbot/frontend/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-frontend
 spec:
-  tls:
-  - hosts:
-    - todo.local
-    secretName: todo-tls
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-frontend
+  template:
+    metadata:
+      labels:
+        app: todo-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: todo-frontend:latest  # Built from Phase III source
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: api-url
+
+# phase-4-kubernetes/deployments/backend.yaml
+# Deploying: phase-3-ai-chatbot/backend/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-backend
+  template:
+    metadata:
+      labels:
+        app: todo-backend
+    spec:
+      containers:
+      - name: backend
+        image: todo-backend:latest  # Built from Phase III source
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-secret
+              key: url
+        - name: BETTER_AUTH_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: auth-secret
+              key: jwt-secret
 ```
 
-### CLR-005: ConfigMap vs Environment Variables
-**Decision**: Use ConfigMaps for non-sensitive, Secrets for sensitive data
-**Rationale**: Security best practice, clear separation, Git-friendly configs
-**Implementation**:
-- ConfigMaps: API URLs, feature flags, non-sensitive config
-- Secrets: Database connection strings, API keys, JWT secrets
-- Secrets never committed to Git
-- ConfigMaps in version control
+**Helm Chart Structure:**
+```yaml
+# phase-4-kubernetes/helm/todo-app/Chart.yaml
+# Packages: Complete Phase III application
+apiVersion: v2
+name: todo-app
+description: Phase III Todo Chatbot - Kubernetes deployment
+type: application
 
-## Notes
+# Templates:
+#   - deployment-frontend.yaml (from Phase III source)
+#   - deployment-backend.yaml (from Phase III source)
+#   - service-frontend.yaml
+#   - service-backend.yaml
+#   - ingress.yaml
+#   - configmap.yaml
+#   - secrets.yaml
+```
 
-- Focus on local Minikube deployment (not cloud yet)
-- Use AIOps tools extensively to demonstrate AI-assisted DevOps
-- Document all AIOps commands used
-- Test scaling and rolling updates
-- Prepare for Phase V (cloud deployment)
+### Evolution Summary: Phase III → IV
+| Aspect | Phase III (Local) | Phase IV (Minikube K8s) |
+|---------|------------------|-------------------------------|
+| **App Source** | `phase-3-ai-chatbot/` | Same source, containerized |
+| **Frontend** | `npm run dev` (localhost:3000) | Docker Pod (ClusterIP) |
+| **Backend** | `uvicorn` (localhost:8000) | Docker Pod (ClusterIP) |
+| **Database** | Neon (direct connection) | Neon (via K8s Service) |
+| **Environment** | Local `.env` files | K8s ConfigMaps + Secrets |
+| **Access** | `http://localhost:3000` | `http://todo.local` (Ingress) |
+| **Scaling** | Single instance | Replicas: 2 (auto-scaling) |
+| **Auth Secret** | `.env` local file | K8s Secret (encrypted) |
+
+### Key Continuities
+- ✅ **Same Code**: Phase III source unchanged
+- ✅ **Same Models**: Task, Conversation, Message unchanged
+- ✅ **Same Auth**: Better Auth + JWT unchanged
+- ✅ **Same Database**: Neon PostgreSQL unchanged
+- ✅ **Same Features**: Chatbot + MCP unchanged
+
+### Phase IV Additions (Infrastructure Only)
+- ➕ Docker multi-stage builds
+- ➕ Kubernetes Deployment manifests
+- ➕ Helm Chart packaging
+- ➕ Minikube local cluster
+- ➕ AIOps tools integration
+- ➕ Service & Ingress configuration
+
