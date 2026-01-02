@@ -85,6 +85,17 @@ class TaskService:
         """
         return self.repository.get_all()
 
+    def get_by_id(self, task_id: int) -> Optional[Task]:
+        """Get a task by ID.
+
+        Args:
+            task_id (int): Task ID to search for
+
+        Returns:
+            Optional[Task]: Task object if found, None otherwise
+        """
+        return self.repository.get_by_id(task_id)
+
     def update_task(self, task_id: int, title: str = None, description: str = None) -> Task:
         """Update existing task after validation.
 

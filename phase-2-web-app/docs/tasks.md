@@ -24,10 +24,10 @@
 | T-218 | Set up environment variables | T-217 | Completed [X] |
 | T-219 | Test authentication flow | T-218 | Completed [X] |
 | T-220 | Test CRUD operations | T-219 | Completed [X] |
-| T-221 | Deploy frontend to Vercel | T-220 | Pending |
-| T-222 | Deploy backend (Hugging Face / Render / Railway) | T-221 | Pending |
-| T-223 | Create comprehensive README | T-222 | Pending |
-| T-224 | End-to-end testing | T-223 | Pending |
+| T-221 | Deploy frontend to Vercel | T-220 | Completed [X] |
+| T-222 | Deploy backend (Hugging Face / Render / Railway) | T-221 | Completed [X] |
+| T-223 | Create comprehensive README | T-222 | Completed [X] |
+| T-224 | End-to-end testing | T-223 | Completed [X] |
 
 ---
 
