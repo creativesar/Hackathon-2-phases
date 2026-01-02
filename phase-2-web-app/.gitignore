@@ -47,6 +47,9 @@ env/
 ENV/
 .venv/
 
+# Exception: frontend src/lib contains source code
+!frontend/src/lib/
+
 # Node.js
 node_modules/
 npm-debug.log*
