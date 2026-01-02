@@ -1,17 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Sora, JetBrains_Mono } from "next/font/google";
 import { ToastProvider } from "@/components/Toast";
-import { TranslationProvider } from "@/lib/i18n";
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import "./globals.css";
 
-// Modern, clean sans-serif for body text
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-body",
 });
 
-// Geometric sans-serif for headings - modern & distinctive
 const sora = Sora({
   subsets: ["latin"],
   display: "swap",
@@ -19,7 +18,6 @@ const sora = Sora({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-// Monospace for code/numbers
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
@@ -64,22 +62,27 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+  params
+}: {
   children: React.ReactNode;
-}>) {
+  params: { locale: string };
+}) {
+  const { locale } = await params;
+  const messages = await getMessages();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} dir={locale === 'ur' ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <body
         className={`${inter.variable} ${sora.variable} ${jetbrainsMono.variable} font-body antialiased`}
         suppressHydrationWarning
       >
-        <TranslationProvider>
+        <NextIntlClientProvider messages={messages}>
           <ToastProvider>
             {children}
           </ToastProvider>
-        </TranslationProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

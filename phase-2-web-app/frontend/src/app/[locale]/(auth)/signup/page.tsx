@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { signUp } from "@/lib/auth";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   EnvelopeIcon,
   UserIcon,
@@ -21,6 +22,7 @@ import { CheckCircleIcon as CheckCircleSolid, CheckIcon } from "@heroicons/react
 
 export default function SignUpPage() {
   const router = useRouter();
+  const t = useTranslations("auth");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

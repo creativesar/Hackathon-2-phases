@@ -1,0 +1,140 @@
+{
+  "HomePage": {
+    "title": "TaskFlow",
+    "subtitle": "Task Management",
+    "tagline": "A beautifully crafted task management app with secure authentication, real-time updates, and a delightful user experience.",
+    "getStarted": "Get Started",
+    "startFree": "Start for Free",
+    "signIn": "Sign In",
+    "techStack": "Tech Stack",
+    "techDesc": "Built with high-performance technologies",
+    "nav": {
+      "signIn": "Sign In",
+      "logout": "Sign Out",
+      "dashboard": "Dashboard"
+    },
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "tasks": {
+      "addTask": "Add Task",
+      "editTask": "Edit Task",
+      "newTask": "New Task",
+      "deleteTitle": "Delete Task",
+      "deleteMessage": "Are you sure you want to delete '{title}'?",
+      "keepIt": "Keep It",
+      "deleteSuccess": "Task deleted successfully",
+      "searchPlaceholder": "Search tasks...",
+      "empty": "No tasks yet",
+      "emptyDesc": "Get started by creating your first task",
+      "emptySearch": "No tasks found",
+      "emptySearchDesc": "Try adjusting your search or filter",
+      "createFirst": "Create Your First Task",
+      "createTask": "Create Task",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "justNow": "Just now",
+      "minutesAgo": "{minutes}m ago",
+      "hoursAgo": "{hours}h ago",
+      "yesterday": "Yesterday",
+      "daysAgo": "{days}d ago",
+      "morningTask": "Morning task",
+      "afternoonTask": "Afternoon task",
+      "eveningTask": "Evening task",
+      "markComplete": "Mark as complete",
+      "markIncomplete": "Mark as incomplete",
+      "latest": "Latest",
+      "active": "Active",
+      "done": "Done",
+      "edit": "Edit task",
+      "delete": "Delete task"
+    },
+    "list": {
+      "total": "Total",
+      "pending": "Pending",
+      "done": "Done",
+      "progress": "Progress",
+      "allDone": "All tasks completed! 🎉",
+      "keepItUp": "You're doing great!",
+      "makeProgress": "Let's make progress!",
+      "getProductive": "Let's get productive!",
+      "tasksRemaining": "{count} task{plural} remaining",
+      "completedOf": "{completed} of {total} completed",
+      "tasksRefreshed": "Tasks refreshed",
+      "taskUpdated": "Task updated",
+      "taskCreated": "Task created",
+      "taskCompleted": "Task completed!",
+      "taskMarkedPending": "Task marked as pending",
+      "failedUpdate": "Failed to update task",
+      "failedDelete": "Failed to delete task",
+      "filterTasks": "Filter Tasks"
+    },
+    "stats": {
+      "features": "Features",
+      "secure": "Secure",
+      "response": "Response"
+    },
+    "features": {
+      "title": "Everything you need to",
+      "subtitle": "stay productive",
+      "desc": "Built for speed, security, and exceptional user experience."
+    },
+    "feature": {
+      "taskManagement": "Task Management",
+      "taskManagementDesc": "Organize and track your daily tasks with ease.",
+      "secureAuth": "Secure Auth",
+      "secureAuthDesc": "Industrial-grade security for your personal data.",
+      "responsive": "Responsive",
+      "responsiveDesc": "Works perfectly on mobile, tablet, and desktop.",
+      "multiUser": "Multi-User",
+      "multiUserDesc": "Separate space for every user with data isolation.",
+      "fast": "Lightning Fast",
+      "fastDesc": "Optimized performance for a smooth experience."
+    },
+    "cta": {
+      "title": "Ready to boost your productivity?",
+      "desc": "Join thousands of users who are already managing their tasks with TaskFlow.",
+      "button": "Get Started Now"
+    },
+    "common": {
+      "all": "All",
+      "pending": "Pending",
+      "completed": "Completed",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "loading": "Loading...",
+      "success": "successful",
+      "error": "Error"
+    },
+    "form": {
+      "titleRequired": "Title is required.",
+      "titleMax": "Title cannot exceed 200 characters.",
+      "descriptionMax": "Description cannot exceed 1000 characters.",
+      "title": "Title",
+      "titlePlaceholder": "What needs to be done?",
+      "description": "Description",
+      "descriptionOptional": "(optional)",
+      "descriptionPlaceholder": "Add more details...",
+      "updateDetails": "Update task details",
+      "whatNeedsToBeDone": "What needs to be done today?"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign In",
+      "subtitle": "Welcome back! Please sign in to continue.",
+      "newUser": "New to TaskFlow? ",
+      "createAccount": "Create an account",
+      "email": "Email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "signingIn": "Signing in...",
+      "signInFailed": "Sign in failed. Please try again."
+    },
+    "emailRequired": "Email is required.",
+    "invalidEmail": "Please enter a valid email."
+  }
+}

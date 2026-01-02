@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { api } from "@/lib/api";
 import { Task } from "@/lib/types";
 import { signOut } from "@/lib/auth";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { TaskCard } from "@/components/TaskCard";
 import { TaskForm } from "@/components/TaskForm";
 import { useToast } from "@/components/Toast";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import { Confetti } from "@/components/Confetti";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslations } from "next-intl";
 import {
   CheckCircleIcon,
   PlusIcon,
@@ -41,7 +41,7 @@ type ViewType = "list" | "grid";
 export default function TaskList({ userId, userName }: TaskListProps) {
   const router = useRouter();
   const { showToast } = useToast();
-  const { t } = useTranslation();
+  const t = useTranslations("HomePage");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");

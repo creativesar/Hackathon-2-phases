@@ -3,7 +3,7 @@
 import { useState, FormEvent, useRef, useEffect } from "react";
 import { api } from "@/lib/api";
 import { Task } from "@/lib/types";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslations } from "next-intl";
 import {
   XMarkIcon,
   PaperAirplaneIcon,
@@ -19,7 +19,7 @@ interface TaskFormProps {
 }
 
 export function TaskForm({ task, userId, onSave, onCancel }: TaskFormProps) {
-  const { t } = useTranslation();
+  const t = useTranslations("HomePage");
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
   const [error, setError] = useState("");

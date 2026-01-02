@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Task } from "@/lib/types";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslations } from "next-intl";
 import {
   PencilIcon,
   TrashIcon,
@@ -23,7 +23,7 @@ interface TaskCardProps {
 }
 
 export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCardProps) {
-  const { t } = useTranslation();
+  const t = useTranslations("HomePage");
   const [isChecking, setIsChecking] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -65,11 +65,11 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor(diff / (1000 * 60));
 
-    if (minutes < 1) return t("task.justNow");
-    if (minutes < 60) return t("task.minutesAgo", { minutes: String(minutes) });
-    if (hours < 24) return t("task.hoursAgo", { hours: String(hours) });
-    if (days === 1) return t("task.yesterday");
-    if (days < 7) return t("task.daysAgo", { days: String(days) });
+    if (minutes < 1) return t("tasks.justNow");
+    if (minutes < 60) return t("tasks.minutesAgo", { minutes: String(minutes) });
+    if (hours < 24) return t("tasks.hoursAgo", { hours: String(hours) });
+    if (days === 1) return t("tasks.yesterday");
+    if (days < 7) return t("tasks.daysAgo", { days: String(days) });
 
     return date.toLocaleDateString("en-US", {
       month: "short",
@@ -80,9 +80,9 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
 
   const getTimeOfDay = () => {
     const hours = new Date(task.created_at).getHours();
-    if (hours < 12) return t("task.morningTask");
-    if (hours < 17) return t("task.afternoonTask");
-    return t("task.eveningTask");
+    if (hours < 12) return t("tasks.morningTask");
+    if (hours < 17) return t("tasks.afternoonTask");
+    return t("tasks.eveningTask");
   };
 
   return (
@@ -167,7 +167,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
                 }
                 ${isChecking ? "scale-125 animate-check-explosion" : "hover:scale-110"}
               `}
-              aria-label={task.completed ? t("task.markIncomplete") : t("task.markComplete")}
+              aria-label={task.completed ? t("tasks.markIncomplete") : t("tasks.markComplete")}
             >
               {/* Ripple effect on click */}
               {rippleEffect && (
@@ -228,19 +228,19 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
             {!task.completed && index === 0 && (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 rounded-full text-xs font-medium animate-badge-glow border border-amber-500/20">
                 <StarIcon className="h-3.5 w-3.5 animate-star-spin" />
-                {t("task.latest")}
+                {t("tasks.latest")}
               </span>
             )}
             {!task.completed && index !== 0 && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-violet-500/10 text-violet-400 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <BoltIcon className="h-3 w-3 animate-pulse" />
-                {t("task.active")}
+                {t("tasks.active")}
               </span>
             )}
             {task.completed && (
               <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 rounded-full text-xs font-medium border border-emerald-500/20 animate-success-badge">
                 <CheckCircleIcon className="h-3.5 w-3.5" />
-                {t("task.done")}
+                {t("tasks.done")}
               </span>
             )}
           </div>
@@ -323,8 +323,8 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
                 hover:scale-110 active:scale-95
                 group/edit
               "
-              aria-label={t("task.edit")}
-              title={t("task.edit")}
+              aria-label={t("tasks.edit")}
+              title={t("tasks.edit")}
             >
               <PencilIcon className="h-4 w-4 group-hover/edit:animate-wiggle" />
             </button>
@@ -343,8 +343,8 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
                 hover:scale-110 active:scale-95
                 group/delete
               "
-              aria-label={t("task.delete")}
-              title={t("task.delete")}
+              aria-label={t("tasks.delete")}
+              title={t("tasks.delete")}
             >
               <TrashIcon className="h-4 w-4 group-hover/delete:animate-shake-small" />
             </button>

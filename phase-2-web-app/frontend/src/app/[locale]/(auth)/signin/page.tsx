@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { signIn } from "@/lib/auth";
 import Link from "next/link";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import {
   EnvelopeIcon,
@@ -21,7 +21,7 @@ import { CheckCircleIcon as CheckCircleSolid } from "@heroicons/react/24/solid";
 
 export default function SignInPage() {
   const router = useRouter();
-  const { t } = useTranslation();
+  const t = useTranslations("auth");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -35,13 +35,13 @@ export default function SignInPage() {
     setLoading(true);
 
     if (!email || !password) {
-      setError(t("auth.emailRequired"));
+      setError(t("emailRequired"));
       setLoading(false);
       return;
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError(t("auth.invalidEmail"));
+      setError(t("invalidEmail"));
       setLoading(false);
       return;
     }
@@ -50,7 +50,7 @@ export default function SignInPage() {
       await signIn({ email, password });
       window.location.href = "/tasks";
     } catch (err) {
-      setError(err instanceof Error ? err.message : t("auth.signInFailed"));
+      setError(err instanceof Error ? err.message : t("signInFailed"));
       setLoading(false);
     }
   };
@@ -82,10 +82,10 @@ export default function SignInPage() {
           </div>
 
           <h1 className="text-5xl font-display font-bold text-white mb-4 tracking-tight">
-            {t("auth.signIn.title")}
+            {t("signIn.title")}
           </h1>
           <p className="text-xl text-white/60 mb-10 max-w-md mx-auto">
-            {t("auth.signIn.subtitle")}
+            {t("signIn.subtitle")}
           </p>
 
           {/* Stats row */}
@@ -127,14 +127,14 @@ export default function SignInPage() {
 
               {/* Header */}
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-display font-bold text-white mb-2">{t("auth.signIn.title")}</h2>
+                <h2 className="text-3xl font-display font-bold text-white mb-2">{t("signIn.title")}</h2>
                 <p className="text-white/50">
-                  {t("auth.signIn.newUser")}{" "}
+                  {t("signIn.newUser")}{" "}
                   <Link
                     href="/signup"
                     className="text-violet-400 hover:text-violet-300 font-semibold transition-colors"
                   >
-                    {t("auth.signIn.createAccount")}
+                    {t("signIn.createAccount")}
                   </Link>
                 </p>
               </div>
@@ -143,7 +143,7 @@ export default function SignInPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Email Field */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white/70">{t("auth.email")}</label>
+                  <label className="block text-sm font-medium text-white/70">{t("signIn.email")}</label>
                   <div className="relative group">
                     <div className={`absolute left-4 top-1/2 -translate-y-1/2 transition-all duration-300 ${focusedField === "email" ? "text-violet-400 scale-110" : "text-white/40"}`}>
                       <EnvelopeIcon className="h-5 w-5" />
@@ -172,7 +172,7 @@ export default function SignInPage() {
 
                 {/* Password Field */}
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-white/70">{t("auth.password")}</label>
+                  <label className="block text-sm font-medium text-white/70">{t("signIn.password")}</label>
                   <div className="relative group">
                     <div className={`absolute left-4 top-1/2 -translate-y-1/2 transition-all duration-300 ${focusedField === "password" ? "text-violet-400 scale-110" : "text-white/40"}`}>
                       <LockClosedIcon className="h-5 w-5" />
@@ -194,7 +194,7 @@ export default function SignInPage() {
                           : "border-white/10 hover:border-white/20"
                         }
                       `}
-                      placeholder={t("auth.password")}
+                      placeholder={t("signIn.passwordPlaceholder")}
                     />
                     <button
                       type="button"
@@ -238,11 +238,11 @@ export default function SignInPage() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      {t("auth.signingIn")}
+                      {t("signIn.signingIn")}
                     </span>
                   ) : (
                     <span className="flex items-center justify-center gap-2 relative z-10">
-                      {t("auth.signIn.title")}
+                      {t("signIn.title")}
                       <ArrowRightIcon className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                     </span>
                   )}

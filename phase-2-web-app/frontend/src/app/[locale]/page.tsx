@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useTranslation } from "@/lib/i18n";
+import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import {
   CheckCircleIcon,
@@ -16,7 +16,7 @@ import {
 import { CheckCircleIcon as CheckCircleSolid } from "@heroicons/react/24/solid";
 
 export default function Home() {
-  const { t } = useTranslation();
+  const t = useTranslations("HomePage");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -27,37 +27,37 @@ export default function Home() {
     {
       icon: CheckCircleIcon,
       title: t("feature.taskManagement"),
-      desc: t("feature.taskManagement.desc"),
+      desc: t("feature.taskManagementDesc"),
       gradient: "from-violet-500 to-purple-500",
     },
     {
       icon: ShieldCheckIcon,
       title: t("feature.secureAuth"),
-      desc: t("feature.secureAuth.desc"),
+      desc: t("feature.secureAuthDesc"),
       gradient: "from-emerald-500 to-teal-500",
     },
     {
       icon: DevicePhoneMobileIcon,
       title: t("feature.responsive"),
-      desc: t("feature.responsive.desc"),
+      desc: t("feature.responsiveDesc"),
       gradient: "from-pink-500 to-rose-500",
     },
     {
       icon: UserGroupIcon,
       title: t("feature.multiUser"),
-      desc: t("feature.multiUser.desc"),
+      desc: t("feature.multiUserDesc"),
       gradient: "from-amber-500 to-orange-500",
     },
     {
       icon: BoltIcon,
       title: t("feature.fast"),
-      desc: t("feature.fast.desc"),
+      desc: t("feature.fastDesc"),
       gradient: "from-cyan-500 to-blue-500",
     },
   ];
 
   const techStack = [
-    { name: "Next.js 15", icon: "N" },
+    { name: "Next.js 16", icon: "N" },
     { name: "FastAPI", icon: "F" },
     { name: "PostgreSQL", icon: "P" },
     { name: "TypeScript", icon: "T" },
@@ -129,7 +129,7 @@ export default function Home() {
                 href="/signup"
                 className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-fuchsia-600 shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/30 transition-all duration-300 hover:-translate-y-0.5"
               >
-                {t("home.getStarted")}
+                {t("getStarted")}
                 <ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -147,7 +147,7 @@ export default function Home() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
             <span className="text-sm font-medium text-white/60">
-              {t("home.techStack")} — Phase II
+              {t("techStack")} — Phase II
             </span>
           </div>
 
@@ -157,13 +157,13 @@ export default function Home() {
               className={`block text-white transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               style={{ transitionDelay: '200ms' }}
             >
-              {t("home.title")}
+              {t("title")}
             </span>
             <span
               className={`block text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 animate-gradient-x transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               style={{ transitionDelay: '400ms', backgroundSize: '200% auto' }}
             >
-              {t("home.subtitle")}
+              {t("subtitle")}
             </span>
           </h1>
 
@@ -172,7 +172,7 @@ export default function Home() {
             className={`text-lg sm:text-xl text-white/50 mb-10 max-w-2xl mx-auto leading-relaxed transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
             style={{ transitionDelay: '600ms' }}
           >
-            {t("home.tagline")}
+            {t("tagline")}
           </p>
 
           {/* CTA Buttons */}
@@ -187,14 +187,14 @@ export default function Home() {
               {/* Shimmer effect */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
               <SparklesIcon className="h-5 w-5 relative z-10" />
-              <span className="relative z-10">{t("home.startFree")}</span>
+              <span className="relative z-10">{t("startFree")}</span>
               <ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform relative z-10" />
             </Link>
             <Link
               href="/signin"
               className="inline-flex items-center justify-center px-8 py-4 rounded-2xl font-semibold text-white/80 bg-white/[0.05] border border-white/10 hover:bg-white/[0.08] hover:text-white hover:border-white/20 transition-all duration-300"
             >
-              {t("home.signIn")}
+              {t("signIn")}
             </Link>
           </div>
 
@@ -204,9 +204,9 @@ export default function Home() {
             style={{ transitionDelay: '1000ms' }}
           >
             {[
-              { value: "5+", label: "home.stats.features" },
-              { value: "100%", label: "home.stats.secure" },
-              { value: "<50ms", label: "home.stats.response" },
+              { value: "5+", label: "stats.features" },
+              { value: "100%", label: "stats.secure" },
+              { value: "<50ms", label: "stats.response" },
             ].map((stat, i) => (
               <div
                 key={i}
@@ -223,11 +223,11 @@ export default function Home() {
         <section className="max-w-6xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
-              {t("home.features.title")}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400"> {t("home.features.subtitle")}</span>
+              {t("features.title")}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400"> {t("features.subtitle")}</span>
             </h2>
             <p className="text-white/50 max-w-xl mx-auto">
-              {t("home.features.desc")}
+              {t("features.desc")}
             </p>
           </div>
 
@@ -256,10 +256,10 @@ export default function Home() {
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 text-sm font-medium text-white/40 mb-4">
                 <BoltIcon className="h-4 w-4 animate-pulse" />
-                {t("home.techStack")}
+                {t("techStack")}
               </div>
               <h3 className="text-2xl font-display font-bold text-white">
-                {t("home.techDesc")}
+                {t("techDesc")}
               </h3>
             </div>
 
@@ -294,16 +294,16 @@ export default function Home() {
                 <SparklesIcon className="h-8 w-8 text-white animate-pulse" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
-                {t("home.cta.title")}
+                {t("cta.title")}
               </h2>
               <p className="text-white/80 mb-8 max-w-md mx-auto">
-                {t("home.cta.desc")}
+                {t("cta.desc")}
               </p>
               <Link
                 href="/signup"
                 className="group/btn inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold bg-white text-violet-600 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
               >
-                {t("home.cta.button")}
+                {t("cta.button")}
                 <ArrowRightIcon className="h-5 w-5 group-hover/btn:translate-x-1 transition-transform" />
               </Link>
             </div>
