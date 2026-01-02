@@ -46,7 +46,10 @@
       "Bash(taskkill:*)",
       "Bash(pkill:*)",
       "Skill(sp.phr)",
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "Bash(npx rimraf:*)"
     ]
   }
 }
