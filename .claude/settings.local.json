@@ -45,7 +45,8 @@
       "Bash(npm uninstall:*)",
       "Bash(taskkill:*)",
       "Bash(pkill:*)",
-      "Skill(sp.phr)"
+      "Skill(sp.phr)",
+      "Bash(git ls-tree:*)"
     ]
   }
 }
