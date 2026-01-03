@@ -1,10 +1,13 @@
 # Frontend Guidelines - Todo Web App
 
+**Part of Hackathon II Monorepo - See root CLAUDE.md for project overview**
+
 ## Stack
 - Next.js 16+ (App Router)
 - TypeScript (strict mode)
 - Tailwind CSS
 - Better Auth
+- OpenAI ChatKit (Phase 3+)
 
 ## Patterns
 - Use Server Components by default
