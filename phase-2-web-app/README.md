@@ -34,8 +34,8 @@ This is Phase II of a 5-phase hackathon project that evolves a simple console ap
 ## Project Structure
 
 ```
-phase-2-web-app/
-├── frontend/                    # Next.js Application
+Hackathon-2-phases/
+├── frontend/                    # Next.js Application (shared)
 │   ├── app/                    # App Router
 │   │   ├── (auth)/            # Auth group layout
 │   │   │   ├── login/
@@ -60,7 +60,7 @@ phase-2-web-app/
 │   ├── tailwind.config.js
 │   └── CLAUDE.md
 │
-├── backend/                     # FastAPI Application
+├── backend/                     # FastAPI Application (shared)
 │   ├── app/
 │   │   ├── __init__.py
 │   │   ├── main.py            # FastAPI app entry
@@ -76,12 +76,13 @@ phase-2-web-app/
 │   ├── pyproject.toml
 │   └── CLAUDE.md
 │
-├── docs/                       # Documentation
-│   ├── spec.md               # Requirements
-│   ├── plan.md               # Architecture plan
-│   └── tasks.md             # Implementation tasks
-│
-└── README.md                 # This file
+├── phase-2-web-app/             # Phase II Documentation Only
+│   ├── docs/                  # Documentation
+│   │   ├── spec.md           # Requirements
+│   │   ├── plan.md           # Architecture plan
+│   │   └── tasks.md         # Implementation tasks
+│   ├── CLAUDE.md              # Phase-specific Claude instructions
+│   └── README.md              # This file
 ```
 
 ## Prerequisites

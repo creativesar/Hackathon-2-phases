@@ -23,12 +23,8 @@ elif "&sslmode=require" in DATABASE_URL:
     DATABASE_URL = DATABASE_URL.replace("&sslmode=require", "")
 
 # Create async engine with connection pooling
-# For asyncpg, SSL is passed via connect_args with proper SSL context
-import ssl
-ssl_context = ssl.create_default_context()
-ssl_context.check_hostname = False
-ssl_context.verify_mode = ssl.CERT_NONE
-
+# For Neon PostgreSQL with asyncpg, we can use the sslmode in the URL
+# and don't need to pass explicit SSL context in connect_args
 engine: AsyncEngine = create_async_engine(
     DATABASE_URL,
     echo=True,  # Set to False in production
@@ -37,7 +33,6 @@ engine: AsyncEngine = create_async_engine(
     max_overflow=10,
     pool_pre_ping=True,  # Check connection before using (fixes Neon sleep issue)
     pool_recycle=300,    # Recycle connections every 5 minutes
-    connect_args={"ssl": ssl_context}
 )
 
 

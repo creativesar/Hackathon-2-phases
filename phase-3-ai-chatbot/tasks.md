@@ -4,28 +4,28 @@
 
 | ID | Description | Dependencies | Status |
 |-----|-------------|----------------|---------|
-| T-301 | Install OpenAI Agents SDK | None | Pending |
-| T-302 | Install Official MCP SDK | None | Pending |
-| T-303 | Create Conversation database models | None | Pending |
-| T-304 | Create Message database model | T-303 | Pending |
-| T-305 | Implement MCP server foundation | T-302 | Pending |
-| T-306 | Implement MCP tool: add_task | T-305 | Pending |
-| T-307 | Implement MCP tool: list_tasks | T-305 | Pending |
-| T-308 | Implement MCP tool: complete_task | T-305 | Pending |
-| T-309 | Implement MCP tool: delete_task | T-305 | Pending |
-| T-310 | Implement MCP tool: update_task | T-305 | Pending |
-| T-311 | Create OpenAI Agent definition | T-301, T-306-T-310 | Pending |
-| T-312 | Implement Agent Runner | T-311 | Pending |
-| T-313 | Create chat API endpoint | T-312, T-303, T-304 | Pending |
-| T-314 | Implement conversation loading | T-313 | Pending |
-| T-315 | Implement message storage | T-313 | Pending |
-| T-316 | Integrate Agent with MCP tools | T-312, T-306-T-310 | Pending |
-| T-317 | Implement stateless design | T-313 | Pending |
-| T-318 | Add JWT middleware to chat endpoint | T-313 | Pending |
-| T-319 | Create ChatKit frontend component | T-317 | Pending |
-| T-320 | Implement chat message display | T-319 | Pending |
-| T-321 | Implement chat input handling | T-319 | Pending |
-| T-322 | Add tool call indicators to UI | T-319 | Pending |
+| T-301 | Install OpenAI Agents SDK | None | Completed |
+| T-302 | Install Official MCP SDK | None | Completed |
+| T-303 | Create Conversation database models | None | Completed |
+| T-304 | Create Message database model | T-303 | Completed |
+| T-305 | Implement MCP server foundation | T-302 | Completed |
+| T-306 | Implement MCP tool: add_task | T-305 | Completed |
+| T-307 | Implement MCP tool: list_tasks | T-305 | Completed |
+| T-308 | Implement MCP tool: complete_task | T-305 | Completed |
+| T-309 | Implement MCP tool: delete_task | T-305 | Completed |
+| T-310 | Implement MCP tool: update_task | T-305 | Completed |
+| T-311 | Create OpenAI Agent definition | T-301, T-306-T-310 | Completed |
+| T-312 | Implement Agent Runner | T-311 | Completed |
+| T-313 | Create chat API endpoint | T-312, T-303, T-304 | Completed |
+| T-314 | Implement conversation loading | T-313 | Completed |
+| T-315 | Implement message storage | T-313 | Completed |
+| T-316 | Integrate Agent with MCP tools | T-312, T-306-T-310 | Completed |
+| T-317 | Implement stateless design | T-313 | Completed |
+| T-318 | Add JWT middleware to chat endpoint | T-313 | Completed |
+| T-319 | Create ChatKit frontend component | T-317 | Completed |
+| T-320 | Implement chat message display | T-319 | Completed |
+| T-321 | Implement chat input handling | T-319 | Completed |
+| T-322 | Add tool call indicators to UI | T-319 | Completed |
 | T-323 | Test all MCP tools | T-306-T-310 | Pending |
 | T-324 | Test natural language commands | T-312 | Pending |
 | T-325 | Test conversation persistence | T-317 | Pending |
@@ -46,7 +46,7 @@
 **Steps**:
 1. Navigate to `backend/`
 2. Install SDK: `uv add openai-agents`
-3. Create `backend/app/agent.py` with basic import
+3. Create `backend/agent.py` with basic import
 4. Test import works correctly
 5. Document API usage
 
@@ -62,7 +62,7 @@
 **Steps**:
 1. Navigate to `backend/`
 2. Install SDK: `uv install mcp`
-3. Create `backend/app/mcp_server.py` with basic import
+3. Create `backend/mcp_server.py` with basic import
 4. Test MCP server can be created
 5. Document MCP tool decorator usage
 
@@ -76,7 +76,7 @@
 **Related Spec**: Database Models - Conversation
 
 **Steps**:
-1. Navigate to `backend/app/models.py`
+1. Navigate to `backend/models.py`
 2. Add `Conversation` class using SQLModel:
    ```python
    class Conversation(SQLModel, table=True):
@@ -98,7 +98,7 @@
 **Related Spec**: Database Models - Message
 
 **Steps**:
-1. Navigate to `backend/app/models.py`
+1. Navigate to `backend/models.py`
 2. Add `Message` class using SQLModel:
    ```python
    class Message(SQLModel, table=True):
@@ -122,7 +122,7 @@
 **Related Spec**: MCP Tools
 
 **Steps**:
-1. Create `backend/app/mcp_server.py`
+1. Create `backend/mcp_server.py`
 2. Import MCP SDK decorators
 3. Create basic MCP server structure:
    ```python
@@ -263,7 +263,7 @@
 **Related Spec**: Agent Behavior
 
 **Steps**:
-1. Create `backend/app/agent.py`
+1. Create `backend/agent.py`
 2. Define Agent with instructions:
    ```python
    from openai import Agent
@@ -321,7 +321,7 @@
 **Related Spec**: Chat API Endpoint
 
 **Steps**:
-1. Create `backend/app/routes/chat.py`
+1. Create `backend/routes/chat.py`
 2. Define Pydantic schema for request:
    ```python
    class ChatRequest(BaseModel):
@@ -437,7 +437,7 @@
 
 **Steps**:
 1. Install OpenAI ChatKit: `npm install @openai/chatkit`
-2. Create `components/ChatInterface.tsx`
+2. Create `frontend/src/components/ChatInterface.tsx`
 3. Import ChatKit components
 4. Configure ChatKit with domain key
 5. Add JWT token management
@@ -716,22 +716,22 @@ T-329
 
 ## Progress Checklist
 
-- [ ] OpenAI Agents SDK installed
-- [ ] Official MCP SDK installed
-- [ ] Conversation model created
-- [ ] Message model created
-- [ ] MCP server foundation implemented
-- [ ] All 5 MCP tools implemented
-- [ ] Agent definition created
-- [ ] Agent Runner implemented
-- [ ] Chat API endpoint created
-- [ ] Conversation loading functional
-- [ ] Message storage functional
-- [ ] Agent integrated with MCP tools
-- [ ] Stateless design verified
-- [ ] JWT authentication configured
-- [ ] ChatKit component created
-- [ ] Chat UI fully functional
+- [x] OpenAI Agents SDK installed
+- [x] Official MCP SDK installed
+- [x] Conversation model created
+- [x] Message model created
+- [x] MCP server foundation implemented
+- [x] All 5 MCP tools implemented
+- [x] Agent definition created
+- [x] Agent Runner implemented
+- [x] Chat API endpoint created
+- [x] Conversation loading functional
+- [x] Message storage functional
+- [x] Agent integrated with MCP tools
+- [x] Stateless design verified
+- [x] JWT authentication configured
+- [x] ChatKit component created
+- [x] Chat UI fully functional
 - [ ] All MCP tools tested
 - [ ] Natural language commands tested
 - [ ] Conversation persistence tested
@@ -744,18 +744,18 @@ T-329
 
 | Task | Est. Time | Actual Time | Status |
 |-------|-----------|--------------|---------|
-| T-301 | 15 min | - | Pending |
-| T-302 | 15 min | - | Pending |
-| T-303 | 10 min | - | Pending |
-| T-304 | 10 min | - | Pending |
-| T-305 | 20 min | - | Pending |
-| T-306 | 30 min | - | Pending |
-| T-307 | 20 min | - | Pending |
-| T-308 | 25 min | - | Pending |
-| T-309 | 20 min | - | Pending |
-| T-310 | 30 min | - | Pending |
-| T-311 | 30 min | - | Pending |
-| T-312 | 30 min | - | Pending |
+| T-301 | 15 min | - | Completed |
+| T-302 | 15 min | - | Completed |
+| T-303 | 10 min | - | Completed |
+| T-304 | 10 min | - | Completed |
+| T-305 | 20 min | - | Completed |
+| T-306 | 30 min | - | Completed |
+| T-307 | 20 min | - | Completed |
+| T-308 | 25 min | - | Completed |
+| T-309 | 20 min | - | Completed |
+| T-310 | 30 min | - | Completed |
+| T-311 | 30 min | - | Completed |
+| T-312 | 30 min | - | Completed |
 | T-313 | 30 min | - | Pending |
 | T-314 | 20 min | - | Pending |
 | T-315 | 20 min | - | Pending |

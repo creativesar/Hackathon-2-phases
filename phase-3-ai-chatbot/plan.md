@@ -82,7 +82,7 @@ Add AI-powered conversational interface to Phase II web application using OpenAI
 
 **Purpose**: Conversational UI for todo management
 
-**Location**: `components/ChatInterface.tsx`
+**Location**: `frontend/src/components/ChatInterface.tsx`
 
 **Features**:
 ```typescript
@@ -143,7 +143,7 @@ const ChatInterface = () => {
 
 **Purpose**: Stateless chat endpoint
 
-**Location**: `backend/app/routes/chat.py`
+**Location**: `backend/routes/chat.py`
 
 **Flow**:
 ```python
@@ -198,7 +198,7 @@ async def chat(user_id: str, request: ChatRequest):
 
 **Purpose**: AI logic and tool orchestration
 
-**Location**: `backend/app/agent.py`
+**Location**: `backend/agent.py`
 
 **Agent Definition**:
 ```python
@@ -238,7 +238,7 @@ async def chat_handler(user_message: str, conversation_history: list):
 
 **Purpose**: Expose task operations as MCP tools
 
-**Location**: `backend/app/mcp_server.py`
+**Location**: `backend/mcp_server.py`
 
 **Tool Definitions**:
 
@@ -365,7 +365,7 @@ async def update_task(user_id: str, task_id: int, title: str = None, description
 
 **Purpose**: Store conversations and messages
 
-**Location**: `backend/app/models.py`
+**Location**: `backend/models.py`
 
 ```python
 from sqlmodel import SQLModel, Field, create_engine, Session
@@ -579,7 +579,7 @@ Return Response to Client
 **Rationale**: Centralized management, easier to test, clear organization
 **Implementation**:
 ```python
-# app/mcp_server.py
+# mcp_server.py
 from mcp_sdk import Tool, mcp_tool
 
 @mcp_tool

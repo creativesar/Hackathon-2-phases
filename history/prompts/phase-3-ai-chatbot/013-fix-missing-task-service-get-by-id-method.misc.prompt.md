@@ -1,5 +1,5 @@
 ---
-id: "0013"
+id: "013"
 title: "Fix missing TaskService.get_by_id method"
 stage: "misc"
 date_iso: "2026-01-02"

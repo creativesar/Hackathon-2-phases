@@ -45,3 +45,21 @@ export interface SignInRequest {
   email: string;
   password: string;
 }
+
+export interface Message {
+  id: number;
+  user_id: string;
+  conversation_id: number;
+  role: string;
+  content: string;
+  tool_calls: string | null;
+  created_at: string;
+}
+
+export interface Conversation {
+  id: number;
+  user_id: string;
+  thread_id: string | null;
+  created_at: string;
+  updated_at: string;
+}

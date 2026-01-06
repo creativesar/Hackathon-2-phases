@@ -15,6 +15,7 @@ import traceback
 
 from routes.tasks import router as tasks_router
 from routes.auth import router as auth_router
+from routes.chat import router as chat_router
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -56,6 +57,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Register routers
 app.include_router(tasks_router)
 app.include_router(auth_router)
+app.include_router(chat_router)
 
 
 @app.get("/health")

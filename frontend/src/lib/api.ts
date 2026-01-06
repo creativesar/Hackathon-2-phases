@@ -8,7 +8,7 @@ import {
 } from "./types";
 import { getAuthToken } from "./auth";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://creativesar-phase-11-todo.hf.space";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 /**
  * API Client for making authenticated requests to the backend API.
@@ -117,6 +117,30 @@ class ApiClient {
   async toggleCompletion(userId: string, taskId: number): Promise<Task> {
     return this.request<Task>(`/api/${userId}/tasks/${taskId}/complete`, {
       method: "PATCH",
+    });
+  }
+
+  /**
+   * Chat with AI assistant
+   * POST /api/{user_id}/chat
+   */
+  async chat(
+    userId: string,
+    data: { conversation_id?: number; message: string }
+  ): Promise<{
+    conversation_id: number;
+    response: string;
+    tool_calls?: Array<any>;
+    tool_results?: Array<any>;
+  }> {
+    return this.request<{
+      conversation_id: number;
+      response: string;
+      tool_calls?: Array<any>;
+      tool_results?: Array<any>;
+    }>(`/api/${userId}/chat`, {
+      method: "POST",
+      body: JSON.stringify(data),
     });
   }
 }

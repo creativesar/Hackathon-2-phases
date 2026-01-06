@@ -1,13 +1,10 @@
 # Backend Guidelines - Todo API
 
-**Part of Hackathon II Monorepo - See root CLAUDE.md for project overview**
-
 ## Stack
 - FastAPI (Python 3.13+)
 - SQLModel (ORM)
 - Neon PostgreSQL (Serverless)
 - UV (Package Manager)
-- OpenAI Agents SDK (Phase 3+)
 
 ## Project Structure
 ```
