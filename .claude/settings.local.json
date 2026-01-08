@@ -146,7 +146,9 @@
       "Bash(then rm -rf chat)",
       "Bash(else echo \"Old chat directory already removed\")",
       "Bash([:*)",
-      "Bash(else echo \"No unprotected chat directory found\")"
+      "Bash(else echo \"No unprotected chat directory found\")",
+      "Bash(git branch -d 323-test-mcp-tools)",
+      "Bash(git branch -D 001-phase-3-ai-chatbot 301-openai-agents-sdk 302-openai-agents-sdk temp-branch)"
     ]
   }
 }
