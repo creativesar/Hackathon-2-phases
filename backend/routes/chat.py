@@ -1,227 +1,248 @@
 """
-T-313: Chat API endpoint for AI chatbot
-T-314: Implement conversation loading
-T-317: Implement stateless design
-
-This module implements the chat API endpoint that allows users to interact with the AI agent
-through natural language. The endpoint handles conversation persistence and integrates with
-the OpenAI agent and MCP tools. The design is stateless - no conversation state is held
-in server memory between requests. All state is loaded from and saved to the database.
+Chat API route handlers
+Implements conversational interface for AI-powered task management
+Phase III: AI Chatbot
 """
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
-from sqlmodel import Session, select
+from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlmodel import select
+from typing import List, Optional, Dict, Any
+from datetime import datetime
+import json
 
-from models import Conversation, Message
 from db import get_session
 from middleware.auth import verify_token
-from agent import get_agent
+from models import Conversation, Message
+from agent import run_agent
+from pydantic import BaseModel
 
 
-def get_or_create_conversation(
-    session: Session,
+# Request/Response schemas
+class ChatRequest(BaseModel):
+    """Request schema for chat endpoint"""
+    conversation_id: Optional[int] = None
+    message: str
+
+
+class ChatResponse(BaseModel):
+    """Response schema for chat endpoint"""
+    conversation_id: int
+    response: str
+    tool_calls: Optional[List[Dict[str, Any]]] = None
+
+
+router = APIRouter(prefix="/api/{user_id}/chat", tags=["chat"])
+
+
+# Conversation service functions (T-314)
+async def get_or_create_conversation(
+    session: AsyncSession,
     user_id: str,
     conversation_id: Optional[int] = None
 ) -> Conversation:
     """
-    Get existing conversation or create new one
+    Load existing conversation or create new one.
 
     Args:
         session: Database session
-        user_id: ID of the user
-        conversation_id: Optional conversation ID to retrieve existing conversation
+        user_id: User identifier
+        conversation_id: Optional conversation ID to load
 
     Returns:
-        Conversation: Retrieved or newly created conversation
+        Conversation object
+
+    Raises:
+        HTTPException: If conversation not found or access denied
     """
     if conversation_id:
-        # Fetch existing conversation and verify it belongs to user
+        # Load existing conversation
         statement = select(Conversation).where(
             Conversation.id == conversation_id,
             Conversation.user_id == user_id
         )
-        conversation = session.exec(statement).first()
+        result = await session.execute(statement)
+        conversation = result.scalar_one_or_none()
 
         if not conversation:
-            raise HTTPException(status_code=404, detail="Conversation not found")
+            raise HTTPException(
+                status_code=404,
+                detail="Conversation not found or access denied"
+            )
+
+        # Update timestamp
+        conversation.updated_at = datetime.utcnow()
+        await session.commit()
+        await session.refresh(conversation)
+
+        return conversation
     else:
         # Create new conversation
         conversation = Conversation(user_id=user_id)
         session.add(conversation)
-        session.commit()
-        session.refresh(conversation)
+        await session.commit()
+        await session.refresh(conversation)
 
-    return conversation
+        return conversation
 
 
-def ensure_openai_thread_exists(conversation: Conversation, agent) -> str:
+async def load_conversation_history(
+    session: AsyncSession,
+    conversation_id: int
+) -> List[Dict[str, str]]:
     """
-    Ensure the OpenAI thread exists for the conversation and return the thread ID
+    Load all messages from a conversation.
 
     Args:
-        conversation: The conversation object from our database
-        agent: The agent instance to use for thread operations
+        session: Database session
+        conversation_id: Conversation ID
 
     Returns:
-        str: The OpenAI thread ID
+        List of messages in format [{"role": "user"|"assistant", "content": "..."}]
     """
-    # If conversation has a thread_id stored, verify it exists in OpenAI
-    if conversation.thread_id:
-        try:
-            # Verify the thread exists in OpenAI
-            agent.client.beta.threads.retrieve(conversation.thread_id)
-            return conversation.thread_id
-        except Exception:
-            # If thread doesn't exist in OpenAI, create a new one
-            thread = agent.client.beta.threads.create()
-            # We'll update the conversation object, but the database update happens in the calling function
-            conversation.thread_id = thread.id
-            return thread.id
-    else:
-        # Create a new OpenAI thread
-        thread = agent.client.beta.threads.create()
-        return thread.id
+    statement = select(Message).where(
+        Message.conversation_id == conversation_id
+    ).order_by(Message.created_at.asc())
+
+    result = await session.execute(statement)
+    messages = result.scalars().all()
+
+    # Convert to agent format
+    return [
+        {"role": msg.role, "content": msg.content}
+        for msg in messages
+    ]
 
 
-def create_message(
-    session: Session,
+# Message service functions (T-315)
+async def store_message(
+    session: AsyncSession,
     user_id: str,
     conversation_id: int,
     role: str,
     content: str,
-    tool_calls: Optional[str] = None
+    tool_calls: Optional[List[Dict[str, Any]]] = None
 ) -> Message:
     """
-    Create a new message in the database
+    Store a message in the database.
 
     Args:
         session: Database session
-        user_id: ID of the user
-        conversation_id: ID of the conversation
-        role: Role of the message sender ("user" or "assistant")
-        content: Content of the message
-        tool_calls: Optional JSON string of tool calls (for assistant messages)
+        user_id: User identifier
+        conversation_id: Conversation ID
+        role: Message role ("user" or "assistant")
+        content: Message content
+        tool_calls: Optional list of tool calls made
 
     Returns:
-        Message: Created message object
+        Created Message object
     """
     message = Message(
         user_id=user_id,
         conversation_id=conversation_id,
         role=role,
         content=content,
-        tool_calls=tool_calls
+        tool_calls=json.dumps(tool_calls) if tool_calls else None
     )
+
     session.add(message)
-    session.flush()  # Flush to get the ID but don't commit yet
+    await session.commit()
+    await session.refresh(message)
+
     return message
 
 
-# Create router
-router = APIRouter(prefix="/api/{user_id}", tags=["chat"])
-
-# Request/Response models
-class ChatRequest(BaseModel):
-    """
-    Request model for chat endpoint
-    """
-    conversation_id: Optional[int] = None
-    message: str
-
-
-class ChatResponse(BaseModel):
-    """
-    Response model for chat endpoint
-    """
-    conversation_id: int
-    response: str
-    tool_calls: Optional[List[Dict[str, Any]]] = None
-    tool_results: Optional[List[Dict[str, Any]]] = None
-
-
-@router.post("/chat", response_model=ChatResponse)
-async def chat_endpoint(
+# Chat endpoint (T-313, T-317, T-318)
+@router.post("", response_model=ChatResponse)
+async def chat(
     user_id: str,
     request: ChatRequest,
-    session: Session = Depends(get_session),
-    token_data: dict = Depends(verify_token)
+    session: AsyncSession = Depends(get_session),
+    auth: dict = Depends(verify_token)  # T-318: JWT middleware
 ):
     """
-    Chat endpoint that allows users to interact with the AI agent through natural language.
+    Stateless chat endpoint for AI-powered task management.
+
+    Flow (T-317: Stateless design):
+    1. Load or create conversation from database
+    2. Store user message in database
+    3. Load conversation history from database
+    4. Run agent with history + new message
+    5. Store assistant response in database
+    6. Return response (server holds no state)
 
     Args:
-        user_id: ID of the user (from URL path)
-        request: Chat request containing message and optional conversation_id
+        user_id: User identifier from URL
+        request: Chat request with optional conversation_id and message
         session: Database session
-        token_data: Decoded JWT token data (from authentication middleware)
+        auth: JWT authentication data
 
     Returns:
-        ChatResponse: Response from the AI agent with conversation ID
+        Chat response with conversation_id, response text, and tool_calls
+
+    Raises:
+        403: User ID mismatch
+        404: Conversation not found
+        500: Agent execution error
     """
-    # Verify user_id in URL matches the authenticated user
-    current_user_id = token_data["user_id"]
-    if user_id != current_user_id:
-        raise HTTPException(status_code=403, detail="Access denied")
-
-    # Get or create conversation using utility function
-    conversation = get_or_create_conversation(
-        session=session,
-        user_id=user_id,
-        conversation_id=request.conversation_id
-    )
-
-    # Store user message in database
-    create_message(
-        session=session,
-        user_id=user_id,
-        conversation_id=conversation.id,
-        role="user",
-        content=request.message
-    )
+    # T-318: Validate user ID matches JWT token
+    if auth["user_id"] != user_id:
+        raise HTTPException(
+            status_code=403,
+            detail="Forbidden: Cannot access other user's conversations"
+        )
 
     try:
-        # Get the agent instance
-        agent = get_agent()
-
-        # Ensure the OpenAI thread exists for this conversation and get the thread ID
-        thread_id = ensure_openai_thread_exists(conversation, agent)
-
-        # Call the agent to get the response using the OpenAI thread ID
-        agent_response = agent.chat(request.message, thread_id=thread_id)
-
-        # If the conversation didn't have a thread_id before, or it was invalid,
-        # we might have created a new one, so update the database
-        if not conversation.thread_id or conversation.thread_id != thread_id:
-            conversation.thread_id = thread_id
-            session.add(conversation)
-            # We don't need a separate commit since we commit at the end
-
-        # Store assistant response in database
-        create_message(
-            session=session,
-            user_id=user_id,
-            conversation_id=conversation.id,
-            role="assistant",
-            content=agent_response.response,
-            tool_calls=str(agent_response.tool_calls) if agent_response.tool_calls else None
+        # Step 1: Load or create conversation (T-314)
+        conversation = await get_or_create_conversation(
+            session,
+            user_id,
+            request.conversation_id
         )
 
-        # Commit both messages and conversation updates to the database
-        session.commit()
+        # Step 2: Store user message (T-315)
+        await store_message(
+            session,
+            user_id,
+            conversation.id,
+            role="user",
+            content=request.message
+        )
 
+        # Step 3: Load conversation history (T-314)
+        history = await load_conversation_history(session, conversation.id)
+
+        # Step 4: Run agent with history and user_id
+        # Note: history already includes the new user message we just stored
+        agent_result = await run_agent(request.message, user_id, history[:-1])  # Exclude last message since run_agent adds it
+
+        if agent_result["error"]:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Agent execution error: {agent_result['error']}"
+            )
+
+        # Step 5: Store assistant response (T-315)
+        await store_message(
+            session,
+            user_id,
+            conversation.id,
+            role="assistant",
+            content=agent_result["response"],
+            tool_calls=agent_result["tool_calls"]
+        )
+
+        # Step 6: Return response (T-317: Server holds no state)
         return ChatResponse(
             conversation_id=conversation.id,
-            response=agent_response.response,
-            tool_calls=agent_response.tool_calls,
-            tool_results=[]  # Tool results would be populated when we implement full tool execution cycle
+            response=agent_result["response"],
+            tool_calls=agent_result["tool_calls"]
         )
+
+    except HTTPException:
+        raise
     except Exception as e:
-        # Rollback any uncommitted changes if agent processing fails
-        session.rollback()
-        raise HTTPException(status_code=500, detail=f"Error processing chat: {str(e)}")
-
-
-# Additional endpoints for conversation management might be added later
-# For now, focusing on the main chat endpoint as specified in the task
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal server error: {str(e)}"
+        )

@@ -123,7 +123,30 @@
       "Bash(py -3.14 -m pip install fastapi uvicorn sqlmodel python-jose[cryptography] pydantic pydantic-settings python-multipart email-validator openai)",
       "Bash(py -3.14 -m uvicorn main:app --host 0.0.0.0 --port 8000)",
       "Bash(powershell Get-Content \"C:\\\\Users\\\\Coders\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-Coders-Desktop-Hackathon-2-phases\\\\tasks\\\\b5f4d38.output\" -ErrorAction SilentlyContinue)",
-      "Bash(powershell Get-Content \"C:\\\\Users\\\\Coders\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-Coders-Desktop-Hackathon-2-phases\\\\tasks\\\\b3fbbda.output\" -ErrorAction SilentlyContinue)"
+      "Bash(powershell Get-Content \"C:\\\\Users\\\\Coders\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-Coders-Desktop-Hackathon-2-phases\\\\tasks\\\\b3fbbda.output\" -ErrorAction SilentlyContinue)",
+      "Bash(if [ -d \"phase-3-ai-chatbot/checklists\" ])",
+      "Bash(then ls -la phase-3-ai-chatbot/checklists/)",
+      "Bash(else echo \"No checklists directory found\")",
+      "Bash(if [ -f \"phase-3-ai-chatbot/checklists/test-mcp-tools.md\" ])",
+      "Bash(then echo \"Checklist exists\")",
+      "Bash(else echo \"Checklist not found\")",
+      "Bash(py:*)",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(.venv/Scripts/python.exe:*)",
+      "Bash(.venvScriptspython.exe:*)",
+      "Bash(timeout:*)",
+      "Bash(if exist .next rmdir /s /q .next)",
+      "Bash(uvicorn:*)",
+      "Bash(tasklist)",
+      "Bash(findstr:*)",
+      "Bash(netstat:*)",
+      "Bash(pip install:*)",
+      "Bash(git config:*)",
+      "Bash(if [ -d \"chat\" ])",
+      "Bash(then rm -rf chat)",
+      "Bash(else echo \"Old chat directory already removed\")",
+      "Bash([:*)",
+      "Bash(else echo \"No unprotected chat directory found\")"
     ]
   }
 }

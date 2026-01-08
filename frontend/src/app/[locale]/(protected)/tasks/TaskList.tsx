@@ -5,6 +5,7 @@ import { api } from "@/lib/api";
 import { Task } from "@/lib/types";
 import { signOut } from "@/lib/auth";
 import { useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { TaskCard } from "@/components/TaskCard";
 import { TaskForm } from "@/components/TaskForm";
 import { useToast } from "@/components/Toast";
@@ -27,6 +28,7 @@ import {
   FireIcon,
   TrophyIcon,
   RocketLaunchIcon,
+  ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
 import { CheckCircleIcon as CheckCircleSolid, ClockIcon } from "@heroicons/react/24/solid";
 
@@ -351,6 +353,15 @@ export default function TaskList({ userId, userName }: TaskListProps) {
             {/* Actions */}
             <div className="flex items-center gap-1 sm:gap-2">
               <LanguageSwitcher />
+
+              <Link
+                href="/chat"
+                className="p-2.5 rounded-xl text-white/40 hover:text-violet-400 hover:bg-violet-500/10 transition-all duration-300 hover:scale-105"
+                aria-label="AI Chat"
+                title="AI Chat"
+              >
+                <ChatBubbleLeftRightIcon className="h-5 w-5" />
+              </Link>
 
               <button
                 onClick={handleRefresh}

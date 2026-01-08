@@ -57,7 +57,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Register routers
 app.include_router(tasks_router)
 app.include_router(auth_router)
-app.include_router(chat_router)
+app.include_router(chat_router)  # Phase III: AI Chatbot
 
 
 @app.get("/health")

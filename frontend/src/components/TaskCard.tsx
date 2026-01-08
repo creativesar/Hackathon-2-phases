@@ -267,6 +267,9 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
           {/* Meta info */}
           <div className="flex items-center gap-3 text-xs text-white/30">
             <div className="flex items-center gap-1.5">
+              <span className="font-mono text-violet-400/60">#{task.id}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
               <CalendarIcon className="h-3.5 w-3.5" />
               <span>{formatDate(task.created_at)}</span>
             </div>

@@ -29,10 +29,10 @@
 | T-323 | Test all MCP tools | T-306-T-310 | Pending |
 | T-324 | Test natural language commands | T-312 | Pending |
 | T-325 | Test conversation persistence | T-317 | Pending |
-| T-326 | Configure OpenAI domain allowlist | None | Pending |
-| T-327 | Test end-to-end workflow | T-325 | Pending |
-| T-328 | Create comprehensive README | T-327 | Pending |
-| T-329 | Record demo video | T-328 | Pending |
+| T-326 | Configure OpenAI domain allowlist | None | Documented |
+| T-327 | Test end-to-end workflow | T-325 | Documented |
+| T-328 | Create comprehensive README | T-327 | Completed |
+| T-329 | Record demo video | T-328 | Documented |
 
 ---
 
@@ -716,46 +716,46 @@ T-329
 
 ## Progress Checklist
 
-- [x] OpenAI Agents SDK installed
-- [x] Official MCP SDK installed
-- [x] Conversation model created
-- [x] Message model created
-- [x] MCP server foundation implemented
-- [x] All 5 MCP tools implemented
-- [x] Agent definition created
-- [x] Agent Runner implemented
-- [x] Chat API endpoint created
-- [x] Conversation loading functional
-- [x] Message storage functional
-- [x] Agent integrated with MCP tools
-- [x] Stateless design verified
-- [x] JWT authentication configured
-- [x] ChatKit component created
-- [x] Chat UI fully functional
-- [ ] All MCP tools tested
-- [ ] Natural language commands tested
-- [ ] Conversation persistence tested
-- [ ] Domain allowlist configured
-- [ ] End-to-end workflow tested
-- [ ] Documentation complete
-- [ ] Demo video recorded
+- [X] OpenAI Agents SDK installed
+- [X] Official MCP SDK installed
+- [X] Conversation model created
+- [X] Message model created
+- [X] MCP server foundation implemented
+- [X] All 5 MCP tools implemented
+- [X] Agent definition created
+- [X] Agent Runner implemented
+- [X] Chat API endpoint created
+- [X] Conversation loading functional
+- [X] Message storage functional
+- [X] Agent integrated with MCP tools
+- [X] Stateless design verified
+- [X] JWT authentication configured
+- [X] ChatKit component created
+- [X] Chat UI fully functional
+- [~] All MCP tools tested (Documented in TESTING.md)
+- [~] Natural language commands tested (Documented in TESTING.md)
+- [~] Conversation persistence tested (Documented in TESTING.md)
+- [~] Domain allowlist configured (Documented in DOMAIN_ALLOWLIST.md)
+- [~] End-to-end workflow tested (Documented in TESTING.md)
+- [X] Documentation complete
+- [~] Demo video recorded (Guide in DEMO_VIDEO_GUIDE.md)
 
 ## Time Estimates
 
 | Task | Est. Time | Actual Time | Status |
 |-------|-----------|--------------|---------|
-| T-301 | 15 min | - | Completed |
-| T-302 | 15 min | - | Completed |
-| T-303 | 10 min | - | Completed |
-| T-304 | 10 min | - | Completed |
-| T-305 | 20 min | - | Completed |
-| T-306 | 30 min | - | Completed |
-| T-307 | 20 min | - | Completed |
-| T-308 | 25 min | - | Completed |
-| T-309 | 20 min | - | Completed |
-| T-310 | 30 min | - | Completed |
-| T-311 | 30 min | - | Completed |
-| T-312 | 30 min | - | Completed |
+| T-301 | 15 min | - | Pending |
+| T-302 | 15 min | - | Pending |
+| T-303 | 10 min | - | Pending |
+| T-304 | 10 min | - | Pending |
+| T-305 | 20 min | - | Pending |
+| T-306 | 30 min | - | Pending |
+| T-307 | 20 min | - | Pending |
+| T-308 | 25 min | - | Pending |
+| T-309 | 20 min | - | Pending |
+| T-310 | 30 min | - | Pending |
+| T-311 | 30 min | - | Pending |
+| T-312 | 30 min | - | Pending |
 | T-313 | 30 min | - | Pending |
 | T-314 | 20 min | - | Pending |
 | T-315 | 20 min | - | Pending |

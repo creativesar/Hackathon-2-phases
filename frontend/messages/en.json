@@ -98,6 +98,23 @@
       "desc": "Join thousands of users who are already managing their tasks with TaskFlow.",
       "button": "Get Started Now"
     },
+    "chat": {
+      "welcome": "Welcome to TaskFlowBot!",
+      "welcomeDesc": "I can help you manage your tasks using natural language. Try saying:",
+      "example1": "Add a task to buy groceries",
+      "example2": "Show me all my tasks",
+      "example3": "Mark task 3 as complete",
+      "example4": "Delete the meeting task",
+      "chatWithAssistant": "Chat with your AI assistant",
+      "typePlaceholder": "Type your message... (e.g., 'Add a task to call mom')",
+      "send": "Send",
+      "sending": "Sending...",
+      "pressEnter": "Press Enter to send",
+      "poweredBy": "Powered by OpenAI GPT-4o",
+      "toolCalls": "Tool Calls:",
+      "args": "Args:",
+      "result": "Result:"
+    },
     "common": {
       "all": "All",
       "pending": "Pending",
@@ -111,6 +128,7 @@
     },
     "form": {
       "titleRequired": "Title is required.",
+      "descriptionRequired": "Description is required.",
       "titleMax": "Title cannot exceed 200 characters.",
       "descriptionMax": "Description cannot exceed 1000 characters.",
       "title": "Title",

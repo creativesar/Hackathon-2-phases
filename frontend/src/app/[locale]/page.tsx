@@ -12,6 +12,8 @@ import {
   BoltIcon,
   ArrowRightIcon,
   SparklesIcon,
+  ClipboardDocumentListIcon,
+  ChatBubbleLeftRightIcon,
 } from "@heroicons/react/24/outline";
 import { CheckCircleIcon as CheckCircleSolid } from "@heroicons/react/24/solid";
 
@@ -116,6 +118,24 @@ export default function Home() {
               <span className="text-xl font-display font-bold text-white tracking-tight">TaskFlow</span>
             </Link>
 
+            {/* Nav Links */}
+            <div className="hidden md:flex items-center gap-1">
+              <Link
+                href="/tasks"
+                className="group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.05] transition-all duration-300"
+              >
+                <ClipboardDocumentListIcon className="h-4 w-4" />
+                <span>Tasks</span>
+              </Link>
+              <Link
+                href="/chat"
+                className="group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/[0.05] transition-all duration-300"
+              >
+                <ChatBubbleLeftRightIcon className="h-4 w-4" />
+                <span>Chat</span>
+              </Link>
+            </div>
+
             {/* Nav Actions */}
             <div className="flex items-center gap-2">
               <LanguageSwitcher />
@@ -147,7 +167,7 @@ export default function Home() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
             <span className="text-sm font-medium text-white/60">
-              {t("techStack")} — Phase II
+              {t("techStack")}
             </span>
           </div>
 
@@ -218,6 +238,165 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {/* Main Features Showcase - Tasks & Chat */}
+        <section className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-3">
+              Powerful Features for
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400"> Maximum Productivity</span>
+            </h2>
+            <p className="text-white/60 text-sm max-w-2xl mx-auto">
+              Manage your tasks efficiently with our intuitive interface and AI-powered chat assistant
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-6 mb-12">
+            {/* Tasks Feature Card - Left */}
+            <div className="group relative bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl border-2 border-white/10 rounded-3xl p-6 hover:border-violet-500/40 hover:shadow-2xl hover:shadow-violet-500/20 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+              {/* Animated gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-fuchsia-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+              {/* Decorative circles */}
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-violet-500/10 rounded-full blur-3xl group-hover:bg-violet-500/20 transition-colors duration-700" />
+              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-fuchsia-500/10 rounded-full blur-3xl group-hover:bg-fuchsia-500/20 transition-colors duration-700" />
+
+              <div className="relative z-10">
+                {/* Icon with enhanced styling */}
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-violet-500 to-fuchsia-600 mb-4 shadow-2xl shadow-violet-500/40 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                  <ClipboardDocumentListIcon className="h-7 w-7 text-white" />
+                </div>
+
+                {/* Title with better typography */}
+                <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-violet-300 group-hover:to-fuchsia-300 transition-all duration-300">
+                  Task Management
+                </h3>
+
+                {/* Description with better spacing */}
+                <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                  Create, organize, and track your daily tasks with ease. Mark tasks as complete and stay on top of your to-do list.
+                </p>
+
+                {/* Divider line */}
+                <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-4" />
+
+                {/* Features List with enhanced styling */}
+                <ul className="space-y-2 mb-5">
+                  <li className="flex items-center gap-2.5 text-white/80 group/item hover:text-white transition-colors">
+                    <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                      <CheckCircleSolid className="h-3.5 w-3.5 text-emerald-400" />
+                    </div>
+                    <span className="text-xs font-medium">Create tasks with title and description</span>
+                  </li>
+                  <li className="flex items-center gap-2.5 text-white/80 group/item hover:text-white transition-colors">
+                    <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                      <CheckCircleSolid className="h-3.5 w-3.5 text-emerald-400" />
+                    </div>
+                    <span className="text-xs font-medium">Mark tasks as complete with one click</span>
+                  </li>
+                  <li className="flex items-center gap-2.5 text-white/80 group/item hover:text-white transition-colors">
+                    <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                      <CheckCircleSolid className="h-3.5 w-3.5 text-emerald-400" />
+                    </div>
+                    <span className="text-xs font-medium">Filter by status and search tasks</span>
+                  </li>
+                  <li className="flex items-center gap-2.5 text-white/80 group/item hover:text-white transition-colors">
+                    <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                      <CheckCircleSolid className="h-3.5 w-3.5 text-emerald-400" />
+                    </div>
+                    <span className="text-xs font-medium">Real-time sync across all devices</span>
+                  </li>
+                </ul>
+
+                {/* Enhanced CTA Button */}
+                <Link
+                  href="/tasks"
+                  className="group/btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-white bg-gradient-to-r from-violet-600 via-violet-500 to-fuchsia-600 shadow-xl shadow-violet-500/30 hover:shadow-2xl hover:shadow-violet-500/40 hover:scale-105 transition-all duration-300 relative overflow-hidden"
+                >
+                  {/* Button shimmer effect */}
+                  <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                  <span className="relative z-10 text-xs">Explore Tasks</span>
+                  <ArrowRightIcon className="h-3.5 w-3.5 relative z-10 group-hover/btn:translate-x-2 transition-transform" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Chat Feature Card - Right */}
+            <div className="group relative bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl border-2 border-white/10 rounded-3xl p-6 hover:border-fuchsia-500/40 hover:shadow-2xl hover:shadow-fuchsia-500/20 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+              {/* Animated gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-600/20 via-pink-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+              {/* Decorative circles */}
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-fuchsia-500/10 rounded-full blur-3xl group-hover:bg-fuchsia-500/20 transition-colors duration-700" />
+              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl group-hover:bg-pink-500/20 transition-colors duration-700" />
+
+              <div className="relative z-10">
+                {/* Icon with badge and enhanced styling */}
+                <div className="relative inline-block mb-4">
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-600 via-fuchsia-500 to-pink-600 shadow-2xl shadow-fuchsia-500/40 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                    <ChatBubbleLeftRightIcon className="h-7 w-7 text-white" />
+                  </div>
+                  {/* Enhanced AI Badge */}
+                  <div className="absolute -top-1.5 -right-1.5 px-2 py-0.5 rounded-lg bg-gradient-to-r from-amber-500 via-orange-500 to-orange-600 text-white text-[10px] font-black shadow-xl shadow-orange-500/50 animate-pulse">
+                    AI
+                  </div>
+                </div>
+
+                {/* Title with better typography */}
+                <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-fuchsia-300 group-hover:to-pink-300 transition-all duration-300">
+                  AI Chat Assistant
+                </h3>
+
+                {/* Description with better spacing */}
+                <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                  Manage your tasks using natural language with our AI-powered chatbot. Just tell it what you need!
+                </p>
+
+                {/* Divider line */}
+                <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-4" />
+
+                {/* Features List with enhanced styling */}
+                <ul className="space-y-2 mb-5">
+                  <li className="flex items-center gap-2.5 text-white/80 group/item hover:text-white transition-colors">
+                    <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-fuchsia-500/30 to-pink-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                      <SparklesIcon className="h-3.5 w-3.5 text-fuchsia-400" />
+                    </div>
+                    <span className="text-xs font-medium">Add tasks with natural language</span>
+                  </li>
+                  <li className="flex items-center gap-2.5 text-white/80 group/item hover:text-white transition-colors">
+                    <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-fuchsia-500/30 to-pink-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                      <SparklesIcon className="h-3.5 w-3.5 text-fuchsia-400" />
+                    </div>
+                    <span className="text-xs font-medium">Complete, delete, or update tasks by ID</span>
+                  </li>
+                  <li className="flex items-center gap-2.5 text-white/80 group/item hover:text-white transition-colors">
+                    <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-fuchsia-500/30 to-pink-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                      <SparklesIcon className="h-3.5 w-3.5 text-fuchsia-400" />
+                    </div>
+                    <span className="text-xs font-medium">View all tasks in real-time sidebar</span>
+                  </li>
+                  <li className="flex items-center gap-2.5 text-white/80 group/item hover:text-white transition-colors">
+                    <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-fuchsia-500/30 to-pink-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                      <SparklesIcon className="h-3.5 w-3.5 text-fuchsia-400" />
+                    </div>
+                    <span className="text-xs font-medium">Powered by advanced AI technology</span>
+                  </li>
+                </ul>
+
+                {/* Enhanced CTA Button */}
+                <Link
+                  href="/chat"
+                  className="group/btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-white bg-gradient-to-r from-fuchsia-600 via-fuchsia-500 to-pink-600 shadow-xl shadow-fuchsia-500/30 hover:shadow-2xl hover:shadow-fuchsia-500/40 hover:scale-105 transition-all duration-300 relative overflow-hidden"
+                >
+                  {/* Button shimmer effect */}
+                  <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                  <span className="relative z-10 text-xs">Try AI Chat</span>
+                  <ArrowRightIcon className="h-3.5 w-3.5 relative z-10 group-hover/btn:translate-x-2 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Features Section with staggered animations */}
         <section className="max-w-6xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
@@ -322,7 +501,7 @@ export default function Home() {
               <span className="font-display font-semibold text-white">TaskFlow</span>
             </div>
             <p className="text-sm text-white/40">
-              Phase II — Fullstack Todo App
+              Modern Task Management Platform
             </p>
           </div>
         </div>

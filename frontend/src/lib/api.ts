@@ -5,6 +5,8 @@ import {
   CreateTaskRequest,
   UpdateTaskRequest,
   DeleteTaskResponse,
+  ChatRequest,
+  ChatResponse,
 } from "./types";
 import { getAuthToken } from "./auth";
 
@@ -121,24 +123,15 @@ class ApiClient {
   }
 
   /**
-   * Chat with AI assistant
+   * Send a chat message to the AI assistant
    * POST /api/{user_id}/chat
+   * Phase III: AI Chatbot
    */
-  async chat(
+  async sendChatMessage(
     userId: string,
-    data: { conversation_id?: number; message: string }
-  ): Promise<{
-    conversation_id: number;
-    response: string;
-    tool_calls?: Array<any>;
-    tool_results?: Array<any>;
-  }> {
-    return this.request<{
-      conversation_id: number;
-      response: string;
-      tool_calls?: Array<any>;
-      tool_results?: Array<any>;
-    }>(`/api/${userId}/chat`, {
+    data: ChatRequest
+  ): Promise<ChatResponse> {
+    return this.request<ChatResponse>(`/api/${userId}/chat`, {
       method: "POST",
       body: JSON.stringify(data),
     });

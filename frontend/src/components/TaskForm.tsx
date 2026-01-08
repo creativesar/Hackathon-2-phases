@@ -47,6 +47,11 @@ export function TaskForm({ task, userId, onSave, onCancel }: TaskFormProps) {
       return;
     }
 
+    if (!description.trim()) {
+      setError(t("form.descriptionRequired"));
+      return;
+    }
+
     if (description.length > 1000) {
       setError(t("form.descriptionMax"));
       return;
@@ -59,12 +64,12 @@ export function TaskForm({ task, userId, onSave, onCancel }: TaskFormProps) {
       if (task) {
         savedTask = await api.updateTask(userId, task.id, {
           title: title.trim(),
-          description: description.trim() || undefined,
+          description: description.trim(),
         });
       } else {
         savedTask = await api.createTask(userId, {
           title: title.trim(),
-          description: description.trim() || undefined,
+          description: description.trim(),
         });
       }
 
@@ -174,9 +179,8 @@ export function TaskForm({ task, userId, onSave, onCancel }: TaskFormProps) {
           {/* Description Field */}
           <div className="space-y-1.5">
             <label className="flex items-center justify-between text-sm font-medium text-white/70">
-              <span className="flex items-center gap-2">
-                {t("form.description")}
-                <span className="text-xs text-white/30 font-normal">{t("form.descriptionOptional")}</span>
+              <span>
+                {t("form.description")} <span className="text-red-400">*</span>
               </span>
               <span
                 className={`text-xs transition-colors ${
@@ -194,6 +198,7 @@ export function TaskForm({ task, userId, onSave, onCancel }: TaskFormProps) {
                 onBlur={() => setIsFocused(null)}
                 maxLength={1000}
                 rows={3}
+                required
                 className={`
                   w-full px-4 py-3 rounded-xl resize-none text-sm
                   bg-white/[0.05] backdrop-blur
@@ -232,12 +237,12 @@ export function TaskForm({ task, userId, onSave, onCancel }: TaskFormProps) {
           <div className="flex gap-3 pt-2">
             <button
               type="submit"
-              disabled={loading || !title.trim()}
+              disabled={loading || !title.trim() || !description.trim()}
               className={`
                 group flex-1 inline-flex items-center justify-center gap-2
                 py-3 px-5 rounded-xl font-semibold text-sm
                 transition-all duration-300
-                ${loading || !title.trim()
+                ${loading || !title.trim() || !description.trim()
                   ? "bg-white/5 text-white/30 cursor-not-allowed"
                   : "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/30 hover:-translate-y-0.5 active:translate-y-0"
                 }

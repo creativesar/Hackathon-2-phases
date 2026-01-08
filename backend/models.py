@@ -31,7 +31,7 @@ class Task(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: str = Field(foreign_key="users.id", index=True)
     title: str = Field(max_length=200, min_length=1)
-    description: Optional[str] = Field(default=None, max_length=1000)
+    description: str = Field(max_length=1000, min_length=1)
     completed: bool = Field(default=False)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
@@ -40,13 +40,12 @@ class Task(SQLModel, table=True):
 class Conversation(SQLModel, table=True):
     """
     SQLModel representation of conversations table.
-    Used for storing chat conversations in the AI chatbot feature.
+    Stores chat conversation metadata for Phase III AI Chatbot.
     """
     __tablename__ = "conversations"
 
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: str = Field(foreign_key="users.id", index=True)
-    thread_id: Optional[str] = Field(default=None, max_length=100)  # OpenAI thread ID
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -54,7 +53,7 @@ class Conversation(SQLModel, table=True):
 class Message(SQLModel, table=True):
     """
     SQLModel representation of messages table.
-    Used for storing chat messages in the AI chatbot feature.
+    Stores individual chat messages within conversations.
     """
     __tablename__ = "messages"
 
@@ -63,5 +62,5 @@ class Message(SQLModel, table=True):
     conversation_id: int = Field(foreign_key="conversations.id", index=True)
     role: str = Field(max_length=20)  # "user" or "assistant"
     content: str
-    tool_calls: Optional[str] = Field(default=None)  # JSON string
+    tool_calls: Optional[str] = Field(default=None)  # JSON string of tool calls
     created_at: datetime = Field(default_factory=datetime.utcnow)
