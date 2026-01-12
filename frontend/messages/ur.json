@@ -122,9 +122,44 @@
       "sending": "بھیجا جا رہا ہے...",
       "pressEnter": "بھیجنے کے لیے Enter دبائیں",
       "poweredBy": "OpenAI GPT-4o کی طاقت سے",
-      "toolCalls": "ٹول کالز:",
+      "toolCalls": "ٹول کالز انجام دیے گئے",
       "args": "دلائل:",
-      "result": "نتیجہ:"
+      "result": "نتیجہ:",
+      "newChat": "نئی بات چیت",
+      "conversations": "بات چیت",
+      "searchConversations": "بات چیت تلاش کریں...",
+      "noConversations": "ابھی تک کوئی بات چیت نہیں",
+      "noConversationsFound": "کوئی بات چیت نہیں ملی",
+      "deleteConversation": "بات چیت حذف کریں؟",
+      "conversationDeleted": "بات چیت حذف ہو گئی",
+      "failedToDelete": "بات چیت حذف کرنے میں ناکام",
+      "conversationNotFound": "بات چیت اب موجود نہیں",
+      "failedToLoad": "بات چیت لوڈ کرنے میں ناکام",
+      "thinking": "سوچ رہا ہے...",
+      "stopGenerating": "رکیں",
+      "voiceInput": "آواز سے ان پٹ",
+      "listening": "سن رہا ہے...",
+      "recording": "ریکارڈنگ",
+      "clickMicForVoice": "آواز کے لیے مائیک پر کلک کریں",
+      "voiceNotSupported": "آواز کی شناخت اس براؤزر میں تعاون یافتہ نہیں ہے",
+      "micPermissionDenied": "مائیکروفون کی اجازت مسترد کر دی گئی",
+      "shiftEnterNewLine": "نئی لائن کے لیے Shift+Enter",
+      "messages": "پیغامات",
+      "yourTasks": "آپ کے ٹاسک",
+      "loadingTasks": "ٹاسک لوڈ ہو رہے ہیں...",
+      "noTasksYet": "ابھی تک کوئی ٹاسک نہیں",
+      "askChatbot": "چیٹ بوٹ سے ایک شامل کرنے کو کہیں!",
+      "total": "کل",
+      "newConversation": "+ نئی بات چیت",
+      "rename": "نام تبدیل کریں",
+      "justNow": "ابھی",
+      "minutesAgo": "{minutes} منٹ پہلے",
+      "hoursAgo": "{hours} گھنٹے پہلے",
+      "daysAgo": "{days} دن پہلے",
+      "botName": "ٹاسک فلو بوٹ",
+      "copyMessage": "پیغام کاپی کریں",
+      "regenerate": "جواب دوبارہ بنائیں",
+      "stopRecording": "ریکارڈنگ بند کریں"
     },
     "form": {
       "title": "عنوان",
@@ -138,6 +173,29 @@
       "descriptionPlaceholder": "مزید تفصیلات شامل کریں...",
       "whatNeedsToBeDone": "کیا کرنا ہے؟",
       "updateDetails": "تفصیلات اپ ڈیٹ کریں"
+    }
+  },
+  "chooser": {
+    "welcomeBack": "خوش آمدید",
+    "chooseWorkspace": "اپنا ورک اسپیس منتخب کریں",
+    "greeting": "السلام علیکم، {name}",
+    "subtitle": "جہاں سے شروع کرنا چاہتے ہیں منتخب کریں۔ آپ بعد میں بھی تبدیل کر سکتے ہیں۔",
+    "tasks": {
+      "title": "ٹاسک",
+      "description": "اپنا دن پلان کریں، ٹاسک بنائیں، اور اپنی پروگریس واضح رکھیں۔",
+      "features": ["ٹاسک بنائیں اور منیج کریں", "مکمل ہونا ٹریک کریں", "مستقل رہیں"]
+    },
+    "chat": {
+      "title": "چیٹ",
+      "description": "اپنے اسسٹنٹ سے بات کریں۔ ٹاسک شامل کریں، کام منظم کریں، اور تیزی سے آگے بڑھیں۔",
+      "features": ["پیغام سے ٹاسک بنائیں", "ٹاسک میں ترمیم اور مکمل کریں", "بات چیت محفوظ کریں"]
+    },
+    "openTasks": "ٹاسک کھولیں",
+    "openChat": "چیٹ کھولیں",
+    "bookmarkTip": "ٹپ: آپ اس صفحے کو اپنی ذاتی اسٹارٹ اسکرین کے طور پر بُک مارک کر سکتے ہیں۔",
+    "cta": {
+      "title": "کہاں سے شروع کریں؟",
+      "subtitle": "منصوبہ بندی کے لیے ٹاسک بہتر ہیں۔ رفتار کے لیے چیٹ بہتر ہے۔"
     }
   }
 }

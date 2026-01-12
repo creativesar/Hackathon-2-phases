@@ -11,7 +11,7 @@ import { TaskForm } from "@/components/TaskForm";
 import { useToast } from "@/components/Toast";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import { Confetti } from "@/components/Confetti";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslations } from "next-intl";
 import {
   CheckCircleIcon,
@@ -253,7 +253,7 @@ export default function TaskList({ userId, userName }: TaskListProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] pb-24 sm:pb-8 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0a0a0f]/30 pb-24 sm:pb-8 relative overflow-hidden">
       {/* Confetti celebration */}
       <Confetti isActive={showConfetti} onComplete={() => setShowConfetti(false)} />
 
@@ -271,13 +271,13 @@ export default function TaskList({ userId, userName }: TaskListProps) {
 
       {/* Animated background with aurora effect */}
       <div className="fixed inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-950/50 via-[#0a0a0f] to-fuchsia-950/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-950/30 via-transparent to-fuchsia-950/20" />
         {/* Pulsating orbs with morphing */}
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-violet-600/15 rounded-full blur-[120px] animate-morph-slow" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fuchsia-600/10 rounded-full blur-[100px] animate-morph-slow" style={{ animationDelay: '-3s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-600/5 rounded-full blur-[150px] animate-breathe" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] animate-morph-slow" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fuchsia-600/8 rounded-full blur-[100px] animate-morph-slow" style={{ animationDelay: '-3s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-600/3 rounded-full blur-[150px] animate-breathe" />
         {/* Moving gradient beam */}
-        <div className="absolute inset-0 bg-gradient-conic from-violet-500/10 via-transparent to-fuchsia-500/10 animate-spin-very-slow" style={{ animationDuration: '20s' }} />
+        <div className="absolute inset-0 bg-gradient-conic from-violet-500/5 via-transparent to-fuchsia-500/5 animate-spin-very-slow" style={{ animationDuration: '20s' }} />
       </div>
 
       {/* Enhanced floating particles */}
@@ -322,146 +322,82 @@ export default function TaskList({ userId, userName }: TaskListProps) {
         <div className="absolute -top-1/2 -left-1/4 w-[200%] h-32 bg-gradient-to-r from-transparent via-violet-500/5 to-transparent rotate-12 animate-streak" />
       </div>
 
-      {/* Header */}
-      <header className={`sticky top-0 z-20 bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-        <div className="max-w-5xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            {/* Logo & User */}
-            <div className="flex items-center gap-4">
-              <div className="relative group">
-                <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-500/25 group-hover:shadow-xl group-hover:shadow-violet-500/40 transition-all duration-300 group-hover:scale-105">
-                  <CheckCircleIcon className="h-6 w-6 text-white" />
-                </div>
-                {/* Pulse ring */}
-                <div className="absolute inset-0 rounded-xl bg-violet-500/30 animate-ping" style={{ animationDuration: '2s' }} />
-              </div>
-              <div>
-                <h1 className="text-lg sm:text-xl font-bold text-white">{getGreeting()}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">{userName}</span>!</h1>
-                <p className="text-sm text-white/40 hidden sm:block">
-                  {tasks.length === 0 ? (
-                    <span className="flex items-center gap-1">
-                      <RocketLaunchIcon className="h-4 w-4 animate-bounce" />
-                      {t("list.getProductive")}
-                    </span>
-                  ) : (
-                    t("list.tasksRemaining", { count: pendingCount, plural: pendingCount !== 1 ? "s" : "" })
-                  )}
-                </p>
-              </div>
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-1 sm:gap-2">
-              <LanguageSwitcher />
-
-              <Link
-                href="/chat"
-                className="p-2.5 rounded-xl text-white/40 hover:text-violet-400 hover:bg-violet-500/10 transition-all duration-300 hover:scale-105"
-                aria-label="AI Chat"
-                title="AI Chat"
-              >
-                <ChatBubbleLeftRightIcon className="h-5 w-5" />
-              </Link>
-
-              <button
-                onClick={handleRefresh}
-                disabled={refreshing}
-                className={`p-2.5 rounded-xl text-white/40 hover:text-violet-400 hover:bg-violet-500/10 transition-all duration-300 hover:scale-105 ${refreshing ? "animate-spin" : ""}`}
-                aria-label={t("common.loading")}
-                title={t("common.loading")}
-              >
-                <ArrowPathIcon className="h-5 w-5" />
-              </button>
-
-              <button
-                onClick={handleLogout}
-                className="p-2.5 rounded-xl text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all duration-300 hover:scale-105"
-                aria-label={t("nav.logout")}
-                title={t("nav.logout")}
-              >
-                <ArrowRightOnRectangleIcon className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
-      <main className="relative z-10 max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <main className="relative z-10 max-w-4xl mx-auto px-3 py-4 sm:px-4 sm:py-5">
         {/* Stats Cards with staggered animation */}
         {tasks.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
             {/* Total Tasks */}
             <div
-              className={`group bg-white/[0.03] backdrop-blur border border-white/5 rounded-2xl p-4 hover:bg-white/[0.05] hover:border-violet-500/20 hover:-translate-y-1 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              className={`group bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 hover:bg-white/[0.04] hover:border-violet-500/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-violet-500/5 transition-all duration-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               style={{ transitionDelay: '100ms' }}
             >
-              <div className="flex items-center gap-3">
-                <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500/20 to-indigo-600/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <ClipboardDocumentListIcon className="h-5 w-5 text-indigo-400" />
-                  <div className="absolute inset-0 rounded-xl bg-indigo-500/20 animate-ping opacity-0 group-hover:opacity-100" style={{ animationDuration: '1.5s' }} />
+              <div className="flex items-center gap-2.5">
+                <div className="relative h-8 w-8 rounded-lg bg-gradient-to-br from-indigo-500/15 to-indigo-600/15 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                  <ClipboardDocumentListIcon className="h-4 w-4 text-indigo-400" />
+                  <div className="absolute inset-0 rounded-lg bg-indigo-500/15 animate-ping opacity-0 group-hover:opacity-100" style={{ animationDuration: '1.5s' }} />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-white group-hover:scale-105 transition-transform duration-300">{tasks.length}</p>
-                  <p className="text-xs text-white/40">{t("list.total")}</p>
+                  <p className="text-lg font-bold text-white group-hover:scale-105 transition-transform duration-300">{tasks.length}</p>
+                  <p className="text-[10px] text-white/40">{t("list.total")}</p>
                 </div>
               </div>
             </div>
 
             {/* Pending */}
             <div
-              className={`group bg-white/[0.03] backdrop-blur border border-white/5 rounded-2xl p-4 hover:bg-white/[0.05] hover:border-amber-500/20 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              className={`group bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 hover:bg-white/[0.04] hover:border-amber-500/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-amber-500/5 transition-all duration-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               style={{ transitionDelay: '200ms' }}
             >
-              <div className="flex items-center gap-3">
-                <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <ClockIcon className="h-5 w-5 text-amber-400" />
+              <div className="flex items-center gap-2.5">
+                <div className="relative h-8 w-8 rounded-lg bg-gradient-to-br from-amber-500/15 to-orange-500/15 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                  <ClockIcon className="h-4 w-4 text-amber-400" />
                   {pendingCount > 0 && (
-                    <div className="absolute -top-1 -right-1 h-3 w-3 bg-amber-500 rounded-full animate-pulse" />
+                    <div className="absolute -top-0.5 -right-0.5 h-2 w-2 bg-amber-500 rounded-full animate-pulse" />
                   )}
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-white group-hover:scale-105 transition-transform duration-300">{pendingCount}</p>
-                  <p className="text-xs text-white/40">{t("list.pending")}</p>
+                  <p className="text-lg font-bold text-white group-hover:scale-105 transition-transform duration-300">{pendingCount}</p>
+                  <p className="text-[10px] text-white/40">{t("list.pending")}</p>
                 </div>
               </div>
             </div>
 
             {/* Completed */}
             <div
-              className={`group bg-white/[0.03] backdrop-blur border border-white/5 rounded-2xl p-4 hover:bg-white/[0.05] hover:border-emerald-500/20 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/10 transition-all duration-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              className={`group bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 hover:bg-white/[0.04] hover:border-emerald-500/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-emerald-500/5 transition-all duration-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               style={{ transitionDelay: '300ms' }}
             >
-              <div className="flex items-center gap-3">
-                <div className="relative h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <CheckCircleSolid className="h-5 w-5 text-emerald-400" />
+              <div className="flex items-center gap-2.5">
+                <div className="relative h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-500/15 to-teal-500/15 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                  <CheckCircleSolid className="h-4 w-4 text-emerald-400" />
                   {completedCount > 0 && (
-                    <div className="absolute inset-0 rounded-xl bg-emerald-500/20 animate-ping opacity-0 group-hover:opacity-100" style={{ animationDuration: '1.5s' }} />
+                    <div className="absolute inset-0 rounded-lg bg-emerald-500/15 animate-ping opacity-0 group-hover:opacity-100" style={{ animationDuration: '1.5s' }} />
                   )}
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-white group-hover:scale-105 transition-transform duration-300">{completedCount}</p>
-                  <p className="text-xs text-white/40">{t("list.done")}</p>
+                  <p className="text-lg font-bold text-white group-hover:scale-105 transition-transform duration-300">{completedCount}</p>
+                  <p className="text-[10px] text-white/40">{t("list.done")}</p>
                 </div>
               </div>
             </div>
 
             {/* Progress */}
             <div
-              className={`group bg-white/[0.03] backdrop-blur border border-white/5 rounded-2xl p-4 hover:bg-white/[0.05] hover:border-fuchsia-500/20 hover:-translate-y-1 hover:shadow-lg hover:shadow-fuchsia-500/10 transition-all duration-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              className={`group bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 hover:bg-white/[0.04] hover:border-fuchsia-500/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-fuchsia-500/5 transition-all duration-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               style={{ transitionDelay: '400ms' }}
             >
-              <div className="flex items-center gap-3">
-                <div className={`relative h-10 w-10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 ${completionRate === 100 ? 'bg-gradient-to-br from-amber-500 to-orange-500 animate-pulse' : 'bg-gradient-to-br from-fuchsia-500/20 to-pink-500/20'}`}>
+              <div className="flex items-center gap-2.5">
+                <div className={`relative h-8 w-8 rounded-lg flex items-center justify-center group-hover:scale-105 transition-all duration-300 ${completionRate === 100 ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/20 animate-pulse' : 'bg-gradient-to-br from-fuchsia-500/15 to-pink-500/15'}`}>
                   {completionRate === 100 ? (
-                    <TrophyIcon className="h-5 w-5 text-white animate-bounce" />
+                    <TrophyIcon className="h-4 w-4 text-white animate-bounce" />
                   ) : (
-                    <FireIcon className="h-5 w-5 text-fuchsia-400" />
+                    <FireIcon className="h-4 w-4 text-fuchsia-400" />
                   )}
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 group-hover:scale-105 transition-transform duration-300">{completionRate}%</p>
-                  <p className="text-xs text-white/40">{t("list.progress")}</p>
+                  <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 group-hover:scale-105 transition-transform duration-300">{completionRate}%</p>
+                  <p className="text-[10px] text-white/40">{t("list.progress")}</p>
                 </div>
               </div>
             </div>
@@ -471,31 +407,31 @@ export default function TaskList({ userId, userName }: TaskListProps) {
         {/* Animated Progress Bar */}
         {tasks.length > 0 && (
           <div
-            className={`mb-6 bg-white/[0.03] backdrop-blur border border-white/5 rounded-2xl p-4 hover:border-white/10 transition-all duration-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            className={`mb-5 bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-xl p-3 hover:border-white/15 transition-all duration-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             style={{ transitionDelay: '500ms' }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-medium text-white/60 flex items-center gap-2">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-medium text-white/60 flex items-center gap-1.5">
                 {completionRate === 100 ? (
                   <>
-                    <SparklesIcon className="h-4 w-4 text-amber-400 animate-spin" style={{ animationDuration: '3s' }} />
+                    <SparklesIcon className="h-3 w-3 text-amber-400 animate-spin" style={{ animationDuration: '3s' }} />
                     {t("list.allDone")}
                   </>
                 ) : completionRate >= 50 ? (
                   <>
-                    <FireIcon className="h-4 w-4 text-orange-400 animate-pulse" />
+                    <FireIcon className="h-3 w-3 text-orange-400 animate-pulse" />
                     {t("list.keepItUp")}
                   </>
                 ) : (
                   <>
-                    <RocketLaunchIcon className="h-4 w-4 text-violet-400 animate-bounce" />
+                    <RocketLaunchIcon className="h-3 w-3 text-violet-400 animate-bounce" />
                     {t("list.makeProgress")}
                   </>
                 )}
               </span>
-              <span className="text-sm font-medium text-violet-400">{t("list.completedOf", { completed: String(completedCount), total: String(tasks.length) })}</span>
+              <span className="text-xs font-medium text-violet-400">{t("list.completedOf", { completed: String(completedCount), total: String(tasks.length) })}</span>
             </div>
-            <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 transition-all duration-1000 ease-out relative overflow-hidden"
                 style={{ width: `${completionRate}%` }}
@@ -509,7 +445,7 @@ export default function TaskList({ userId, userName }: TaskListProps) {
 
         {/* Actions Bar */}
         <div
-          className={`flex flex-col sm:flex-row gap-3 mb-6 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`flex flex-col sm:flex-row gap-2.5 mb-5 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           style={{ transitionDelay: '600ms' }}
         >
           {/* Add Task Button */}
@@ -521,11 +457,11 @@ export default function TaskList({ userId, userName }: TaskListProps) {
               }}
               className="
                 group relative inline-flex items-center justify-center gap-2
-                px-5 py-3 rounded-xl font-semibold
+                px-4 py-2.5 rounded-lg font-medium
                 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white
-                shadow-lg shadow-violet-500/25
-                hover:shadow-xl hover:shadow-violet-500/40
-                hover:-translate-y-1 active:translate-y-0
+                shadow-md shadow-violet-500/25
+                hover:shadow-lg hover:shadow-violet-500/40
+                hover:-translate-y-0.5 active:translate-y-0
                 transition-all duration-300
                 overflow-hidden
               "
@@ -533,19 +469,19 @@ export default function TaskList({ userId, userName }: TaskListProps) {
             >
               {/* Shimmer effect */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              <PlusIcon className="h-5 w-5 group-hover:rotate-180 transition-transform duration-500 relative z-10" />
-              <span className="relative z-10">{t("tasks.addTask")}</span>
+              <PlusIcon className="h-4 w-4 group-hover:rotate-180 transition-transform duration-500 relative z-10" />
+              <span className="relative z-10 text-sm">{t("tasks.addTask")}</span>
               {/* Pulse ring */}
-              <div className="absolute inset-0 rounded-xl bg-violet-400/30 animate-ping opacity-0 group-hover:opacity-100" style={{ animationDuration: '1s' }} />
+              <div className="absolute inset-0 rounded-lg bg-violet-400/30 animate-ping opacity-0 group-hover:opacity-100" style={{ animationDuration: '1s' }} />
             </button>
           )}
 
           {/* Search & Filter */}
           {tasks.length > 0 && !showForm && (
-            <div className="flex gap-2 flex-1">
+            <div className="flex gap-1.5 flex-1">
               {/* Search */}
               <div className="relative flex-1 group">
-                <MagnifyingGlassIcon className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-violet-400 transition-colors duration-300" />
+                <MagnifyingGlassIcon className="h-4 w-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-violet-400 transition-colors duration-300" />
                 <input
                   id="search-input"
                   type="text"
@@ -553,40 +489,40 @@ export default function TaskList({ userId, userName }: TaskListProps) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="
-                    w-full pl-10 pr-10 py-3 rounded-xl
-                    bg-white/[0.03] backdrop-blur
+                    w-full pl-8 pr-8 py-2.5 rounded-lg
+                    bg-white/[0.02] backdrop-blur-sm
                     text-white placeholder:text-white/30
-                    border border-white/5
+                    border border-white/10
                     focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20
-                    focus:bg-white/[0.05]
-                    transition-all duration-300 text-sm
+                    focus:bg-white/[0.03]
+                    transition-all duration-300 text-xs
                   "
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 hover:scale-110 transition-all duration-300"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 hover:scale-110 transition-all duration-300"
                   >
-                    <XMarkIcon className="h-5 w-5" />
+                    <XMarkIcon className="h-4 w-4" />
                   </button>
                 )}
               </div>
 
               {/* View Toggle */}
-              <div className="hidden sm:flex bg-white/[0.03] rounded-xl border border-white/5 overflow-hidden">
+              <div className="hidden sm:flex bg-white/[0.02] rounded-lg border border-white/10 overflow-hidden">
                 <button
                   onClick={() => setViewType("list")}
-                  className={`p-3 transition-all duration-300 hover:scale-105 ${viewType === "list" ? "bg-violet-500/20 text-violet-400" : "text-white/30 hover:text-white/60 hover:bg-white/[0.03]"}`}
+                  className={`p-2.5 transition-all duration-300 hover:scale-105 ${viewType === "list" ? "bg-violet-500/20 text-violet-400" : "text-white/30 hover:text-white/60 hover:bg-white/[0.03]"}`}
                   aria-label="List view"
                 >
-                  <ListBulletIcon className="h-5 w-5" />
+                  <ListBulletIcon className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => setViewType("grid")}
-                  className={`p-3 transition-all duration-300 hover:scale-105 ${viewType === "grid" ? "bg-violet-500/20 text-violet-400" : "text-white/30 hover:text-white/60 hover:bg-white/[0.03]"}`}
+                  className={`p-2.5 transition-all duration-300 hover:scale-105 ${viewType === "grid" ? "bg-violet-500/20 text-violet-400" : "text-white/30 hover:text-white/60 hover:bg-white/[0.03]"}`}
                   aria-label="Grid view"
                 >
-                  <Squares2X2Icon className="h-5 w-5" />
+                  <Squares2X2Icon className="h-4 w-4" />
                 </button>
               </div>
 
@@ -596,19 +532,19 @@ export default function TaskList({ userId, userName }: TaskListProps) {
                   value={filter}
                   onChange={(e) => setFilter(e.target.value as FilterType)}
                   className="
-                    appearance-none px-4 py-3 pr-10 rounded-xl text-sm
-                    bg-white/[0.03] backdrop-blur text-white
-                    border border-white/5
+                    appearance-none px-3 py-2.5 pr-7 rounded-lg text-xs
+                    bg-white/[0.02] backdrop-blur-sm text-white
+                    border border-white/10
                     focus:border-violet-500/50 focus:ring-2 focus:ring-violet-500/20
                     cursor-pointer transition-all duration-300
-                    hover:bg-white/[0.05]
+                    hover:bg-white/[0.03]
                   "
                 >
                   <option value="all" className="bg-[#0a0a0f]">{t("common.all")}</option>
                   <option value="pending" className="bg-[#0a0a0f]">{t("common.pending")}</option>
                   <option value="completed" className="bg-[#0a0a0f]">{t("common.completed")}</option>
                 </select>
-                <FunnelIcon className="h-4 w-4 absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none group-hover:text-violet-400 transition-colors duration-300" />
+                <FunnelIcon className="h-3.5 w-3.5 absolute right-2 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none group-hover:text-violet-400 transition-colors duration-300" />
               </div>
             </div>
           )}
@@ -616,14 +552,14 @@ export default function TaskList({ userId, userName }: TaskListProps) {
 
         {/* Error Display */}
         {error && (
-          <div className="mb-6 bg-red-500/10 border border-red-500/20 p-4 rounded-xl animate-shake">
-            <p className="text-sm text-red-400 font-medium">{error}</p>
+          <div className="mb-5 bg-red-500/10 border border-red-500/20 p-3 rounded-lg animate-shake">
+            <p className="text-xs text-red-400 font-medium">{error}</p>
           </div>
         )}
 
         {/* Task Form with animation */}
         {showForm && (
-          <div className="mb-6 animate-scale-in">
+          <div className="mb-5 animate-scale-in">
             <TaskForm
               task={editingTask}
               userId={userId}
@@ -639,38 +575,38 @@ export default function TaskList({ userId, userName }: TaskListProps) {
         {/* Task List */}
         {filteredTasks.length === 0 && !showForm ? (
           <div
-            className={`relative bg-white/[0.03] backdrop-blur border-2 border-dashed border-white/10 rounded-3xl p-10 sm:p-16 text-center transition-all duration-700 overflow-hidden ${mounted ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+            className={`relative bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-center transition-all duration-700 overflow-hidden ${mounted ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
             style={{ transitionDelay: '700ms' }}
           >
             {/* Animated background circles */}
             <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-violet-500/10 rounded-full blur-2xl animate-float-slow" />
-              <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-fuchsia-500/10 rounded-full blur-2xl animate-float-slow" style={{ animationDelay: '-2s' }} />
+              <div className="absolute top-1/4 left-1/4 w-24 h-24 bg-violet-500/5 rounded-full blur-xl animate-float-slow" />
+              <div className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-fuchsia-500/5 rounded-full blur-xl animate-float-slow" style={{ animationDelay: '-2s' }} />
             </div>
 
             <div className="relative z-10">
               {/* Animated icon container */}
-              <div className="relative inline-block mb-8">
-                <div className="h-24 w-24 rounded-3xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] flex items-center justify-center animate-levitate border border-white/10">
-                  <ClipboardDocumentListIcon className="h-12 w-12 text-white/30 animate-pulse" />
+              <div className="relative inline-block mb-6">
+                <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-white/[0.03] to-white/[0.01] flex items-center justify-center animate-levitate border border-white/10">
+                  <ClipboardDocumentListIcon className="h-8 w-8 text-white/30 animate-pulse" />
                 </div>
                 {/* Orbiting sparkles */}
                 <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '8s' }}>
-                  <div className="absolute -top-2 left-1/2 w-2 h-2 bg-violet-400 rounded-full shadow-lg shadow-violet-500/50" />
+                  <div className="absolute -top-1 left-1/2 w-1.5 h-1.5 bg-violet-400 rounded-full shadow-lg shadow-violet-500/50" />
                 </div>
                 <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '6s', animationDirection: 'reverse' }}>
-                  <div className="absolute top-1/2 -right-2 w-1.5 h-1.5 bg-fuchsia-400 rounded-full shadow-lg shadow-fuchsia-500/50" />
+                  <div className="absolute top-1/2 -right-1 w-1 h-1 bg-fuchsia-400 rounded-full shadow-lg shadow-fuchsia-500/50" />
                 </div>
                 {/* Corner badge */}
-                <div className="absolute -bottom-3 -right-3 h-10 w-10 bg-gradient-to-br from-violet-500 to-fuchsia-600 rounded-xl flex items-center justify-center shadow-xl shadow-violet-500/40 animate-bounce-gentle">
-                  <SparklesIcon className="h-5 w-5 text-white animate-spin-slow" style={{ animationDuration: '3s' }} />
+                <div className="absolute -bottom-2 -right-2 h-7 w-7 bg-gradient-to-br from-violet-500/30 to-fuchsia-600/30 rounded-lg flex items-center justify-center shadow-lg shadow-violet-500/30 animate-bounce-gentle">
+                  <SparklesIcon className="h-3 w-3 text-white animate-spin-slow" style={{ animationDuration: '3s' }} />
                 </div>
               </div>
 
-              <h3 className="text-2xl font-bold text-white mb-3 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+              <h3 className="text-xl font-bold text-white mb-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                 {searchQuery || filter !== "all" ? t("tasks.emptySearch") : t("tasks.empty")}
               </h3>
-              <p className="text-white/40 mb-8 max-w-sm mx-auto animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <p className="text-white/40 mb-6 max-w-sm mx-auto animate-fade-in-up text-sm" style={{ animationDelay: '0.3s' }}>
                 {searchQuery || filter !== "all"
                   ? t("tasks.emptySearchDesc")
                   : t("tasks.emptyDesc")}
@@ -679,26 +615,27 @@ export default function TaskList({ userId, userName }: TaskListProps) {
                 <button
                   onClick={() => setShowForm(true)}
                   className="
-                    group relative inline-flex items-center gap-2.5 px-6 py-3 rounded-xl
+                    group relative inline-flex items-center gap-2 px-4 py-2.5 rounded-lg
                     bg-gradient-to-r from-violet-600 to-fuchsia-600
-                    text-white font-semibold
-                    hover:shadow-2xl hover:shadow-violet-500/40
-                    hover:-translate-y-1 hover:scale-105
+                    text-white font-medium
+                    hover:shadow-xl hover:shadow-violet-500/40
+                    hover:-translate-y-0.5 hover:scale-105
                     transition-all duration-300
                     animate-fade-in-up overflow-hidden
+                    text-sm
                   "
                   style={{ animationDelay: '0.4s' }}
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                  <SparklesIcon className="h-5 w-5 group-hover:rotate-180 transition-transform duration-500" />
+                  <SparklesIcon className="h-4 w-4 group-hover:rotate-180 transition-transform duration-500" />
                   <span className="relative z-10">{t("tasks.createFirst")}</span>
-                  <RocketLaunchIcon className="h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                  <RocketLaunchIcon className="h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                 </button>
               )}
             </div>
           </div>
         ) : (
-          <div className={viewType === "grid" ? "grid sm:grid-cols-2 gap-4 sm:gap-5" : "space-y-4"}>
+          <div className={viewType === "grid" ? "grid sm:grid-cols-2 gap-3 sm:gap-4" : "space-y-3"}>
             {filteredTasks.map((task, index) => (
               <div
                 key={task.id}
@@ -729,22 +666,22 @@ export default function TaskList({ userId, userName }: TaskListProps) {
 
       </main>
 
-      {/* Mobile Bottom Stats Bar */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-[#0a0a0f]/90 backdrop-blur-xl border-t border-white/5 p-3 z-30">
+      {/* Compact Mobile Stats Bar */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white/[0.04] backdrop-blur-xl border-t border-white/15 p-2.5 z-30">
         <div className="flex justify-around items-center">
           <div className="text-center group">
-            <div className="text-xl font-bold text-amber-400 group-hover:scale-110 transition-transform duration-300">{pendingCount}</div>
-            <div className="text-[10px] text-white/30 uppercase tracking-wide">{t("list.pending")}</div>
+            <div className="text-lg font-bold text-amber-400 group-hover:scale-110 transition-transform duration-300">{pendingCount}</div>
+            <div className="text-[9px] text-white/40 tracking-wide">{t("list.pending")}</div>
           </div>
-          <div className="w-px h-8 bg-white/10" />
+          <div className="w-0.5 h-6 bg-white/15" />
           <div className="text-center group">
-            <div className="text-xl font-bold text-emerald-400 group-hover:scale-110 transition-transform duration-300">{completedCount}</div>
-            <div className="text-[10px] text-white/30 uppercase tracking-wide">{t("list.done")}</div>
+            <div className="text-lg font-bold text-emerald-400 group-hover:scale-110 transition-transform duration-300">{completedCount}</div>
+            <div className="text-[9px] text-white/40 tracking-wide">{t("list.done")}</div>
           </div>
-          <div className="w-px h-8 bg-white/10" />
+          <div className="w-0.5 h-6 bg-white/15" />
           <div className="text-center group">
-            <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 group-hover:scale-110 transition-transform duration-300">{completionRate}%</div>
-            <div className="text-[10px] text-white/30 uppercase tracking-wide">{t("list.progress")}</div>
+            <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 group-hover:scale-110 transition-transform duration-300">{completionRate}%</div>
+            <div className="text-[9px] text-white/40 tracking-wide">{t("list.progress")}</div>
           </div>
         </div>
       </div>

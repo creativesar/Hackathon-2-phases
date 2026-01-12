@@ -2,28 +2,33 @@
 
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/routing";
-import { Languages } from "lucide-react";
+import { GlobeAltIcon } from "@heroicons/react/24/outline";
 
-export const LanguageSwitcher = () => {
+/**
+ * Language Switcher Component
+ * Simple toggle button to switch between English and Urdu
+ */
+export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  const toggleLanguage = () => {
-    const nextLocale = locale === "en" ? "ur" : "en";
-    router.replace(pathname, { locale: nextLocale });
+  const handleToggleLanguage = () => {
+    const newLocale = locale === "en" ? "ur" : "en";
+    router.replace(pathname, { locale: newLocale });
   };
+
+  const currentLanguage = locale === "en" ? "English" : "اردو";
 
   return (
     <button
-      onClick={toggleLanguage}
-      className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-white/80 hover:text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105"
+      onClick={handleToggleLanguage}
+      className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] backdrop-blur border border-white/10 text-white/80 hover:text-white hover:bg-white/[0.05] hover:border-violet-500/30 transition-all duration-300 outline-none"
+      aria-label="Toggle language"
       title={`Switch to ${locale === "en" ? "Urdu" : "English"}`}
     >
-      <Languages className="h-4 w-4" />
-      <span className="text-sm font-medium">
-        {locale === "en" ? "اردو" : "English"}
-      </span>
+      <GlobeAltIcon className="h-5 w-5 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
+      <span className="text-sm font-medium">{currentLanguage}</span>
     </button>
   );
-};
+}

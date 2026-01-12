@@ -105,7 +105,7 @@ $ python agent.py
 TodoBot agent is ready for chat API integration.
 ```
 
-Backend server confirmed running on port 8001 with OpenRouter configuration.
+Backend server confirmed running on port 8000 with OpenRouter configuration.
 
 ## Outcome
 

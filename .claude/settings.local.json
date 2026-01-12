@@ -148,7 +148,32 @@
       "Bash([:*)",
       "Bash(else echo \"No unprotected chat directory found\")",
       "Bash(git branch -d 323-test-mcp-tools)",
-      "Bash(git branch -D 001-phase-3-ai-chatbot 301-openai-agents-sdk 302-openai-agents-sdk temp-branch)"
+      "Bash(git branch -D 001-phase-3-ai-chatbot 301-openai-agents-sdk 302-openai-agents-sdk temp-branch)",
+      "Bash(if exist \".next\\\\dev\\\\lock\" del /F \".next\\\\dev\\\\lock\")",
+      "Bash(grep -r \"class.*Store\" *.py)",
+      "Bash(npx next info:*)",
+      "Bash(npm search:*)",
+      "Bash(npm info:*)",
+      "Bash(chmod:*)",
+      "Bash(./test.sh)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:openai.github.io)",
+      "Bash(grep -n \"sendChatMessage\" *.ts *.tsx)",
+      "Bash(cd:*)",
+      "Bash(npm test:*)",
+      "Bash(npm --prefix frontend test)",
+      "Bash(bash --noprofile --norc -lc \"cd ''C:/Users/Coders/Desktop/Hackathon-2-phases/frontend'' && npm test\")",
+      "Bash(bash --noprofile --norc -lc \"cd ''C:/Users/Coders/Desktop/Hackathon-2-phases/frontend'' && npm run build\")",
+      "Bash(bash --noprofile --norc -lc \"cd ''C:/Users/Coders/Desktop/Hackathon-2-phases'' && git rev-parse --abbrev-ref HEAD && git config user.name && git config user.email && git diff --name-only\")",
+      "Bash(bash --noprofile --norc -lc \"cd ''C:/Users/Coders/Desktop/Hackathon-2-phases/frontend'' && npm test && npm run build\")",
+      "Bash(bash:*)",
+      "mcp__filesystem__directory_tree",
+      "Bash(powershell -Command \"Get-ChildItem ''C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\frontend\\\\node_modules\\\\react-window\\\\dist''\")",
+      "Bash(powershell -Command \"Select-String -Pattern ''sticky|top-16|greeting|userInfo|header'' -Path ''src/components/ChatInterface.tsx'' -SimpleMatch\")",
+      "Bash(powershell -Command \"Get-Content src/components/ChatInterface.tsx | Select-String -Pattern ''</main>'' -CaseSensitive\")",
+      "Bash(powershell -Command \"\\(Get-Content src/components/ChatInterface.tsx\\) -match ''main.*role=\"\"main\"\"'' -or \\(Get-Content src/components/ChatInterface.tsx\\) -match ''className=.*top-16''\")",
+      "Bash(del \"C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\frontend\\\\src\\\\components\\\\chat\\\\ConversationSidebar.tsx\")",
+      "Bash(powershell Remove-Item \"C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\frontend\\\\src\\\\components\\\\chat\\\\ConversationSidebar.tsx\")"
     ]
   }
 }

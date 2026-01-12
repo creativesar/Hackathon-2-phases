@@ -9,7 +9,7 @@ import json
 from datetime import datetime
 
 # Configuration
-BASE_URL = "http://localhost:8001"
+BASE_URL = "http://localhost:8000"
 TEST_EMAIL = f"test_mcp_{datetime.now().strftime('%Y%m%d_%H%M%S')}@example.com"
 TEST_PASSWORD = "TestPassword123!"
 TEST_NAME = "MCP Test User"

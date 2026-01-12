@@ -35,6 +35,13 @@ Phase III adds an AI-powered conversational interface to the Todo application us
    - User isolation enforced
    - Input validation on all tools
 
+6. **🎤 Voice Commands (Bonus Feature: +200 Points)**
+   - Speech-to-text using Web Speech API
+   - Multi-language support (English & Urdu)
+   - Real-time voice recognition
+   - Visual feedback during recording
+   - See [VOICE_COMMANDS.md](./VOICE_COMMANDS.md) for details
+
 ## Architecture
 
 ```
@@ -95,7 +102,7 @@ Phase III adds an AI-powered conversational interface to the Todo application us
 | UI Library | React | 19.2.3 |
 | Styling | Tailwind CSS | 4.1.18 |
 | Backend Framework | FastAPI | 0.104.0+ |
-| Backend Language | Python | 3.12+ |
+| Backend Language | Python | 3.13+ |
 | AI Framework | OpenAI Agents SDK | 0.6.5 |
 | MCP SDK | Official MCP SDK | 1.25.0 |
 | Database | Neon PostgreSQL | Serverless |
@@ -106,7 +113,7 @@ Phase III adds an AI-powered conversational interface to the Todo application us
 ## Prerequisites
 
 1. **Node.js** 20+ and npm
-2. **Python** 3.12+
+2. **Python** 3.13+
 3. **Neon PostgreSQL** account and database
 4. **OpenAI API** key with GPT-4o access
 5. **Git** for version control

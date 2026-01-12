@@ -12,9 +12,33 @@ export interface Task {
 
 // Phase III: AI Chatbot types
 export interface ChatMessage {
+  id?: number;
   role: "user" | "assistant";
   content: string;
   tool_calls?: ToolCall[];
+  created_at?: string;
+  reactions?: Record<string, string[]>; // emoji -> user_ids
+  reply_to?: number; // message id this message is replying to
+  thread_id?: number; // thread id if this is part of a thread
+  status?: 'sending' | 'sent' | 'delivered' | 'read' | 'error'; // message status
+  read_by?: string[]; // user ids who have read this message
+}
+
+export interface UserPresence {
+  id: string;
+  name: string;
+  status: 'online' | 'away' | 'busy' | 'offline';
+  last_seen: string;
+  is_typing?: boolean;
+}
+
+export interface Conversation {
+  id: number;
+  title: string;
+  last_message: string;
+  created_at: string;
+  updated_at: string;
+  message_count: number;
 }
 
 export interface ToolCall {

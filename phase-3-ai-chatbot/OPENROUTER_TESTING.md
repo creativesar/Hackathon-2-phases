@@ -10,7 +10,7 @@ The backend has been successfully configured to use OpenRouter API instead of Op
 - `OPENROUTER_API_KEY` detected in backend/.env
 - `OPENROUTER_BASE_URL` set to https://openrouter.ai/api/v1
 - Agent configured to use OpenRouter via environment variables
-- Backend server running on port 8001
+- Backend server running on port 8000
 
 ✅ **Agent Initialization:**
 ```
@@ -36,7 +36,7 @@ First, you need to sign in and get your JWT token:
 
 **Option B: Using API**
 ```bash
-curl -X POST http://localhost:8001/api/auth/sign-in \
+curl -X POST http://localhost:8000/api/auth/sign-in \
   -H "Content-Type: application/json" \
   -d '{
     "email": "your-email@example.com",
@@ -52,7 +52,7 @@ Replace `{USER_ID}` and `{TOKEN}` with your actual values:
 
 **Test 1: Add Task**
 ```bash
-curl -X POST http://localhost:8001/api/{USER_ID}/chat \
+curl -X POST http://localhost:8000/api/{USER_ID}/chat \
   -H "Authorization: Bearer {TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{"message": "Add a task to test OpenRouter integration"}'
@@ -77,7 +77,7 @@ curl -X POST http://localhost:8001/api/{USER_ID}/chat \
 
 **Test 2: List Tasks**
 ```bash
-curl -X POST http://localhost:8001/api/{USER_ID}/chat \
+curl -X POST http://localhost:8000/api/{USER_ID}/chat \
   -H "Authorization: Bearer {TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{"message": "Show me all my tasks"}'
@@ -85,7 +85,7 @@ curl -X POST http://localhost:8001/api/{USER_ID}/chat \
 
 **Test 3: Complete Task**
 ```bash
-curl -X POST http://localhost:8001/api/{USER_ID}/chat \
+curl -X POST http://localhost:8000/api/{USER_ID}/chat \
   -H "Authorization: Bearer {TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{"message": "Mark task 1 as complete"}'
@@ -93,7 +93,7 @@ curl -X POST http://localhost:8001/api/{USER_ID}/chat \
 
 **Test 4: Update Task**
 ```bash
-curl -X POST http://localhost:8001/api/{USER_ID}/chat \
+curl -X POST http://localhost:8000/api/{USER_ID}/chat \
   -H "Authorization: Bearer {TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{"message": "Change task 1 to Buy groceries for dinner"}'
@@ -101,7 +101,7 @@ curl -X POST http://localhost:8001/api/{USER_ID}/chat \
 
 **Test 5: Delete Task**
 ```bash
-curl -X POST http://localhost:8001/api/{USER_ID}/chat \
+curl -X POST http://localhost:8000/api/{USER_ID}/chat \
   -H "Authorization: Bearer {TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{"message": "Delete task 1"}'
@@ -111,7 +111,7 @@ curl -X POST http://localhost:8001/api/{USER_ID}/chat \
 
 **First Message:**
 ```bash
-curl -X POST http://localhost:8001/api/{USER_ID}/chat \
+curl -X POST http://localhost:8000/api/{USER_ID}/chat \
   -H "Authorization: Bearer {TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{"message": "Add a task to test conversation persistence"}'
@@ -121,7 +121,7 @@ Note the `conversation_id` from the response (e.g., 1).
 
 **Continue Conversation:**
 ```bash
-curl -X POST http://localhost:8001/api/{USER_ID}/chat \
+curl -X POST http://localhost:8000/api/{USER_ID}/chat \
   -H "Authorization: Bearer {TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{
@@ -142,7 +142,7 @@ The agent should have access to the full conversation history.
 
 ## Verification Checklist
 
-- [ ] Backend server running on port 8001
+- [ ] Backend server running on port 8000
 - [ ] OpenRouter API key configured in .env
 - [ ] Agent initializes with OpenRouter configuration
 - [ ] Chat endpoint responds to requests

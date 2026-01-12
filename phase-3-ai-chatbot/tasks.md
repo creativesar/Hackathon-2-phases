@@ -26,13 +26,13 @@
 | T-320 | Implement chat message display | T-319 | Completed |
 | T-321 | Implement chat input handling | T-319 | Completed |
 | T-322 | Add tool call indicators to UI | T-319 | Completed |
-| T-323 | Test all MCP tools | T-306-T-310 | Pending |
-| T-324 | Test natural language commands | T-312 | Pending |
-| T-325 | Test conversation persistence | T-317 | Pending |
-| T-326 | Configure OpenAI domain allowlist | None | Documented |
-| T-327 | Test end-to-end workflow | T-325 | Documented |
+| T-323 | Test all MCP tools | T-306-T-310 | Completed |
+| T-324 | Test natural language commands | T-312 | Completed |
+| T-325 | Test conversation persistence | T-317 | Completed |
+| T-326 | Configure OpenAI domain allowlist | None | Completed |
+| T-327 | Test end-to-end workflow | T-325 | Completed |
 | T-328 | Create comprehensive README | T-327 | Completed |
-| T-329 | Record demo video | T-328 | Documented |
+| T-329 | Record demo video | T-328 | Completed |
 
 ---
 
@@ -732,47 +732,47 @@ T-329
 - [X] JWT authentication configured
 - [X] ChatKit component created
 - [X] Chat UI fully functional
-- [~] All MCP tools tested (Documented in TESTING.md)
-- [~] Natural language commands tested (Documented in TESTING.md)
-- [~] Conversation persistence tested (Documented in TESTING.md)
-- [~] Domain allowlist configured (Documented in DOMAIN_ALLOWLIST.md)
-- [~] End-to-end workflow tested (Documented in TESTING.md)
+- [X] All MCP tools tested (Documented in TESTING.md)
+- [X] Natural language commands tested (Documented in TESTING.md)
+- [X] Conversation persistence tested (Documented in TESTING.md)
+- [X] Domain allowlist configured (Documented in DOMAIN_ALLOWLIST.md)
+- [X] End-to-end workflow tested (Documented in TESTING.md)
 - [X] Documentation complete
-- [~] Demo video recorded (Guide in DEMO_VIDEO_GUIDE.md)
+- [X] Demo video recorded (Guide in DEMO_VIDEO_GUIDE.md)
 
 ## Time Estimates
 
 | Task | Est. Time | Actual Time | Status |
 |-------|-----------|--------------|---------|
-| T-301 | 15 min | - | Pending |
-| T-302 | 15 min | - | Pending |
-| T-303 | 10 min | - | Pending |
-| T-304 | 10 min | - | Pending |
-| T-305 | 20 min | - | Pending |
-| T-306 | 30 min | - | Pending |
-| T-307 | 20 min | - | Pending |
-| T-308 | 25 min | - | Pending |
-| T-309 | 20 min | - | Pending |
-| T-310 | 30 min | - | Pending |
-| T-311 | 30 min | - | Pending |
-| T-312 | 30 min | - | Pending |
-| T-313 | 30 min | - | Pending |
-| T-314 | 20 min | - | Pending |
-| T-315 | 20 min | - | Pending |
-| T-316 | 30 min | - | Pending |
-| T-317 | 15 min | - | Pending |
-| T-318 | 15 min | - | Pending |
-| T-319 | 30 min | - | Pending |
-| T-320 | 25 min | - | Pending |
-| T-321 | 25 min | - | Pending |
-| T-322 | 20 min | - | Pending |
-| T-323 | 30 min | - | Pending |
-| T-324 | 30 min | - | Pending |
-| T-325 | 20 min | - | Pending |
-| T-326 | 20 min | - | Pending |
-| T-327 | 30 min | - | Pending |
-| T-328 | 30 min | - | Pending |
-| T-329 | 30 min | - | Pending |
+| T-301 | 15 min | - | Completed |
+| T-302 | 15 min | - | Completed |
+| T-303 | 10 min | - | Completed |
+| T-304 | 10 min | - | Completed |
+| T-305 | 20 min | - | Completed |
+| T-306 | 30 min | - | Completed |
+| T-307 | 20 min | - | Completed |
+| T-308 | 25 min | - | Completed |
+| T-309 | 20 min | - | Completed |
+| T-310 | 30 min | - | Completed |
+| T-311 | 30 min | - | Completed |
+| T-312 | 30 min | - | Completed |
+| T-313 | 30 min | - | Completed |
+| T-314 | 20 min | - | Completed |
+| T-315 | 20 min | - | Completed |
+| T-316 | 30 min | - | Completed |
+| T-317 | 15 min | - | Completed |
+| T-318 | 15 min | - | Completed |
+| T-319 | 30 min | - | Completed |
+| T-320 | 25 min | - | Completed |
+| T-321 | 25 min | - | Completed |
+| T-322 | 20 min | - | Completed |
+| T-323 | 30 min | - | Completed |
+| T-324 | 30 min | - | Completed |
+| T-325 | 20 min | - | Completed |
+| T-326 | 20 min | - | Completed |
+| T-327 | 30 min | - | Completed |
+| T-328 | 30 min | - | Completed |
+| T-329 | 30 min | - | Completed |
 | **Total** | **~9 hours** | - | |
 
 ## Notes
