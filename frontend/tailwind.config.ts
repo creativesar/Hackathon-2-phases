@@ -36,6 +36,9 @@ export default {
         'streak': 'streak 8s linear infinite',
         'float-slow': 'floatSlow 8s ease-in-out infinite',
         'task-enter': 'taskEnter 0.6s ease-out',
+        'grid-move': 'gridMove 20s linear infinite',
+        'gradient-x': 'gradientX 6s ease infinite',
+        'text-shimmer': 'textShimmer 3s infinite',
       },
       keyframes: {
         fadeInUp: {
@@ -136,6 +139,18 @@ export default {
         taskEnter: {
           '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
           '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        gridMove: {
+          '0%': { backgroundPosition: '0 0' },
+          '100%': { backgroundPosition: '50px 50px' },
+        },
+        gradientX: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        textShimmer: {
+          '0%': { transform: 'skewX(-12deg) translateX(-100%)' },
+          '100%': { transform: 'skewX(-12deg) translateX(100%)' },
         },
       },
     },

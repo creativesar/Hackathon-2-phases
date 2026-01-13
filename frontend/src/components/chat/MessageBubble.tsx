@@ -86,7 +86,7 @@ export default function MessageBubble({ message, isLatest = false, userName, onD
             {[...Array(3)].map((_, i) => (
               <div
                 key={i}
-                className="absolute w-1 h-1 bg-violet-400/20 rounded-full animate-float"
+                className="absolute w-1 h-1 bg-violet-400/20 rounded-full animate-float-enhanced"
                 style={{
                   left: `${20 + i * 30}%`,
                   top: `${30 + i * 20}%`,
@@ -145,7 +145,16 @@ export default function MessageBubble({ message, isLatest = false, userName, onD
                   ) : (
                     <CodeBlock inline value={value} />
                   );
-                }
+                },
+                p: ({ node, ...props }) => <p className="mb-3 leading-relaxed" {...props} />,
+                ul: ({ node, ...props }) => <ul className="mb-3 pl-5 list-disc space-y-2" {...props} />,
+                ol: ({ node, ...props }) => <ol className="mb-3 pl-5 list-decimal space-y-2" {...props} />,
+                li: ({ node, ...props }) => <li className="leading-relaxed" {...props} />,
+                strong: ({ node, ...props }) => <strong className="font-semibold text-violet-300" {...props} />,
+                em: ({ node, ...props }) => <em className="italic text-white/80" {...props} />,
+                blockquote: ({ node, ...props }) => (
+                  <blockquote className="border-l-4 border-violet-500 pl-4 py-1 my-3 text-white/70" {...props} />
+                ),
               }}
             >
               {message.content}
@@ -158,7 +167,7 @@ export default function MessageBubble({ message, isLatest = false, userName, onD
               {Object.entries(message.reactions).map(([emoji, users]) => (
                 <div
                   key={emoji}
-                  className="flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+                  className="flex items-center gap-1 px-2 py-1 rounded-full text-xs bg-white/10 hover:bg-white/20 transition-colors cursor-pointer border border-white/20 hover:border-violet-500/50"
                 >
                   <span>{emoji}</span>
                   <span className="text-white/70">{users.length}</span>
@@ -343,6 +352,10 @@ export default function MessageBubble({ message, isLatest = false, userName, onD
         {isUser && (
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 blur-xl pointer-events-none" />
         )}
+
+        {/* Premium corner accents */}
+        <div className="absolute top-2 left-2 w-1 h-1 bg-violet-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping transition-opacity duration-300" />
+        <div className="absolute bottom-2 right-2 w-1 h-1 bg-fuchsia-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping transition-opacity duration-300" style={{ animationDelay: '0.2s' }} />
       </div>
     </div>
   );

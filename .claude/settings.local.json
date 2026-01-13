@@ -173,7 +173,11 @@
       "Bash(powershell -Command \"Get-Content src/components/ChatInterface.tsx | Select-String -Pattern ''</main>'' -CaseSensitive\")",
       "Bash(powershell -Command \"\\(Get-Content src/components/ChatInterface.tsx\\) -match ''main.*role=\"\"main\"\"'' -or \\(Get-Content src/components/ChatInterface.tsx\\) -match ''className=.*top-16''\")",
       "Bash(del \"C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\frontend\\\\src\\\\components\\\\chat\\\\ConversationSidebar.tsx\")",
-      "Bash(powershell Remove-Item \"C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\frontend\\\\src\\\\components\\\\chat\\\\ConversationSidebar.tsx\")"
+      "Bash(powershell Remove-Item \"C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\frontend\\\\src\\\\components\\\\chat\\\\ConversationSidebar.tsx\")",
+      "WebFetch(domain:platform.openai.com)",
+      "Bash(git diff:*)",
+      "mcp__filesystem__edit_file",
+      "Bash(npx eslint \"src/app/[locale]/page.tsx\" --no-ignore)"
     ]
   }
 }

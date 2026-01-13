@@ -19,6 +19,7 @@ async def test_openrouter():
     # Simple test message
     result = await run_agent(
         user_message="Hello! Can you help me?",
+        user_id="test_user_123",  # Add required user_id parameter
         conversation_history=[]
     )
 

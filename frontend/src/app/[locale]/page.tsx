@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { FloatingParticles, ParticleTrails, HeadingParticles } from "@/components/ClientOnlyParticles";
 import {
   CheckCircleIcon,
   ShieldCheckIcon,
@@ -23,6 +24,7 @@ export default function Home() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -79,20 +81,7 @@ export default function Home() {
       </div>
 
       {/* Enhanced animated particles with premium movement patterns */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-gradient-to-r from-violet-400/40 to-fuchsia-400/40 rounded-full animate-float-enhanced"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
-            }}
-          />
-        ))}
-      </div>
+      <FloatingParticles />
 
       {/* Premium grid pattern overlay with animated lines */}
       <div
@@ -104,19 +93,7 @@ export default function Home() {
       />
 
       {/* Premium particle trails */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={`trail-${i}`}
-            className="absolute w-0.5 h-8 bg-gradient-to-t from-violet-500/30 to-transparent animate-streak"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${8 + Math.random() * 4}s`
-            }}
-          />
-        ))}
-      </div>
+      <ParticleTrails />
 
       {/* Floating geometric shapes for premium feel */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -202,18 +179,7 @@ export default function Home() {
               className={`absolute inset-0 opacity-20 -z-10 transition-all duration-1000 ${mounted ? "opacity-20" : "opacity-0"}`}
               style={{ transitionDelay: '900ms' }}
             >
-              {[...Array(12)].map((_, i) => (
-                <div
-                  key={`particle-${i}`}
-                  className="absolute w-0.5 h-0.5 bg-gradient-to-r from-violet-400 to-fuchsia-400 rounded-full animate-float-enhanced"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    animationDuration: `${2 + Math.random() * 3}s`
-                  }}
-                />
-              ))}
+              {mounted && <HeadingParticles />}
             </span>
           </h1>
 
@@ -252,8 +218,8 @@ export default function Home() {
                     style={{
                       left: `${10 + i * 10}%`,
                       top: `${10 + (i % 3) * 20}%`,
-                      '--tx': `${(Math.random() - 0.5) * 50}px`,
-                      '--ty': `${(Math.random() - 0.5) * 50}px`,
+                      '--tx': `${(i - 4) * 6.25}px`,
+                      '--ty': `${(i - 4) * 6.25}px`,
                       animation: `particle-burst 0.6s ease-out forwards`,
                       animationDelay: `${i * 0.1}s`
                     } as React.CSSProperties}
@@ -594,8 +560,8 @@ export default function Home() {
                           top: `${20 + (j % 3) * 20}%`,
                           animation: `particle-burst 0.8s ease-out forwards`,
                           animationDelay: `${j * 0.1}s`,
-                          '--tx': `${(Math.random() - 0.5) * 30}px`,
-                          '--ty': `${(Math.random() - 0.5) * 30}px`
+                          '--tx': `${(j - 4) * 3.75}px`,
+                          '--ty': `${(j - 4) * 3.75}px`
                         } as React.CSSProperties}
                       />
                     ))}
@@ -618,9 +584,9 @@ export default function Home() {
                       key={`trail-${j}`}
                       className="absolute w-0.5 h-0.5 bg-gradient-to-r from-violet-400/40 to-fuchsia-400/40 rounded-full animate-streak"
                       style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                        animationDuration: `${2 + Math.random() * 2}s`,
+                        left: `${(i * 16.67) % 100}%`,
+                        top: `${(i * 16.67 + 50) % 100}%`,
+                        animationDuration: `${2 + ((i * 0.333) % 2)}s`,
                         animationDelay: `${j * 0.3}s`
                       }}
                     />
@@ -696,8 +662,8 @@ export default function Home() {
                               top: `${25 + (j % 2) * 50}%`,
                               animation: `particle-burst 0.5s ease-out forwards`,
                               animationDelay: `${j * 0.1}s`,
-                              '--tx': `${(Math.random() - 0.5) * 20}px`,
-                              '--ty': `${(Math.random() - 0.5) * 20}px`
+                              '--tx': `${(j - 4) * 2.5}px`,
+                              '--ty': `${(j - 4) * 2.5}px`
                             } as React.CSSProperties}
                           />
                         ))}
@@ -728,10 +694,10 @@ export default function Home() {
                 key={`cta-float-${i}`}
                 className="absolute w-3 h-3 bg-gradient-to-r from-violet-400/40 to-fuchsia-400/40 rounded-full animate-float-enhanced"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  animationDuration: `${4 + Math.random() * 3}s`
+                  left: `${(i * 16.67) % 100}%`,
+                  top: `${(i * 16.67 + 50) % 100}%`,
+                  animationDelay: `${(i * 0.833) % 5}s`,
+                  animationDuration: `${4 + (i * 0.5) % 3}s`
                 }}
               />
             ))}
@@ -751,12 +717,12 @@ export default function Home() {
                   key={`burst-${i}`}
                   className="absolute w-1 h-1 bg-white/60 rounded-full"
                   style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
+                    left: `${(i * 16.67) % 100}%`,
+                    top: `${(i * 16.67 + 50) % 100}%`,
                     animation: `particle-burst 1s ease-out forwards`,
                     animationDelay: `${i * 0.1}s`,
-                    '--tx': `${(Math.random() - 0.5) * 100}px`,
-                    '--ty': `${(Math.random() - 0.5) * 100}px`
+                    '--tx': `${(i - 4) * 12.5}px`,
+                    '--ty': `${(i - 4) * 12.5}px`
                   } as React.CSSProperties}
                 />
               ))}
@@ -780,8 +746,8 @@ export default function Home() {
                         top: `${25 + (j % 2) * 50}%`,
                         animation: `particle-burst 0.8s ease-out forwards`,
                         animationDelay: `${j * 0.1}s`,
-                        '--tx': `${(Math.random() - 0.5) * 20}px`,
-                        '--ty': `${(Math.random() - 0.5) * 20}px`
+                        '--tx': `${(j - 4) * 2.5}px`,
+                        '--ty': `${(j - 4) * 2.5}px`
                       } as React.CSSProperties}
                     />
                   ))}
@@ -819,8 +785,8 @@ export default function Home() {
                         top: `${20 + (j % 3) * 20}%`,
                         animation: `particle-burst 0.6s ease-out forwards`,
                         animationDelay: `${j * 0.1}s`,
-                        '--tx': `${(Math.random() - 0.5) * 30}px`,
-                        '--ty': `${(Math.random() - 0.5) * 30}px`
+                        '--tx': `${(j - 4) * 3.75}px`,
+                        '--ty': `${(j - 4) * 3.75}px`
                       } as React.CSSProperties}
                     />
                   ))}
@@ -895,7 +861,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <p className="text-white/80 italic relative z-10">"{testimonial.quote}"</p>
+                <p className="text-white/80 italic relative z-10">&quot;{testimonial.quote}&quot;</p>
 
                 <div className="flex mt-4 relative z-10">
                   {[...Array(5)].map((_, star) => (

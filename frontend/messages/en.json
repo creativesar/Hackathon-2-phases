@@ -142,6 +142,7 @@
       "newConversation": "+ New Conversation",
       "rename": "Rename",
       "justNow": "Just now",
+      "yesterday": "Yesterday",
       "minutesAgo": "{minutes}m ago",
       "hoursAgo": "{hours}h ago",
       "daysAgo": "{days}d ago",

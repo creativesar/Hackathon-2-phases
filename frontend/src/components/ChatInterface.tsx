@@ -411,7 +411,7 @@ export default function ChatInterface() {
     return t("greeting.evening");
   };
 
-  // Handle message submission with streaming support
+  // Handle message submission with streaming support and advanced features
   const handleSendMessage = async () => {
     if (!canSubmit() || !user) return;
 
@@ -489,6 +489,11 @@ export default function ChatInterface() {
             // Refresh tasks and conversations
             await fetchTasks(user.id);
             await fetchConversations(user.id);
+
+            // Update presence to show user is active
+            setUsersOnline(prev => prev.map(u =>
+              u.id === user.id ? { ...u, last_seen: new Date().toISOString(), status: 'active' } : u
+            ));
           },
           // onError
           (error: Error) => {
@@ -568,6 +573,11 @@ export default function ChatInterface() {
 
         await fetchTasks(user.id);
         await fetchConversations(user.id);
+
+        // Update presence to show user is active
+        setUsersOnline(prev => prev.map(u =>
+          u.id === user.id ? { ...u, last_seen: new Date().toISOString(), status: 'active' } : u
+        ));
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : "Failed to send message";
 
@@ -850,40 +860,59 @@ export default function ChatInterface() {
 
           {/* Chat Area with premium styling */}
           <div className="flex-1 flex flex-col min-w-0" role="region" aria-label={t("chat.chatArea")}>
-            {/* Premium controls bar with analytics and settings */}
-            <div className="flex justify-end gap-2 mb-3 px-2">
-              <button
-                onClick={() => setShowAnalytics(true)}
-                className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white/70 hover:text-white transition-all duration-300 hover:scale-105 border border-white/10 hover:border-violet-500/30 shadow-sm hover:shadow-lg"
-                title={t("chat.analytics")}
-                aria-label={t("chat.analytics")}
-              >
-                <ChartBarIcon className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => setShowSettings(true)}
-                className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white/70 hover:text-white transition-all duration-300 hover:scale-105 border border-white/10 hover:border-violet-500/30 shadow-sm hover:shadow-lg"
-                title={t("chat.settings")}
-                aria-label={t("chat.settings")}
-              >
-                <Cog6ToothIcon className="h-4 w-4" />
-              </button>
-              <button
-                onClick={handleExportConversation}
-                className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white/70 hover:text-white transition-all duration-300 hover:scale-105 border border-white/10 hover:border-violet-500/30 shadow-sm hover:shadow-lg"
-                title={t("chat.export")}
-                aria-label={t("chat.export")}
-              >
-                <ArrowDownTrayIcon className="h-4 w-4" />
-              </button>
-              <button
-                onClick={handleClearMessages}
-                className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white/70 hover:text-white transition-all duration-300 hover:scale-105 border border-white/10 hover:border-red-500/30 shadow-sm hover:shadow-lg hover:bg-red-500/10"
-                title={t("chat.delete")}
-                aria-label={t("chat.delete")}
-              >
-                <TrashIcon className="h-4 w-4" />
-              </button>
+            {/* Premium controls bar with analytics, settings, and presence indicators */}
+            <div className="flex justify-between items-center mb-3 px-2">
+              {/* Presence indicators */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+                  <span className="text-xs text-white/60 font-medium">You</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 bg-violet-400 rounded-full animate-pulse" />
+                  <span className="text-xs text-white/60 font-medium">TaskFlowBot</span>
+                </div>
+                <div className="text-xs text-white/40">•</div>
+                <div className="text-xs text-white/60 font-medium">
+                  {messages.length} {messages.length === 1 ? t("chat.message") : t("chat.messages")}
+                </div>
+              </div>
+
+              {/* Control buttons */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowAnalytics(true)}
+                  className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white/70 hover:text-white transition-all duration-300 hover:scale-105 border border-white/10 hover:border-violet-500/30 shadow-sm hover:shadow-lg"
+                  title={t("chat.analytics")}
+                  aria-label={t("chat.analytics")}
+                >
+                  <ChartBarIcon className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => setShowSettings(true)}
+                  className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white/70 hover:text-white transition-all duration-300 hover:scale-105 border border-white/10 hover:border-violet-500/30 shadow-sm hover:shadow-lg"
+                  title={t("chat.settings")}
+                  aria-label={t("chat.settings")}
+                >
+                  <Cog6ToothIcon className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={handleExportConversation}
+                  className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white/70 hover:text-white transition-all duration-300 hover:scale-105 border border-white/10 hover:border-violet-500/30 shadow-sm hover:shadow-lg"
+                  title={t("chat.export")}
+                  aria-label={t("chat.export")}
+                >
+                  <ArrowDownTrayIcon className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={handleClearMessages}
+                  className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white/70 hover:text-white transition-all duration-300 hover:scale-105 border border-white/10 hover:border-red-500/30 shadow-sm hover:shadow-lg hover:bg-red-500/10"
+                  title={t("chat.delete")}
+                  aria-label={t("chat.delete")}
+                >
+                  <TrashIcon className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
             {/* Messages Area with premium styling and custom scrollbar */}
