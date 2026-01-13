@@ -490,9 +490,9 @@ export default function ChatInterface() {
             await fetchTasks(user.id);
             await fetchConversations(user.id);
 
-            // Update presence to show user is active
+            // Update presence to show user is online
             setUsersOnline(prev => prev.map(u =>
-              u.id === user.id ? { ...u, last_seen: new Date().toISOString(), status: 'active' } : u
+              u.id === user.id ? { ...u, last_seen: new Date().toISOString(), status: 'online' } : u
             ));
           },
           // onError
@@ -574,9 +574,9 @@ export default function ChatInterface() {
         await fetchTasks(user.id);
         await fetchConversations(user.id);
 
-        // Update presence to show user is active
+        // Update presence to show user is online
         setUsersOnline(prev => prev.map(u =>
-          u.id === user.id ? { ...u, last_seen: new Date().toISOString(), status: 'active' } : u
+          u.id === user.id ? { ...u, last_seen: new Date().toISOString(), status: 'online' } : u
         ));
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : "Failed to send message";
