@@ -270,5 +270,15 @@
       "title": "Need to start somewhere?",
       "subtitle": "Tasks is best for planning. Chat is best for speed."
     }
+  },
+  "SelectPage": {
+    "title": "Choose Your Workspace",
+    "subtitle": "Select how you'd like to manage your tasks and productivity",
+    "tasksTitle": "Tasks",
+    "tasksDescription": "Organize, plan, and track your daily tasks with beautiful UI. Create, edit, and manage your to-dos efficiently.",
+    "chatTitle": "Chat",
+    "chatDescription": "Talk to your AI assistant. Add tasks through natural conversation, get smart suggestions, and work faster.",
+    "selectOption": "Choose",
+    "bottomText": "💡 Tip: You can switch between Tasks and Chat anytime from the dashboard."
   }
 }
