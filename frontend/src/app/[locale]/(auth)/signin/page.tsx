@@ -48,7 +48,7 @@ export default function SignInPage() {
 
     try {
       await signIn({ email, password });
-      window.location.href = "/chooser";
+      window.location.href = "/tasks";
     } catch (err) {
       setError(err instanceof Error ? err.message : t("signInFailed"));
       setLoading(false);

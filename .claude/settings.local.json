@@ -177,7 +177,10 @@
       "WebFetch(domain:platform.openai.com)",
       "Bash(git diff:*)",
       "mcp__filesystem__edit_file",
-      "Bash(npx eslint \"src/app/[locale]/page.tsx\" --no-ignore)"
+      "Bash(npx eslint \"src/app/[locale]/page.tsx\" --no-ignore)",
+      "mcp__filesystem__search_files",
+      "mcp__filesystem__write_file",
+      "mcp__playwright__browser_navigate"
     ]
   }
 }

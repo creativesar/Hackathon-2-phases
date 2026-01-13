@@ -12,7 +12,7 @@ import {
 } from "./types";
 import { getAuthToken } from "./auth";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").replace(/\/$/, "");
 
 /**
  * API Client for making authenticated requests to the backend API.
@@ -47,7 +47,9 @@ class ApiClient {
       Object.assign(headers, options.headers);
     }
 
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+    const url = `${this.baseUrl}${endpoint}`;
+    console.log('API Request:', { url, method: options.method || 'GET' });
+    const response = await fetch(url, {
       ...options,
       headers,
     });
