@@ -12,7 +12,7 @@ import {
 } from "./types";
 import { getAuthToken } from "./auth";
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").replace(/\/$/, "");
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || "https://creativesar-taskflow.hf.space/").replace(/\/$/, "");
 
 /**
  * API Client for making authenticated requests to the backend API.
