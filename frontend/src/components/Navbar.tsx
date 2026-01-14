@@ -58,7 +58,7 @@ export default function Navbar() {
     setIsAuthenticatedUser(false);
     setUser(null);
     showToast(t("nav.logout") + " " + t("common.success"), "info");
-    router.push("/");
+    router.push("/signin");
     setIsMenuOpen(false);
   };
 

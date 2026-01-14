@@ -4,6 +4,12 @@ import { AuthTokens, SignInRequest, SignUpRequest } from "./types";
 
 const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000").replace(/\/$/, "");
 
+// Log configuration in development to help diagnose issues
+if (typeof window !== "undefined" && process.env.NODE_ENV === 'development') {
+  console.log('[Auth] API URL configured:', API_URL);
+  console.log('[Auth] Environment:', process.env.NODE_ENV);
+}
+
 /**
  * Authentication module for managing user authentication with JWT tokens.
  * Uses Better Auth secret for token generation and validation.
