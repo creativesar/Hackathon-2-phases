@@ -64,7 +64,7 @@ export default function SignUpPage() {
 
     try {
       await signUp({ email, password, name: name || undefined });
-      window.location.href = "/tasks";
+      router.push("/tasks");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign up failed");
       setLoading(false);

@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/routing";
+import { isAuthenticated } from "@/lib/auth";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { FloatingParticles, ParticleTrails, HeadingParticles } from "@/components/ClientOnlyParticles";
 import {
@@ -19,14 +21,19 @@ import {
 import { CheckCircleIcon as CheckCircleSolid } from "@heroicons/react/24/solid";
 
 export default function Home() {
+  const router = useRouter();
   const t = useTranslations("HomePage");
   const [mounted, setMounted] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   useEffect(() => {
+    if (isAuthenticated()) {
+      router.push("/tasks");
+      return;
+    }
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
-  }, []);
+  }, [router]);
 
   const features = [
     {
