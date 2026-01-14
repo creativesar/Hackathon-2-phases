@@ -54,6 +54,9 @@ export default function Navbar() {
 
   const handleLogout = () => {
     signOut();
+    // Immediately update state to reflect logged-out status
+    setIsAuthenticatedUser(false);
+    setUser(null);
     showToast(t("nav.logout") + " " + t("common.success"), "info");
     router.push("/");
     setIsMenuOpen(false);
@@ -68,11 +71,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled
           ? "bg-[#0a0a0f]/90 backdrop-blur-xl border-b border-white/10"
           : "bg-transparent border-b border-transparent"
-      }`}
+        }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
@@ -98,11 +100,10 @@ export default function Navbar() {
               <>
                 <Link
                   href="/tasks"
-                  className={`group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    isActive("/tasks")
+                  className={`group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${isActive("/tasks")
                       ? "text-white bg-white/[0.08]"
                       : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                  }`}
+                    }`}
                   onClick={handleNavClick}
                 >
                   <ClipboardDocumentListIcon className="h-4 w-4" />
@@ -110,11 +111,10 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href="/chat"
-                  className={`group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    isActive("/chat")
+                  className={`group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${isActive("/chat")
                       ? "text-white bg-white/[0.08]"
                       : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                  }`}
+                    }`}
                   onClick={handleNavClick}
                 >
                   <ChatBubbleLeftRightIcon className="h-4 w-4" />
@@ -125,11 +125,10 @@ export default function Navbar() {
               <>
                 <Link
                   href="/"
-                  className={`group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    isActive("/")
+                  className={`group inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${isActive("/")
                       ? "text-white bg-white/[0.08]"
                       : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                  }`}
+                    }`}
                   onClick={handleNavClick}
                 >
                   <CheckCircleIcon className="h-4 w-4" />
@@ -198,9 +197,8 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-            isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
+          className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            }`}
         >
           <div className="py-4 border-t border-white/10 bg-[#0a0a0f]/90 backdrop-blur-xl rounded-b-xl">
             <div className="flex flex-col gap-2">
@@ -208,11 +206,10 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/tasks"
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      isActive("/tasks")
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${isActive("/tasks")
                         ? "text-white bg-white/[0.08]"
                         : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                    }`}
+                      }`}
                     onClick={handleNavClick}
                   >
                     <ClipboardDocumentListIcon className="h-5 w-5" />
@@ -220,11 +217,10 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/chat"
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      isActive("/chat")
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${isActive("/chat")
                         ? "text-white bg-white/[0.08]"
                         : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                    }`}
+                      }`}
                     onClick={handleNavClick}
                   >
                     <ChatBubbleLeftRightIcon className="h-5 w-5" />
@@ -248,11 +244,10 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/"
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      isActive("/")
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${isActive("/")
                         ? "text-white bg-white/[0.08]"
                         : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                    }`}
+                      }`}
                     onClick={handleNavClick}
                   >
                     <CheckCircleIcon className="h-5 w-5" />
@@ -260,11 +255,10 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/signin"
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      isActive("/signin")
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${isActive("/signin")
                         ? "text-white bg-white/[0.08]"
                         : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                    }`}
+                      }`}
                     onClick={handleNavClick}
                   >
                     <UserIcon className="h-5 w-5" />
@@ -272,11 +266,10 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/signup"
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      isActive("/signup")
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${isActive("/signup")
                         ? "text-white bg-white/[0.08]"
                         : "text-white/60 hover:text-white hover:bg-white/[0.05]"
-                    }`}
+                      }`}
                     onClick={handleNavClick}
                   >
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
