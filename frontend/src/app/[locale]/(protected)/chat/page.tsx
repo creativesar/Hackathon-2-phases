@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { isAuthenticated, getAuthUser } from "@/lib/auth";
 import ChatInterface from "@/components/ChatInterface";
-import LoadingSkeleton from "@/components/chat/LoadingSkeleton";
 
 /**
  * Protected Chat Page
@@ -34,7 +33,11 @@ export default function ChatPage() {
   }, [router]);
 
   if (loading || !isAuth) {
-    return <LoadingSkeleton />;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#0a0a0f]">
+        <div className="text-white/60">Loading...</div>
+      </div>
+    );
   }
 
   return <ChatInterface />;

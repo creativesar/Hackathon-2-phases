@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Task } from "@/lib/types";
 import { useTranslations } from "next-intl";
-import { useTranslateTask } from "@/hooks/useTranslateTask";
 import {
   PencilIcon,
   TrashIcon,
@@ -25,7 +24,6 @@ interface TaskCardProps {
 
 export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCardProps) {
   const t = useTranslations("HomePage");
-  const { title, description, isTranslating } = useTranslateTask(task);
   const [isChecking, setIsChecking] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -214,10 +212,9 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
                     ? "text-white/40 line-through decoration-2 decoration-emerald-500/50"
                     : "text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:via-violet-200 group-hover:to-white"
                   }
-                  ${isTranslating ? "opacity-50" : ""}
                 `}
               >
-                {title}
+                {task.title}
               </h3>
               {/* Text shimmer on hover */}
               {isHovered && !task.completed && (
@@ -250,7 +247,7 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
         </div>
 
         {/* Description */}
-        {description && (
+        {task.description && (
           <p
             className={`
               text-sm leading-relaxed mb-4 pl-9
@@ -259,10 +256,9 @@ export function TaskCard({ task, onToggle, onEdit, onDelete, index = 0 }: TaskCa
                 ? "text-white/30 line-clamp-1"
                 : "text-white/50 line-clamp-2"
               }
-              ${isTranslating ? "opacity-50" : ""}
             `}
           >
-            {description}
+            {task.description}
           </p>
         )}
 

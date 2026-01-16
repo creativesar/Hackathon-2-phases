@@ -3,7 +3,6 @@ import { Inter, Sora, JetBrains_Mono } from "next/font/google";
 import { ToastProvider } from "@/components/Toast";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 const inter = Inter({
@@ -81,12 +80,7 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <ToastProvider>
-            <div className="min-h-screen bg-[#0a0a0f] relative overflow-hidden">
-              <Navbar />
-              <div className="pt-16">
-                {children}
-              </div>
-            </div>
+            {children}
           </ToastProvider>
         </NextIntlClientProvider>
       </body>

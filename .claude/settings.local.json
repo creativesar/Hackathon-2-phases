@@ -180,7 +180,24 @@
       "Bash(npx eslint \"src/app/[locale]/page.tsx\" --no-ignore)",
       "mcp__filesystem__search_files",
       "mcp__filesystem__write_file",
-      "mcp__playwright__browser_navigate"
+      "mcp__playwright__browser_navigate",
+      "Bash(.)",
+      "Bash(npx next dev --port 8001)",
+      "Bash(npx next dev --port 8000)",
+      "Bash(npx next dev --port 3000)",
+      "Bash(npx shadcn@latest init)",
+      "Bash(npx @shadcn/ui@latest add:*)",
+      "Bash(C:UsersCodersDesktopHackathon-2-phasesbackend.python-version)",
+      "mcp__ide__getDiagnostics",
+      "mcp__filesystem__list_directory_with_sizes",
+      "Bash(test:*)",
+      "WebFetch(domain:openai.com)",
+      "Bash(grep -r \"Starter\\\\|Professional\\\\|Enterprise\\\\|price\\\\|pricing\" src/app/[locale]/page.tsx)",
+      "Bash(powershell -Command \"gc src\\\\app\\\\[locale]\\\\page.tsx | select -first 1050 | select -last 60\")",
+      "Bash(del \"C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\frontend\\\\src\\\\app\\\\[locale]\\\\features\\\\page.tsx\")",
+      "Bash(npx next dev)",
+      "Bash(npx next clean)",
+      "Bash(powershell -Command \"Select-String -Path ''C:\\\\Users\\\\Coders\\\\Desktop\\\\Hackathon-2-phases\\\\frontend\\\\messages\\\\en.json'' -Pattern ''HomePage''\")"
     ]
   }
 }

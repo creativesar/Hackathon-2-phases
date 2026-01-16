@@ -1,15 +1,15 @@
 """
-Standard OpenAI SDK with Function Calling + OpenRouter Support
-Phase III: AI Chatbot - Agent with ChatKit
+OpenAI Agents SDK Integration with OpenRouter Support
+Phase III: AI Chatbot - Agent Definition and Runner
 
-This module implements TodoBot using standard OpenAI SDK.
+This module defines the TodoBot agent using OpenAI Agents SDK.
+The agent helps users manage their tasks through natural language.
 Supports both OpenAI and OpenRouter APIs.
 """
 
-from openai import OpenAI
 from typing import List, Dict, Any, Optional
+from agents import Agent, Runner, function_tool
 import os
-import json
 
 # Import MCP tool implementations
 from mcp_server import (
@@ -20,352 +20,229 @@ from mcp_server import (
     update_task as mcp_update_task
 )
 
-
-class TodoAgent:
+# Configure OpenAI SDK environment variables for OpenRouter support
+# The Agents SDK will automatically use these environment variables
+def configure_openai_environment():
     """
-    AI agent for task management using OpenAI Chat Completions API.
+    Configure OpenAI SDK environment variables.
+    Supports both OpenAI and OpenRouter APIs.
 
-    Features:
-    - Natural language understanding
-    - Function calling for CRUD operations
-    - Stateless design
-    - Conversation history support
-    - OpenRouter support
+    If OPENROUTER_API_KEY is set, configures the SDK to use OpenRouter.
+    Otherwise, uses standard OpenAI configuration.
     """
-
-    def __init__(self, api_key: str, base_url: Optional[str] = None, model: str = "gpt-4o"):
-        """
-        Initialize TodoAgent with API configuration.
-
-        Args:
-            api_key: OpenAI or OpenRouter API key
-            base_url: Optional base URL (for OpenRouter)
-            model: Model name
-        """
-        if base_url:
-            self.client = OpenAI(api_key=api_key, base_url=base_url)
-        else:
-            self.client = OpenAI(api_key=api_key)
-
-        self.model = model
-        self.tools = self._define_tools()
-        self.tool_functions = self._map_tool_functions()
-
-    def _define_tools(self) -> List[Dict[str, Any]]:
-        """Define function tools in OpenAI format."""
-        return [
-            {
-                "type": "function",
-                "function": {
-                    "name": "add_task",
-                    "description": "Create a new todo task",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "user_id": {
-                                "type": "string",
-                                "description": "User ID who owns this task"
-                            },
-                            "title": {
-                                "type": "string",
-                                "description": "Task title"
-                            },
-                            "description": {
-                                "type": "string",
-                                "description": "Optional task description"
-                            }
-                        },
-                        "required": ["user_id", "title"]
-                    }
-                }
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "list_tasks",
-                    "description": "List all tasks for a user",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "user_id": {
-                                "type": "string",
-                                "description": "User ID"
-                            },
-                            "status": {
-                                "type": "string",
-                                "enum": ["all", "pending", "completed"],
-                                "description": "Filter by status"
-                            }
-                        },
-                        "required": ["user_id"]
-                    }
-                }
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "complete_task",
-                    "description": "Mark a task as complete",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "user_id": {
-                                "type": "string",
-                                "description": "User ID"
-                            },
-                            "task_id": {
-                                "type": "integer",
-                                "description": "Task ID to complete"
-                            }
-                        },
-                        "required": ["user_id", "task_id"]
-                    }
-                }
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "delete_task",
-                    "description": "Delete a task",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "user_id": {
-                                "type": "string",
-                                "description": "User ID"
-                            },
-                            "task_id": {
-                                "type": "integer",
-                                "description": "Task ID to delete"
-                            }
-                        },
-                        "required": ["user_id", "task_id"]
-                    }
-                }
-            },
-            {
-                "type": "function",
-                "function": {
-                    "name": "update_task",
-                    "description": "Update a task title or description",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "user_id": {
-                                "type": "string",
-                                "description": "User ID"
-                            },
-                            "task_id": {
-                                "type": "integer",
-                                "description": "Task ID"
-                            },
-                            "title": {
-                                "type": "string",
-                                "description": "New title"
-                            },
-                            "description": {
-                                "type": "string",
-                                "description": "New description"
-                            }
-                        },
-                        "required": ["user_id", "task_id"]
-                    }
-                }
-            }
-        ]
-
-    def _map_tool_functions(self) -> Dict[str, Any]:
-        """Map tool names to implementation functions."""
-        return {
-            "add_task": mcp_add_task,
-            "list_tasks": mcp_list_tasks,
-            "complete_task": mcp_complete_task,
-            "delete_task": mcp_delete_task,
-            "update_task": mcp_update_task
-        }
-
-    async def execute_tool(self, function_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a tool function."""
-        if function_name not in self.tool_functions:
-            return {"error": f"Unknown function: {function_name}"}
-
-        try:
-            func = self.tool_functions[function_name]
-            result = await func(**arguments)
-            return result
-        except Exception as e:
-            return {"error": str(e)}
-
-    async def chat(
-        self,
-        user_id: str,
-        message: str,
-        conversation_history: List[Dict[str, str]] = []
-    ) -> Dict[str, Any]:
-        """
-        Process chat message and return response.
-
-        Args:
-            user_id: User identifier (auto-injected into tool calls)
-            message: User's message
-            conversation_history: Previous messages
-
-        Returns:
-            Dictionary with response, tool_calls, tool_results
-        """
-        # Build system message
-        system_message = {
-            "role": "system",
-            "content": """You are TaskFlowBot, a helpful task management assistant.
-
-IMPORTANT: You do NOT need to ask for user_id - it's automatically provided.
-
-Natural language commands:
-- "Add task to buy groceries" → use add_task
-- "Show me all my tasks" → use list_tasks
-- "What's pending?" → use list_tasks with status="pending"
-- "Mark task 3 as complete" → use complete_task
-- "Delete task 2" → use delete_task
-- "Change task 1 to Call mom" → use update_task
-
-CRITICAL - Always include task IDs in responses:
-- When adding: "I've added Task #[ID]: [title]"
-- When listing: "Task #[ID]: [title]"
-- When completing/deleting/updating: "Task #[ID] has been [action]"
-
-Always confirm actions with friendly responses."""
-        }
-
-        # Build messages
-        messages = [system_message]
-        messages.extend(conversation_history)
-        messages.append({"role": "user", "content": message})
-
-        # Call OpenAI/OpenRouter
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            tools=self.tools,
-            tool_choice="auto"
-        )
-
-        assistant_message = response.choices[0].message
-        tool_calls = assistant_message.tool_calls
-        tool_results = []
-        tool_names = []
-
-        if tool_calls:
-            # Execute each tool call
-            for tool_call in tool_calls:
-                function_name = tool_call.function.name
-                function_args = json.loads(tool_call.function.arguments)
-
-                # Add user_id to arguments
-                function_args["user_id"] = user_id
-
-                # Execute tool
-                result = await self.execute_tool(function_name, function_args)
-
-                tool_names.append(function_name)
-                tool_results.append({
-                    "tool_call_id": tool_call.id,
-                    "role": "tool",
-                    "content": json.dumps(result)
-                })
-
-                # Add to messages for final response
-                messages.append({
-                    "role": "assistant",
-                    "content": assistant_message.content or "",
-                    "tool_calls": [{
-                        "id": tool_call.id,
-                        "type": "function",
-                        "function": {
-                            "name": tool_call.function.name,
-                            "arguments": tool_call.function.arguments
-                        }
-                    }]
-                })
-
-                messages.append({
-                    "tool_call_id": tool_call.id,
-                    "role": "tool",
-                    "content": json.dumps(result)
-                })
-
-            # Get final response
-            final_response = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages
-            )
-
-            return {
-                "response": final_response.choices[0].message.content,
-                "tool_calls": tool_names,
-                "tool_results": tool_results
-            }
-
-        # No tool calls
-        return {
-            "response": assistant_message.content,
-            "tool_calls": [],
-            "tool_results": []
-        }
-
-
-# Initialize agent
-def get_agent() -> TodoAgent:
-    """Get or create TodoAgent instance with OpenRouter support."""
     openrouter_key = os.getenv("OPENROUTER_API_KEY")
-    openai_key = os.getenv("OPENAI_API_KEY")
+    openrouter_base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
 
     if openrouter_key:
-        # Use OpenRouter
-        base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
-        model = os.getenv("AI_MODEL", "openai/gpt-4o-mini")
+        # Configure for OpenRouter
+        os.environ["OPENAI_API_KEY"] = openrouter_key
+        os.environ["OPENAI_BASE_URL"] = openrouter_base_url
 
-        print(f"[INFO] Using OpenRouter API")
-        print(f"[INFO] Model: {model}")
-
-        return TodoAgent(api_key=openrouter_key, base_url=base_url, model=model)
-
-    elif openai_key:
-        # Use OpenAI
-        model = os.getenv("AI_MODEL", "gpt-4o")
-
-        print(f"[INFO] Using OpenAI API")
-        print(f"[INFO] Model: {model}")
-
-        return TodoAgent(api_key=openai_key, model=model)
-
+        # Set max_tokens to stay within OpenRouter free tier (4000 tokens max)
+        # This environment variable is read by the OpenAI SDK
+        max_tokens = os.getenv("MAX_TOKENS", "1000")
+        os.environ["OPENAI_MAX_COMPLETION_TOKENS"] = max_tokens
     else:
-        raise ValueError("Either OPENROUTER_API_KEY or OPENAI_API_KEY must be set")
+        # Use standard OpenAI configuration
+        openai_key = os.getenv("OPENAI_API_KEY")
+        if not openai_key:
+            raise ValueError("Either OPENROUTER_API_KEY or OPENAI_API_KEY must be set")
+
+# Configure environment before creating agent
+configure_openai_environment()
 
 
-# Wrapper function for compatibility with existing chat.py
-async def run_agent(user_message: str, user_id: str, conversation_history: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
+# Global variable to store current user_id context
+_current_user_id: Optional[str] = None
+
+def set_user_context(user_id: str):
+    """Set the current user context for tool execution."""
+    global _current_user_id
+    _current_user_id = user_id
+
+def get_user_context() -> str:
+    """Get the current user context."""
+    global _current_user_id
+    if _current_user_id is None:
+        raise ValueError("User context not set")
+    return _current_user_id
+
+
+# Define function tools using @function_tool decorator
+# These tools do NOT require user_id - it's automatically injected from context
+@function_tool
+async def add_task(title: str, description: Optional[str] = None) -> Dict[str, Any]:
     """
-    Run agent - compatible with existing chat.py.
+    Create a new task for the user.
 
     Args:
-        user_message: User's message
-        user_id: User identifier
-        conversation_history: Previous messages
+        title: Task title (1-200 characters)
+        description: Optional task description (0-1000 characters)
 
     Returns:
-        Dictionary with response, tool_calls, error
+        Dictionary with task_id, status, and title
+    """
+    user_id = get_user_context()
+    return await mcp_add_task(user_id, title, description)
+
+
+@function_tool
+async def list_tasks(status: str = "all") -> List[Dict[str, Any]]:
+    """
+    Retrieve tasks from the user's list.
+
+    Args:
+        status: Filter by status ("all", "pending", "completed")
+
+    Returns:
+        List of task dictionaries
+    """
+    user_id = get_user_context()
+    return await mcp_list_tasks(user_id, status)
+
+
+@function_tool
+async def complete_task(task_id: int) -> Dict[str, Any]:
+    """
+    Mark a task as complete or toggle completion status.
+
+    Args:
+        task_id: The ID of the task to complete
+
+    Returns:
+        Dictionary with task_id, status, and title
+    """
+    user_id = get_user_context()
+    return await mcp_complete_task(user_id, task_id)
+
+
+@function_tool
+async def delete_task(task_id: int) -> Dict[str, Any]:
+    """
+    Remove a task from the list.
+
+    Args:
+        task_id: The ID of the task to delete
+
+    Returns:
+        Dictionary with task_id, status, and title
+    """
+    user_id = get_user_context()
+    return await mcp_delete_task(user_id, task_id)
+
+
+@function_tool
+async def update_task(
+    task_id: int,
+    title: Optional[str] = None,
+    description: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Modify task title or description.
+
+    Args:
+        task_id: The ID of the task to update
+        title: New task title (1-200 characters)
+        description: New task description (0-1000 characters)
+
+    Returns:
+        Dictionary with task_id, status, and title
+    """
+    user_id = get_user_context()
+    return await mcp_update_task(user_id, task_id, title, description)
+
+
+def get_agent_instructions() -> str:
+    """
+    Returns the agent's instruction set.
+
+    The agent is designed to:
+    - Understand natural language task management commands
+    - Use MCP tools to perform CRUD operations on tasks
+    - Provide friendly, helpful responses
+    - Handle errors gracefully
+    - Always include task IDs in responses
+    """
+    return """You are TaskFlowBot, a helpful task management assistant. You help users manage their tasks through natural language.
+
+IMPORTANT: You do NOT need to ask for or provide user_id. The system automatically handles user authentication.
+
+Use the available tools to perform actions:
+- When user wants to add/remember something, use add_task tool with just title and description
+- When user asks to see/show/list tasks, use list_tasks tool (optionally with status filter)
+- When user says done/complete/finished, use complete_task tool with the task_id
+- When user says delete/remove/cancel, use delete_task tool with the task_id
+- When user says change/update/rename, use update_task tool with task_id and new values
+
+CRITICAL - Always include task IDs in your responses:
+- When adding a task, say "I've added Task #[ID]: [title]"
+- When listing tasks, format each as "Task #[ID]: [title]"
+- When completing/deleting/updating, say "Task #[ID] has been [action]"
+- Remind users they can reference tasks by ID (e.g., "To delete it, say 'delete task 5'")
+
+Always confirm actions with a friendly response that includes the task ID.
+Handle errors gracefully and help user rephrase if needed.
+Be concise but helpful in your responses."""
+
+
+# Get model name from environment or use default
+MODEL_NAME = os.getenv("AI_MODEL", "gpt-4o")  # OpenRouter supports gpt-4o
+
+# Get max tokens from environment or use default (reduced for OpenRouter credit limits)
+# OpenRouter free tier allows up to 4000 tokens
+MAX_TOKENS = int(os.getenv("MAX_TOKENS", "1000"))  # Reduced to stay within free tier
+
+# Create the TodoBot agent with all tools (T-311)
+# OpenRouter support configured via environment variables above
+# Token limits are controlled via OPENAI_MAX_COMPLETION_TOKENS environment variable
+todobot_agent = Agent(
+    name="TodoBot",
+    instructions=get_agent_instructions(),
+    model=MODEL_NAME,
+    tools=[add_task, list_tasks, complete_task, delete_task, update_task]
+)
+
+
+# Agent Runner implementation (T-312)
+async def run_agent(user_message: str, user_id: str, conversation_history: Optional[List[Dict[str, str]]] = None) -> Dict[str, Any]:
+    """
+    Run the TodoBot agent with a user message and optional conversation history.
+
+    Args:
+        user_message: The user's input message
+        user_id: The authenticated user's ID (automatically injected into tool calls via context)
+        conversation_history: Optional list of previous messages in format [{"role": "user"|"assistant", "content": "..."}]
+
+    Returns:
+        Dictionary containing:
+        - response: The agent's text response
+        - tool_calls: List of tool calls made (if any)
+        - error: Error message if execution failed
+
+    Example:
+        result = await run_agent("Add a task to buy groceries", "user123")
+        print(result["response"])
     """
     try:
-        agent = get_agent()
-        result = await agent.chat(
-            user_id=user_id,
-            message=user_message,
-            conversation_history=conversation_history or []
+        # Set user context for tool execution
+        set_user_context(user_id)
+
+        # Build messages array
+        messages = conversation_history or []
+        messages.append({"role": "user", "content": user_message})
+
+        # Run the agent
+        # Note: OpenAI Agents SDK doesn't support max_tokens parameter in Runner.run()
+        # Token limits are controlled by the model configuration
+        result = await Runner.run(
+            todobot_agent,
+            messages
         )
 
+        # Extract response and tool calls
         return {
-            "response": result["response"],
-            "tool_calls": result["tool_calls"],
+            "response": result.final_output,
+            "tool_calls": getattr(result, "tool_calls", []),
             "error": None
         }
 
@@ -377,18 +254,22 @@ async def run_agent(user_message: str, user_id: str, conversation_history: Optio
         }
 
 
-# Test
+# Verify imports work correctly
 if __name__ == "__main__":
-    print("[OK] Standard OpenAI SDK imported successfully")
+    print("[OK] OpenAI Agents SDK imported successfully")
 
-    try:
-        agent = get_agent()
-        print(f"[OK] TodoAgent created with {len(agent.tools)} tools")
-        print(f"[OK] Model: {agent.model}")
-        print("[OK] Function tools registered:")
-        for tool in agent.tools:
-            print(f"     - {tool['function']['name']}")
-        print("\n[OK] TodoAgent ready for chat API integration")
-    except ValueError as e:
-        print(f"[WARNING] {e}")
-        print("[INFO] Set OPENROUTER_API_KEY or OPENAI_API_KEY")
+    # Check which API is being used
+    if os.getenv("OPENROUTER_API_KEY"):
+        print("[OK] Using OpenRouter API")
+        print(f"[OK] Base URL: {os.getenv('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1')}")
+    else:
+        print("[OK] Using OpenAI API")
+
+    print(f"[OK] Agent '{todobot_agent.name}' created with {len(todobot_agent.tools)} tools")
+    print(f"[OK] Agent model: {todobot_agent.model}")
+    print(f"[OK] Agent instructions: {len(get_agent_instructions())} characters")
+    print("\n[OK] Function tools registered:")
+    for tool in todobot_agent.tools:
+        print(f"     - {tool.name}")
+    print("\n[OK] Agent Runner implemented")
+    print("\nTodoBot agent is ready for chat API integration.")

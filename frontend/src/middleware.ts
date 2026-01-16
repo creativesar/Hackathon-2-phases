@@ -1,9 +1,13 @@
 import createMiddleware from 'next-intl/middleware';
-import {routing} from './i18n/routing';
+import { routing } from './i18n/routing';
 
 export default createMiddleware(routing);
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/(ur|en)/:path*', '/((?!api|_next|_static|_vercel|[\\w-]+\\.\\w+).*)']
+  // Skip all paths that should not be internationalized. This example skips the
+  // folders "api", "_next", "_vercel" and all files with an extension (image files)
+  matcher: [
+    '/((?!api|_next|_vercel|.*\\..*).*)',
+    '/',
+  ]
 };

@@ -19,7 +19,6 @@ async def test_mcp_tools():
     print("[TEST 1] Adding a task...")
     result = await run_agent(
         user_message="Add a task: Test OpenRouter integration",
-        user_id="test_user_123",  # Add required user_id parameter
         conversation_history=[]
     )
 
@@ -38,7 +37,6 @@ async def test_mcp_tools():
     print("[TEST 2] Listing tasks...")
     result = await run_agent(
         user_message="Show me my tasks",
-        user_id="test_user_123",  # Add required user_id parameter
         conversation_history=[]
     )
 

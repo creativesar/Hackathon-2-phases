@@ -5,7 +5,7 @@ import { useRouter } from "@/i18n/routing";
 import { signIn } from "@/lib/auth";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import {
   EnvelopeIcon,
   LockClosedIcon,
@@ -48,7 +48,7 @@ export default function SignInPage() {
 
     try {
       await signIn({ email, password });
-      router.push("/tasks");
+      window.location.href = "/tasks";
     } catch (err) {
       setError(err instanceof Error ? err.message : t("signInFailed"));
       setLoading(false);

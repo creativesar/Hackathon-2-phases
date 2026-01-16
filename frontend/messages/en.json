@@ -71,32 +71,297 @@
       "failedDelete": "Failed to delete task",
       "filterTasks": "Filter Tasks"
     },
-    "stats": {
-      "features": "Features",
-      "secure": "Secure",
-      "response": "Response"
+    "landing": {
+      "trust": {
+        "security": "Bank-level security",
+        "speed": "Lightning fast",
+        "mobile": "Mobile ready"
+      },
+      "features": {
+        "title": "Powerful Features for",
+        "subtitle": "Manage your tasks efficiently with our intuitive interface and AI-powered chat assistant",
+        "taskManagement": "Task Management",
+        "taskManagementDesc": "Create, organize, and track your daily tasks with ease.",
+        "taskFeatures": {
+          "create": "Create tasks",
+          "complete": "Mark complete",
+          "filter": "Filter & search",
+          "sync": "Sync across devices"
+        },
+        "chat": {
+          "title": "AI Chat Assistant",
+          "subtitle": "Manage your tasks using natural language with our AI-powered chatbot.",
+          "features": {
+            "natural": "Natural language",
+            "updateById": "Update by ID",
+            "realtime": "Real-time view",
+            "ai": "AI powered"
+          }
+        }
+      }
     },
-    "features": {
-      "title": "Everything you need to",
-      "subtitle": "stay productive",
-      "desc": "Built for speed, security, and exceptional user experience."
+    "workflow": {
+      "steps": {
+        "signup": {
+          "title": "Sign Up",
+          "description": "Create your account in seconds with our secure authentication system"
+        },
+        "addTasks": {
+          "title": "Add Tasks",
+          "description": "Create tasks using our intuitive interface or AI-powered chat assistant"
+        },
+        "organize": {
+          "title": "Get Organized",
+          "description": "Track, manage, and complete tasks to boost your productivity"
+        }
+      }
+    },
+    "testimonials": {
+      "roles": {
+        "productManager": "Product Manager",
+        "developer": "Developer",
+        "creativeDirector": "Creative Director"
+      },
+      "content": {
+        "sarah": "TaskFlow has transformed our team's productivity. The AI chat feature saves us hours weekly and the intuitive interface makes task management effortless.",
+        "michael": "Best task manager I've used. Clean interface with powerful features that actually make sense. Integration with our tools was seamless.",
+        "emma": "Perfect for creative professionals like myself. The flexible workflows adapt to my unique project needs, making complex management simple."
+      }
+    },
+    "faq": {
+      "questions": {
+        "security": "How secure is my data?",
+        "collaboration": "Can I collaborate with my team?",
+        "freeTrial": "Do you offer a free trial?",
+        "aiChat": "How does the AI chat feature work?",
+        "cancel": "Can I cancel anytime?",
+        "integrations": "What integrations do you support?"
+      },
+      "answers": {
+        "security": "Industry-standard encryption protects your data in transit and at rest.",
+        "collaboration": "Yes! Professional plans include team features for sharing and working together.",
+        "freeTrial": "Yes! 14-day free trial on our Professional plan, no credit card required.",
+        "aiChat": "Natural language commands to create, update, and manage tasks.",
+        "cancel": "Yes, cancel your subscription at any time with no long-term contracts.",
+        "integrations": "Integrates with popular tools like Slack, Google Calendar, Trello, and more."
+      }
+    },
+    "newsletter": {
+      "title": "Join Our Newsletter",
+      "subtitle": "Get exclusive productivity insights, feature announcements, and tips directly in your inbox. Join thousands of professionals staying ahead.",
+      "summary": "Get curated insights delivered weekly",
+      "description": "Get exclusive productivity insights, feature announcements, and tips directly in your inbox. Join thousands of professionals staying ahead.",
+      "placeholder": {
+        "email": "Your email address",
+        "name": "Your name"
+      },
+      "button": "Subscribe",
+      "disclaimer": "Join 10,000+ subscribers • Unsubscribe anytime",
+      "weeklyTips": "Weekly Productivity Tips"
+    },
+    "extras": {
+      "workflow": {
+        "title": "Simple 3-Step Process",
+        "subtitle": "Get started with TaskFlow in just a few minutes"
+      },
+      "testimonials": {
+        "trustedBy": "Trusted by Top Teams Worldwide",
+        "trustedByAlt": "Trusted by Top Professionals",
+        "joinUsers": "Join thousands of satisfied users who transformed their productivity",
+        "joinProfessionals": "Join thousands of professionals who streamline their workflow with TaskFlow."
+      },
+      "newsletter": {
+        "workflowAdvice": "Actionable advice to boost your workflow",
+        "contentNote": "Only valuable content, unsubscribe anytime"
+      }
     },
     "feature": {
       "taskManagement": "Task Management",
       "taskManagementDesc": "Organize and track your daily tasks with ease.",
+      "aiAssistant": "AI Assistant",
+      "aiAssistantDesc": "Natural language task management with smart AI suggestions.",
       "secureAuth": "Secure Auth",
       "secureAuthDesc": "Industrial-grade security for your personal data.",
       "responsive": "Responsive",
       "responsiveDesc": "Works perfectly on mobile, tablet, and desktop.",
       "multiUser": "Multi-User",
       "multiUserDesc": "Separate space for every user with data isolation.",
+      "analytics": "Analytics",
+      "analyticsDesc": "Track your productivity with insightful metrics and trends.",
+      "realTimeSync": "Real-Time Sync",
+      "realTimeSyncDesc": "Stay updated across all your devices with instant synchronization.",
       "fast": "Lightning Fast",
-      "fastDesc": "Optimized performance for a smooth experience."
+      "fastDesc": "Optimized performance for a smooth experience.",
+      "explore": "Explore"
+    },
+    "features": {
+      "title": "Everything you need to",
+      "subtitle": "stay productive",
+      "desc": "Built for speed, security, and exceptional user experience.",
+      "preview": {
+        "title": "Feature Previews",
+        "description": "First access to new tools and capabilities"
+      }
+    },
+    "changelog": {
+      "title": "Product Changelog",
+      "subtitle": "Stay updated with the latest features, improvements, and fixes",
+      "stats": {
+        "updates": "Updates",
+        "majorFeatures": "Major Features",
+        "improvements": "Improvements",
+        "bugFixes": "Bug Fixes"
+      },
+      "entries": {
+        "aiEnhancement": {
+          "title": "AI Assistant Enhancement",
+          "description": "Added natural language processing for task management with improved response accuracy."
+        },
+        "performance": {
+          "title": "Performance Optimization",
+          "description": "Improved app loading speed by 40% and reduced memory consumption."
+        },
+        "redesign": {
+          "title": "Major Redesign",
+          "description": "Complete UI overhaul with modern dark theme and enhanced animations."
+        },
+        "security": {
+          "title": "Security Update",
+          "description": "Enhanced authentication security with improved encryption protocols."
+        },
+        "mobile": {
+          "title": "Mobile Experience",
+          "description": "Redesigned mobile interface with improved touch interactions."
+        },
+        "multiuser": {
+          "title": "Multi-user Support",
+          "description": "Added support for multiple users with data isolation."
+        },
+        "analytics": {
+          "title": "Task Analytics",
+          "description": "Added productivity metrics and usage statistics dashboard."
+        },
+        "sync": {
+          "title": "Real-time Sync",
+          "description": "Implemented WebSocket connections for real-time updates across devices."
+        }
+      },
+      "types": {
+        "major": "Major",
+        "feature": "Feature",
+        "improvement": "Improvement",
+        "security": "Security",
+        "bug": "Bug Fix"
+      },
+      "cta": {
+        "heading": "Want to try the latest features?",
+        "description": "Join thousands of professionals who are already using TaskFlow to boost their productivity",
+        "startTrial": "Start Free Trial",
+        "backHome": "Back to Home"
+      },
+      "months": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+      }
     },
     "cta": {
-      "title": "Ready to boost your productivity?",
-      "desc": "Join thousands of users who are already managing their tasks with TaskFlow.",
-      "button": "Get Started Now"
+      "title": "Ready to Boost Your Productivity?",
+      "description": "Join thousands of users who are already managing their tasks with TaskFlow.",
+      "button": "Get Started Now",
+      "freeTrial": "Free 14-day trial • No credit card required",
+      "getStartedFree": "Get Started Free"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know about TaskFlow",
+      "questions": {
+        "security": "How secure is my data?",
+        "collaboration": "Can I collaborate with my team?",
+        "freeTrial": "Do you offer a free trial?",
+        "aiChat": "How does the AI chat feature work?",
+        "cancel": "Can I cancel anytime?",
+        "integrations": "What integrations do you support?"
+      },
+      "answers": {
+        "security": "Industry-standard encryption protects your data in transit and at rest.",
+        "collaboration": "Yes! Professional plans include team features for sharing and working together.",
+        "freeTrial": "Yes! 14-day free trial on our Professional plan, no credit card required.",
+        "aiChat": "Natural language commands to create, update, and manage tasks.",
+        "cancel": "Yes, cancel your subscription at any time with no long-term contracts.",
+        "integrations": "Integrates with popular tools like Slack, Google Calendar, Trello, and more."
+      }
+    },
+    "stats": {
+      "features": "Features",
+      "secure": "Secure",
+      "response": "Response",
+      "users": "50K+ Active Users",
+      "uptime": "99.9% Uptime",
+      "tasks": "2M+ Tasks Completed",
+      "support": "24/7 Support"
+    },
+    "newsletter": {
+      "title": "Join Our Newsletter",
+      "summary": "Get curated insights delivered weekly",
+      "description": "Get exclusive productivity insights, feature announcements, and tips directly in your inbox. Join thousands of professionals staying ahead.",
+      "sectionTitle": "Stay Ahead of the Curve",
+      "spamPolicy": "No Spam Policy",
+      "contentNote": "Only valuable content, unsubscribe anytime",
+      "placeholder": {
+        "email": "Your email address",
+        "name": "Your name"
+      },
+      "button": "Subscribe",
+      "disclaimer": "Join 10,000+ subscribers • Unsubscribe anytime",
+      "weeklyTips": "Weekly Productivity Tips"
+    },
+    "footer": {
+      "tagline": "Task management platform",
+      "description": "Advanced task management platform designed to boost productivity and streamline your workflow.",
+      "sections": {
+        "product": "Product",
+        "support": "Support",
+        "company": "Company"
+      },
+      "links": {
+        "product": {
+          "features": "Features",
+          "changelog": "Changelog",
+          "roadmap": "Roadmap",
+          "integrations": "Integrations"
+        },
+        "support": {
+          "docs": "Docs",
+          "contact": "Contact",
+          "status": "Status",
+          "community": "Community"
+        },
+        "company": {
+          "about": "About",
+          "blog": "Blog",
+          "careers": "Careers",
+          "press": "Press"
+        },
+        "legal": {
+          "privacy": "Privacy",
+          "terms": "Terms",
+          "security": "Security"
+        }
+      },
+      "cta": {
+        "button": "Get Started",
+        "copyright": "© 2025 TaskFlow. All rights reserved."
+      }
     },
     "chat": {
       "welcome": "Welcome to TaskFlowBot!",
@@ -111,102 +376,9 @@
       "sending": "Sending...",
       "pressEnter": "Press Enter to send",
       "poweredBy": "Powered by OpenAI GPT-4o",
-      "toolCalls": "Tool calls executed",
+      "toolCalls": "Tool Calls:",
       "args": "Args:",
-      "result": "Result:",
-      "newChat": "New Chat",
-      "conversations": "Conversations",
-      "searchConversations": "Search conversations...",
-      "noConversations": "No conversations yet",
-      "noConversationsFound": "No conversations found",
-      "deleteConversation": "Delete this conversation?",
-      "conversationDeleted": "Conversation deleted",
-      "failedToDelete": "Failed to delete conversation",
-      "conversationNotFound": "Conversation no longer exists",
-      "failedToLoad": "Failed to load conversation",
-      "thinking": "thinking...",
-      "stopGenerating": "Stop",
-      "voiceInput": "Voice Input",
-      "listening": "Listening...",
-      "recording": "Recording",
-      "clickMicForVoice": "Click mic for voice",
-      "voiceNotSupported": "Speech recognition is not supported in this browser",
-      "micPermissionDenied": "Microphone permission denied",
-      "shiftEnterNewLine": "Shift+Enter for new line",
-      "messages": "messages",
-      "yourTasks": "Your Tasks",
-      "loadingTasks": "Loading tasks...",
-      "noTasksYet": "No tasks yet",
-      "askChatbot": "Ask the chatbot to add one!",
-      "total": "Total",
-      "newConversation": "+ New Conversation",
-      "rename": "Rename",
-      "justNow": "Just now",
-      "yesterday": "Yesterday",
-      "minutesAgo": "{minutes}m ago",
-      "hoursAgo": "{hours}h ago",
-      "daysAgo": "{days}d ago",
-      "botName": "TaskFlowBot",
-      "copyMessage": "Copy message",
-      "regenerate": "Regenerate response",
-      "stopRecording": "Stop recording",
-      "analytics": "Analytics",
-      "totalMessages": "Total Messages",
-      "participants": "Participants",
-      "words": "Words",
-      "avgResponseTime": "Avg. Response Time",
-      "messageDistribution": "Message Distribution",
-      "avgMessageLength": "Average Message Length",
-      "wordsPerMsg": "words/msg",
-      "you": "You",
-      "assistant": "Assistant",
-      "settings": "Settings",
-      "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "system": "System",
-      "layout": "Layout",
-      "compactMode": "Compact Mode",
-      "fontSize": "Font Size",
-      "small": "Small",
-      "normal": "Normal",
-      "large": "Large",
-      "avatars": "Avatars",
-      "showAvatars": "Show Avatars",
-      "participants": "Participants",
-      "reactions": "Reactions",
-      "reply": "Reply",
-      "replyingTo": "Replying to message",
-      "like": "Like",
-      "smile": "Smile",
-      "messageReplied": "Message replied",
-      "reactionAdded": "Reaction added",
-      "thread": "Thread",
-      "viewThread": "View thread",
-      "status": {
-        "sending": "Sending...",
-        "sent": "Sent",
-        "delivered": "Delivered",
-        "read": "Read",
-        "error": "Error"
-      },
-      "formattingOptions": "Formatting options",
-      "bold": "Bold",
-      "italic": "Italic",
-      "code": "Code",
-      "link": "Link",
-      "attachFiles": "Attach files",
-      "chatInterface": "Chat Interface",
-      "chatArea": "Chat Area",
-      "messagesArea": "Messages Area",
-      "scrollToBottom": "Scroll to bottom",
-      "conversation": "Conversation",
-      "save": "Save",
-      "cancel": "Cancel",
-      "emptyMessage": "No message",
-      "active": "Active",
-      "export": "Export Conversation",
-      "delete": "Delete Conversation"
+      "result": "Result:"
     },
     "common": {
       "all": "All",
@@ -231,6 +403,329 @@
       "descriptionPlaceholder": "Add more details...",
       "updateDetails": "Update task details",
       "whatNeedsToBeDone": "What needs to be done today?"
+    },
+    "brand": {
+      "name": "TaskFlow",
+      "tasks": "Tasks",
+      "chat": "Chat",
+      "features": "Features",
+      "changelog": "Changelog",
+      "about": "About"
+    },
+    "featuresPage": {
+      "title": "Powerful Features",
+      "subtitle": "Everything you need to boost your productivity and streamline your workflow",
+      "cta": {
+        "title": "Ready to get started?",
+        "description": "Join thousands of professionals who transformed their productivity with TaskFlow",
+        "startTrial": "Start Free Trial",
+        "backHome": "Back to Home"
+      },
+      "footer": {
+        "copyright": "© 2025 TaskFlow. All rights reserved.",
+        "sections": {
+          "product": "Product",
+          "support": "Support",
+          "company": "Company"
+        },
+        "links": {
+          "product": {
+            "features": "Features",
+            "changelog": "Changelog",
+            "roadmap": "Roadmap",
+            "integrations": "Integrations"
+          },
+          "support": {
+            "docs": "Docs",
+            "contact": "Contact",
+            "status": "Status",
+            "community": "Community"
+          },
+          "company": {
+            "about": "About",
+            "blog": "Blog",
+            "careers": "Careers",
+            "press": "Press"
+          },
+          "legal": {
+            "privacy": "Privacy",
+            "terms": "Terms",
+            "security": "Security"
+          }
+        }
+      }
+    },
+    "roadmap": {
+      "title": "Our Roadmap",
+      "subtitle": "See what features we're building next and when you can expect them",
+      "q1": {
+        "title": "Q1 2025: Foundation",
+        "description": "Core features and infrastructure setup",
+        "date": "Jan - Mar 2025",
+        "features": {
+          "1": "User authentication system",
+          "2": "Basic task management",
+          "3": "Secure data storage"
+        }
+      },
+      "q2": {
+        "title": "Q2 2025: Enhancement",
+        "description": "Advanced features and performance improvements",
+        "date": "Apr - Jun 2025",
+        "features": {
+          "1": "AI-powered task suggestions",
+          "2": "Team collaboration features",
+          "3": "Advanced analytics dashboard"
+        }
+      },
+      "q3": {
+        "title": "Q3 2025: Expansion",
+        "description": "New integrations and advanced capabilities",
+        "date": "Jul - Sep 2025",
+        "features": {
+          "1": "Third-party app integrations",
+          "2": "Advanced automation workflows",
+          "3": "Custom reporting tools"
+        }
+      },
+      "q4": {
+        "title": "Q4 2025: Innovation",
+        "description": "Cutting-edge features and platform expansion",
+        "date": "Oct - Dec 2025",
+        "features": {
+          "1": "Voice-controlled task management",
+          "2": "Predictive analytics",
+          "3": "Cross-platform synchronization"
+        }
+      },
+      "status": {
+        "completed": "Completed",
+        "in-progress": "In Progress",
+        "planned": "Planned"
+      },
+      "featuresTitle": "What's included",
+      "progress": {
+        "title": "Development Progress",
+        "completed": "Features Completed",
+        "inProgress": "Features In Progress",
+        "planned": "Features Planned"
+      },
+      "cta": {
+        "title": "Ready to get started?",
+        "description": "Join thousands of professionals who transformed their productivity with TaskFlow",
+        "joinEarly": "Join Early Access",
+        "backHome": "Back to Home"
+      }
+    },
+    "integrations": {
+      "title": "Integrations",
+      "subtitle": "Connect your favorite tools and services with TaskFlow to automate your workflow",
+      "connected": "Connected",
+      "connect": "Connect",
+      "categories": {
+        "productivity": "Productivity",
+        "productivityDesc": "Streamline your daily tasks and boost efficiency",
+        "development": "Development",
+        "developmentDesc": "Integrate with your development tools and CI/CD pipelines",
+        "communication": "Communication",
+        "communicationDesc": "Connect with your team communication platforms",
+        "analytics": "Analytics",
+        "analyticsDesc": "Track and analyze your productivity metrics"
+      },
+      "items": {
+        "slack": "Connect your Slack workspace for real-time notifications",
+        "teams": "Integrate Microsoft Teams for seamless collaboration",
+        "notion": "Sync with Notion for rich task documentation",
+        "google": "Connect Google Workspace for calendar and document sync",
+        "github": "Track issues and pull requests directly in TaskFlow",
+        "jira": "Sync with Jira for enterprise project management",
+        "gitlab": "Connect GitLab for complete development lifecycle",
+        "bitbucket": "Integrate Bitbucket for code repository management",
+        "email": "Receive email notifications for important updates",
+        "sms": "Get SMS alerts for urgent task reminders",
+        "webhooks": "Use webhooks for custom integration workflows",
+        "push": "Enable push notifications for mobile updates",
+        "ga": "Track user behavior with Google Analytics",
+        "mixpanel": "Analyze user engagement with Mixpanel",
+        "segment": "Collect customer data with Segment",
+        "amplitude": "Understand user journeys with Amplitude"
+      },
+      "popular": {
+        "title": "Popular Integrations",
+        "slack": "Receive task updates and notifications directly in Slack",
+        "github": "Create and track development tasks linked to code",
+        "ga": "Monitor how users interact with your products",
+        "email": "Get important updates sent directly to your inbox"
+      },
+      "benefits": {
+        "title": "Why Integrate with TaskFlow?",
+        "seamless": "Seamless Integration",
+        "seamlessDesc": "Connect your tools without disrupting existing workflows",
+        "efficient": "Efficient Automation",
+        "efficientDesc": "Automate repetitive tasks and save valuable time",
+        "secure": "Secure Connection",
+        "secureDesc": "Enterprise-grade security for all your data exchanges"
+      },
+      "api": {
+        "title": "Developer API",
+        "description": "Build custom integrations with our powerful REST API",
+        "example": "Quick example",
+        "endpoint": "https://api.taskflow.com/v1/integrations",
+        "documentation": "API Documentation",
+        "contact": "Contact Sales"
+      },
+      "cta": {
+        "title": "Ready to get started?",
+        "description": "Connect your tools today and experience seamless workflow automation",
+        "getStarted": "Get Started",
+        "backHome": "Back to Home"
+      }
+    },
+    "about": {
+      "title": "About Us",
+      "subtitle": "Our Story",
+      "description": "We're passionate about helping teams and individuals achieve more with intelligent task management solutions. Our journey began with a simple idea: make task management beautiful, intuitive, and powerful.",
+      "hero": {
+        "badge": "WHO WE ARE",
+        "rating": "4.9/5",
+        "startTrial": "Start Free Trial",
+        "watchDemo": "Watch Demo"
+      },
+      "mission": {
+        "sectionLabel": "Our Mission",
+        "title": "Our Purpose",
+        "description": "To empower every individual and team to achieve their goals through innovative task management solutions that blend cutting-edge technology with intuitive design.",
+        "vision": "We envision a world where everyone can focus on what matters most by leveraging intelligent tools that eliminate friction and amplify productivity.",
+        "countries": "150+",
+        "countriesLabel": "Countries Served",
+        "support": "24/7",
+        "supportLabel": "Support Available"
+      },
+      "values": {
+        "innovation": {
+          "title": "Innovation",
+          "description": "We constantly push boundaries to deliver experiences that delight and inspire our users."
+        },
+        "passion": {
+          "title": "Passion",
+          "description": "We genuinely care about solving real problems for real people and businesses."
+        },
+        "community": {
+          "title": "Community",
+          "description": "We believe in the power of collaboration and building meaningful connections."
+        },
+        "excellence": {
+          "title": "Excellence",
+          "description": "We strive for perfection in everything we do, from code to customer service."
+        }
+      },
+      "stats": {
+        "users": "50K+",
+        "usersLabel": "Active Users",
+        "usersDesc": "Growing daily",
+        "tasks": "2M+",
+        "tasksLabel": "Completed Tasks",
+        "tasksDesc": "And growing",
+        "uptime": "99.9%",
+        "uptimeLabel": "Uptime",
+        "uptimeDesc": "Enterprise grade",
+        "rating": "4.9",
+        "ratingLabel": "User Rating",
+        "ratingDesc": "out of 5"
+      },
+      "features": {
+        "sectionLabel": "Why TaskFlow",
+        "title": "Everything for Success",
+        "description": "Powerful features to organize tasks effectively and boost your team's productivity.",
+        "lightning": {
+          "title": "Lightning Fast",
+          "description": "Built for best performance across all devices."
+        },
+        "security": {
+          "title": "Enterprise Security",
+          "description": "Bank-grade encryption keeps your data safe."
+        },
+        "ai": {
+          "title": "AI Power",
+          "description": "Smart suggestions and automation to boost productivity."
+        },
+        "cloud": {
+          "title": "Cloud Sync",
+          "description": "Access your tasks anywhere with real-time synchronization."
+        },
+        "developer": {
+          "title": "Developer Friendly",
+          "description": "RESTful API and webhooks for easy integrations."
+        },
+        "global": {
+          "title": "Global Access",
+          "description": "Available worldwide with multilingual support."
+        }
+      },
+      "testimonials": {
+        "sectionLabel": "Testimonials",
+        "title": "Favorite Among Teams Worldwide",
+        "description": "See what our users say about TaskFlow.",
+        "quote1": {
+          "text": "TaskFlow transformed how our team collaborates. We've seen a 40% increase in productivity.",
+          "author": "Sarah Chen",
+          "role": "Product Manager",
+          "company": "TechCorp"
+        },
+        "quote2": {
+          "text": "The AI features are game-changers. It's like having a personal assistant for task management.",
+          "author": "Michael Roberts",
+          "role": "Startup Founder",
+          "company": "InnovateLab"
+        },
+        "quote3": {
+          "text": "Finally, a task manager that understands workflow. Clean, fast, and intuitive.",
+          "author": "Emily Watson",
+          "role": "Design Lead",
+          "company": "Creative Studio"
+        }
+      },
+      "timeline": {
+        "sectionLabel": "Our Journey",
+        "title": "From Idea to Global Platform",
+        "2023": {
+          "year": "2023",
+          "title": "Foundation",
+          "description": "TaskFlow foundation laid with a vision to revolutionize task management."
+        },
+        "2024": {
+          "year": "2024",
+          "title": "AI Integration",
+          "description": "Launched AI-powered features and reached 10,000 active users."
+        },
+        "2025": {
+          "year": "2025",
+          "title": "Global Expansion",
+          "description": "Expanded to 150+ countries with enterprise-grade features."
+        }
+      },
+      "technology": {
+        "badge": "AI Powered",
+        "title": "Built for the Future",
+        "description": "TaskFlow leverages cutting-edge AI technology to help you work smarter. From intelligent task suggestions to automated workflows, we're building the future of productivity.",
+        "tags": {
+          "ai": "AI Powered",
+          "sync": "Real-time Sync",
+          "encryption": "End-to-End Encryption",
+          "crossPlatform": "Cross Platform"
+        }
+      },
+      "cta": {
+        "title": "Ready to Transform Your Workflow?",
+        "description": "Join thousands of teams who trust TaskFlow to manage their most important work.",
+        "button": "Start Your Journey",
+        "backHome": "Back to Home",
+        "trial": "Free 14-day trial",
+        "noCard": "No credit card required",
+        "cancel": "Cancel anytime"
+      },
+      "footerTagline": "Built with love for productive teams",
+      "reviews": "2,000+ Reviews with 4.9/5"
     }
   },
   "auth": {
@@ -247,38 +742,5 @@
     },
     "emailRequired": "Email is required.",
     "invalidEmail": "Please enter a valid email."
-  },
-  "chooser": {
-    "welcomeBack": "Welcome back",
-    "chooseWorkspace": "Choose your workspace",
-    "greeting": "Hi, {name}",
-    "subtitle": "Pick where you want to start. You can always switch later.",
-    "tasks": {
-      "title": "Tasks",
-      "description": "Plan your day, create todos, and keep your progress visible.",
-      "features": ["Create & manage tasks", "Track completion", "Stay consistent"]
-    },
-    "chat": {
-      "title": "Chat",
-      "description": "Talk to your assistant. Add tasks, organize work, and move faster.",
-      "features": ["Create tasks by message", "Edit & complete tasks", "Export conversations"]
-    },
-    "openTasks": "Open Tasks",
-    "openChat": "Open Chat",
-    "bookmarkTip": "Tip: You can bookmark this page as your personal start screen.",
-    "cta": {
-      "title": "Need to start somewhere?",
-      "subtitle": "Tasks is best for planning. Chat is best for speed."
-    }
-  },
-  "SelectPage": {
-    "title": "Choose Your Workspace",
-    "subtitle": "Select how you'd like to manage your tasks and productivity",
-    "tasksTitle": "Tasks",
-    "tasksDescription": "Organize, plan, and track your daily tasks with beautiful UI. Create, edit, and manage your to-dos efficiently.",
-    "chatTitle": "Chat",
-    "chatDescription": "Talk to your AI assistant. Add tasks through natural conversation, get smart suggestions, and work faster.",
-    "selectOption": "Choose",
-    "bottomText": "💡 Tip: You can switch between Tasks and Chat anytime from the dashboard."
   }
 }

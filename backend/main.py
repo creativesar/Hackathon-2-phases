@@ -15,7 +15,7 @@ import traceback
 
 from routes.tasks import router as tasks_router
 from routes.auth import router as auth_router
-from routes.chat import router as chat_router, router_chat, translate_router
+from routes.chat import router as chat_router
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -28,7 +28,7 @@ app = FastAPI(
 )
 
 # CORS configuration
-origins = [origin.strip() for origin in os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")]
+origins = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
 
 app.add_middleware(
     CORSMiddleware,
@@ -57,9 +57,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Register routers
 app.include_router(tasks_router)
 app.include_router(auth_router)
-app.include_router(chat_router)  # Phase III: Conversation management
-app.include_router(router_chat)  # Phase III: Chat endpoint
-app.include_router(translate_router)  # Translation endpoint
+app.include_router(chat_router)  # Phase III: AI Chatbot
 
 
 @app.get("/health")
