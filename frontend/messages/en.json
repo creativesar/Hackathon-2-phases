@@ -726,6 +726,57 @@
       },
       "footerTagline": "Built with love for productive teams",
       "reviews": "2,000+ Reviews with 4.9/5"
+    },
+    "partners": {
+      "title": "Trusted by Industry Leaders",
+      "subtitle": "Join thousands of companies using TaskFlow"
+    },
+    "trustBadges": {
+      "title": "Why Teams Trust Us",
+      "subtitle": "Enterprise-grade features for teams of all sizes",
+      "badges": {
+        "encryption": "256-bit Encryption",
+        "encryptionDesc": "Bank-level security for your data",
+        "gdpr": "GDPR Compliant",
+        "gdprDesc": "Full compliance with data regulations",
+        "uptime": "99.9% Uptime",
+        "uptimeDesc": "Reliable infrastructure you can count on",
+        "support": "24/7 Support",
+        "supportDesc": "Always here when you need us",
+        "soc2": "SOC 2 Type II",
+        "soc2Desc": "Audited security practices",
+        "iso": "ISO 27001",
+        "isoDesc": "Certified information security"
+      }
+    },
+    "timeline": {
+      "title": "How It Works",
+      "subtitle": "Get started in minutes with our simple workflow",
+      "steps": {
+        "step1": {
+          "title": "Create Account",
+          "description": "Sign up in seconds with email or social login"
+        },
+        "step2": {
+          "title": "Add Your Tasks",
+          "description": "Create tasks manually or use AI chat assistant"
+        },
+        "step3": {
+          "title": "Organize & Prioritize",
+          "description": "Filter, sort, and organize your tasks efficiently"
+        },
+        "step4": {
+          "title": "Track Progress",
+          "description": "Monitor completion and boost your productivity"
+        }
+      }
+    },
+    "liveStats": {
+      "title": "Real-Time Platform Stats",
+      "tasksCreated": "Tasks Created",
+      "activeUsers": "Active Users",
+      "tasksDone": "Tasks Completed",
+      "countries": "Countries"
     }
   },
   "auth": {

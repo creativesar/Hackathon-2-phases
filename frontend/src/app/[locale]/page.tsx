@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -19,12 +19,76 @@ import {
 } from "@heroicons/react/24/outline";
 import { CheckCircleIcon as CheckCircleSolid } from "@heroicons/react/24/solid";
 
+// Animated Counter Component with Cool Effect
+function AnimatedCounter({ target, suffix = "", prefix = "", duration = 2000 }: { target: number; suffix?: string; prefix?: string; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry && entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(easeOutQuart * target));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isVisible, target, duration]);
+
+  return (
+    <div ref={ref} className="tabular-nums font-mono">
+      {prefix}{count.toLocaleString()}{suffix}
+    </div>
+  );
+}
+
 export default function Home() {
   const t = useTranslations("HomePage");
   const [mounted, setMounted] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Auto-rotate testimonials
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % 3);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const features = [
@@ -312,199 +376,140 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Main Features Showcase - Tasks & Chat */}
-        <section className="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 relative">
-            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 rounded-full blur-xl animate-pulse"></div>
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-3 relative z-10">
+        {/* Main Features Showcase - Tasks & Chat - Glassmorphism Style */}
+        <section className="max-w-6xl mx-auto px-4 py-24 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
               {t('landing.features.title')}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400"> {t('features.subtitle')}</span>
             </h2>
-            <p className="text-white/60 text-sm max-w-xl mx-auto relative z-10">
+            <p className="text-white/50 text-lg max-w-xl mx-auto">
               {t('landing.features.subtitle')}
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 mb-12">
-            {/* Tasks Feature Card - Left */}
-            <div className="group relative bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl border-2 border-white/10 rounded-2xl p-6 hover:border-violet-500/40 hover:shadow-2xl hover:shadow-violet-500/20 hover:-translate-y-2 transition-all duration-700 overflow-hidden"
-              style={{ animation: 'fade-in-up 0.8s ease-out forwards' }}>
-              {/* Animated gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-fuchsia-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          {/* Glassmorphism Cards Grid */}
+          <div className="grid lg:grid-cols-2 gap-6">
 
-              {/* Decorative circles */}
-              <div className="absolute -top-16 -right-16 w-24 h-24 bg-violet-500/10 rounded-full blur-2xl group-hover:bg-violet-500/20 transition-all duration-1000" />
-              <div className="absolute -bottom-16 -left-16 w-24 h-24 bg-fuchsia-500/10 rounded-full blur-2xl group-hover:bg-fuchsia-500/20 transition-all duration-1000" />
+            {/* Tasks Card - Glass */}
+            <div className="group relative">
+              {/* Glow Effect Behind Card */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/30 to-purple-600/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
-              {/* Floating particles */}
-              <div className="absolute inset-0 overflow-hidden">
-                {[...Array(3)].map((_, i) => {
-                  // Deterministic values to prevent hydration mismatch
-                  const leftPercent = ((i * 135) % 100);
-                  const topPercent = ((i * 246) % 100);
-                  const animDelay = ((i * 19) % 30) / 10; // 0.0 to 2.9
-                  const animDuration = 3 + ((i * 31) % 20) / 10; // 3.0 to 4.9
+              {/* Glass Card */}
+              <div className="relative h-full bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-3xl p-8 hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-500 overflow-hidden">
 
-                  return (
-                  <div
-                    key={i}
-                    className="absolute w-0.5 h-0.5 bg-violet-400/30 rounded-full animate-float-particle"
-                    style={{
-                      left: `${leftPercent}%`,
-                      top: `${topPercent}%`,
-                      animationDelay: `${animDelay}s`,
-                      animationDuration: `${animDuration}s`
-                    }}
-                  ></div>
-                )})}
-              </div>
+                {/* Gradient Orb */}
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-violet-500/20 rounded-full blur-3xl group-hover:bg-violet-500/30 transition-all duration-700" />
 
-              <div className="relative z-10">
-                {/* Icon with enhanced styling */}
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-violet-500 to-fuchsia-600 mb-4 shadow-lg shadow-violet-500/40 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                  <ClipboardDocumentListIcon className="h-6 w-6 text-white" />
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-violet-600/30 to-fuchsia-600/30 blur-xl group-hover:scale-110 transition-transform duration-500"></div>
-                </div>
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-violet-500/25 group-hover:scale-110 group-hover:shadow-violet-500/40 transition-all duration-300">
+                    <ClipboardDocumentListIcon className="h-7 w-7 text-white" />
+                  </div>
 
-                {/* Title with better typography */}
-                <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-violet-300 group-hover:to-fuchsia-300 transition-all duration-300">
-                  {t('landing.features.taskManagement')}
-                </h3>
+                  {/* Title */}
+                  <h3 className="text-2xl font-display font-bold text-white mb-3">
+                    {t('landing.features.taskManagement')}
+                  </h3>
 
-                {/* Description with better spacing */}
-                <p className="text-white/70 text-sm mb-4 leading-relaxed">
-                  {t('landing.features.taskManagementDesc')}
-                </p>
+                  {/* Description */}
+                  <p className="text-white/60 mb-6 leading-relaxed">
+                    {t('landing.features.taskManagementDesc')}
+                  </p>
 
-                {/* Divider line */}
-                <div className="h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent mb-4" />
-
-                {/* Features List with enhanced styling */}
-                <ul className="space-y-2 mb-4">
-                  {[
-                    { text: t('landing.features.taskFeatures.create'), icon: CheckCircleSolid },
-                    { text: t('landing.features.taskFeatures.complete'), icon: CheckCircleSolid },
-                    { text: t('landing.features.taskFeatures.filter'), icon: CheckCircleSolid },
-                    { text: t('landing.features.taskFeatures.sync'), icon: CheckCircleSolid }
-                  ].map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center gap-2 text-white/80 group/item hover:text-white transition-all duration-300 text-xs"
-                      style={{ animationDelay: `${idx * 100}ms`, animation: 'fade-in-up 0.6s ease-out forwards' }}
-                    >
-                      <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-emerald-500/30 to-emerald-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform duration-300 group/item">
-                        <feature.icon className="h-3 w-3 text-emerald-400" />
+                  {/* Features List */}
+                  <div className="space-y-3 mb-8">
+                    {[
+                      t('landing.features.taskFeatures.create'),
+                      t('landing.features.taskFeatures.complete'),
+                      t('landing.features.taskFeatures.filter'),
+                      t('landing.features.taskFeatures.sync')
+                    ].map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <div className="w-5 h-5 rounded-full bg-violet-500/20 flex items-center justify-center">
+                          <CheckCircleSolid className="h-3 w-3 text-violet-400" />
+                        </div>
+                        <span className="text-white/70 text-sm">{feature}</span>
                       </div>
-                      <span className="font-medium">{feature.text}</span>
-                    </li>
-                  ))}
-                </ul>
+                    ))}
+                  </div>
 
-                {/* Enhanced CTA Button */}
-                <Link
-                  href="/tasks"
-                  className="group/btn inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-white bg-gradient-to-r from-violet-600 via-violet-500 to-fuchsia-600 shadow-lg shadow-violet-500/40 hover:shadow-lg hover:shadow-violet-500/50 hover:scale-105 transition-all duration-300 relative overflow-hidden text-xs"
-                >
-                  {/* Button shimmer effect */}
-                  <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                  <span className="relative z-10">{t('feature.explore')}</span>
-                  <ArrowRightIcon className="h-3 w-3 relative z-10 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                </Link>
+                  {/* CTA Button - Glass Style */}
+                  <Link
+                    href="/tasks"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.08] border border-white/[0.1] text-white font-medium hover:bg-violet-500/20 hover:border-violet-500/30 transition-all duration-300"
+                  >
+                    <span>{t('feature.explore')}</span>
+                    <ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
             </div>
 
-            {/* Chat Feature Card - Right */}
-            <div className="group relative bg-gradient-to-br from-white/[0.07] to-white/[0.02] backdrop-blur-xl border-2 border-white/10 rounded-2xl p-6 hover:border-fuchsia-500/40 hover:shadow-2xl hover:shadow-fuchsia-500/20 hover:-translate-y-2 transition-all duration-700 overflow-hidden"
-              style={{ animation: 'fade-in-up 0.8s ease-out 0.2s forwards' }}>
-              {/* Animated gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-600/20 via-pink-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            {/* AI Chat Card - Glass */}
+            <div className="group relative">
+              {/* Glow Effect Behind Card */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-fuchsia-600/30 to-pink-600/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
 
-              {/* Decorative circles */}
-              <div className="absolute -top-16 -right-16 w-24 h-24 bg-fuchsia-500/10 rounded-full blur-2xl group-hover:bg-fuchsia-500/20 transition-all duration-1000" />
-              <div className="absolute -bottom-16 -left-16 w-24 h-24 bg-pink-500/10 rounded-full blur-2xl group-hover:bg-pink-500/20 transition-all duration-1000" />
+              {/* Glass Card */}
+              <div className="relative h-full bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-3xl p-8 hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-500 overflow-hidden">
 
-              {/* Floating particles */}
-              <div className="absolute inset-0 overflow-hidden">
-                {[...Array(3)].map((_, i) => {
-                  // Deterministic values to prevent hydration mismatch
-                  const leftPercent = ((i * 147) % 100);
-                  const topPercent = ((i * 258) % 100);
-                  const animDelay = ((i * 23) % 30) / 10; // 0.0 to 2.9
-                  const animDuration = 3 + ((i * 37) % 20) / 10; // 3.0 to 4.9
+                {/* Gradient Orb */}
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-fuchsia-500/20 rounded-full blur-3xl group-hover:bg-fuchsia-500/30 transition-all duration-700" />
 
-                  return (
-                  <div
-                    key={i}
-                    className="absolute w-0.5 h-0.5 bg-fuchsia-400/30 rounded-full animate-float-particle"
-                    style={{
-                      left: `${leftPercent}%`,
-                      top: `${topPercent}%`,
-                      animationDelay: `${animDelay}s`,
-                      animationDuration: `${animDuration}s`
-                    }}
-                  ></div>
-                )})}
-              </div>
-
-              <div className="relative z-10">
-                {/* Icon with badge and enhanced styling */}
-                <div className="relative inline-block mb-4">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-600 via-fuchsia-500 to-pink-600 shadow-lg shadow-fuchsia-500/40 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                    <ChatBubbleLeftRightIcon className="h-6 w-6 text-white" />
-                    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-fuchsia-600/30 to-pink-600/30 blur-xl group-hover:scale-110 transition-transform duration-500"></div>
+                <div className="relative z-10">
+                  {/* Icon with AI Badge */}
+                  <div className="relative w-fit mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center shadow-lg shadow-fuchsia-500/25 group-hover:scale-110 group-hover:shadow-fuchsia-500/40 transition-all duration-300">
+                      <ChatBubbleLeftRightIcon className="h-7 w-7 text-white" />
+                    </div>
+                    {/* AI Badge */}
+                    <div className="absolute -top-2 -right-3 px-2 py-0.5 rounded-md bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-bold shadow-lg">
+                      AI
+                    </div>
                   </div>
-                  {/* Enhanced AI Badge */}
-                  <div className="absolute -top-1 -right-1 px-2 py-0.5 rounded bg-gradient-to-r from-amber-500 via-orange-500 to-orange-600 text-white text-[10px] font-black shadow-lg shadow-orange-500/50 animate-pulse">
-                    AI
-                  </div>
-                </div>
 
-                {/* Title with better typography */}
-                <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-fuchsia-300 group-hover:to-pink-300 transition-all duration-300">
-                  {t('landing.features.chat.title')}
-                </h3>
+                  {/* Title */}
+                  <h3 className="text-2xl font-display font-bold text-white mb-3">
+                    {t('landing.features.chat.title')}
+                  </h3>
 
-                {/* Description with better spacing */}
-                <p className="text-white/70 text-sm mb-4 leading-relaxed">
-                  {t('landing.features.chat.subtitle')}
-                </p>
+                  {/* Description */}
+                  <p className="text-white/60 mb-6 leading-relaxed">
+                    {t('landing.features.chat.subtitle')}
+                  </p>
 
-                {/* Divider line */}
-                <div className="h-px bg-gradient-to-r from-transparent via-fuchsia-500/30 to-transparent mb-4" />
-
-                {/* Features List with enhanced styling */}
-                <ul className="space-y-2 mb-4">
-                  {[
-                    { text: t('landing.features.chat.features.natural'), icon: SparklesIcon },
-                    { text: t('landing.features.chat.features.updateById'), icon: SparklesIcon },
-                    { text: t('landing.features.chat.features.realtime'), icon: SparklesIcon },
-                    { text: t('landing.features.chat.features.ai'), icon: SparklesIcon }
-                  ].map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center gap-2 text-white/80 group/item hover:text-white transition-all duration-300 text-xs"
-                      style={{ animationDelay: `${idx * 100}ms`, animation: 'fade-in-up 0.6s ease-out forwards' }}
-                    >
-                      <div className="h-5 w-5 rounded-lg bg-gradient-to-br from-fuchsia-500/30 to-pink-600/20 flex items-center justify-center flex-shrink-0 group-hover/item:scale-110 transition-transform duration-300 group/item">
-                        <feature.icon className="h-3 w-3 text-fuchsia-400" />
+                  {/* Features List */}
+                  <div className="space-y-3 mb-8">
+                    {[
+                      t('landing.features.chat.features.natural'),
+                      t('landing.features.chat.features.updateById'),
+                      t('landing.features.chat.features.realtime'),
+                      t('landing.features.chat.features.ai')
+                    ].map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-3">
+                        <div className="w-5 h-5 rounded-full bg-fuchsia-500/20 flex items-center justify-center">
+                          <SparklesIcon className="h-3 w-3 text-fuchsia-400" />
+                        </div>
+                        <span className="text-white/70 text-sm">{feature}</span>
                       </div>
-                      <span className="font-medium">{feature.text}</span>
-                    </li>
-                  ))}
-                </ul>
+                    ))}
+                  </div>
 
-                {/* Enhanced CTA Button */}
-                <Link
-                  href="/chat"
-                  className="group/btn inline-flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-white bg-gradient-to-r from-fuchsia-600 via-fuchsia-500 to-pink-600 shadow-lg shadow-fuchsia-500/40 hover:shadow-lg hover:shadow-fuchsia-500/50 hover:scale-105 transition-all duration-300 relative overflow-hidden text-xs"
-                >
-                  {/* Button shimmer effect */}
-                  <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                  <span className="relative z-10">{t('landing.features.chat.title')}</span>
-                  <ArrowRightIcon className="h-3 w-3 relative z-10 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                </Link>
+                  {/* CTA Button - Glass Style */}
+                  <Link
+                    href="/chat"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.08] border border-white/[0.1] text-white font-medium hover:bg-fuchsia-500/20 hover:border-fuchsia-500/30 transition-all duration-300"
+                  >
+                    <SparklesIcon className="h-4 w-4" />
+                    <span>{t('landing.features.chat.title')}</span>
+                    <ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
             </div>
+
           </div>
         </section>
 
@@ -673,8 +678,200 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Premium Stats Section */}
+        <section className="py-24 relative">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Minimal Header */}
+            <div className="flex items-center justify-center gap-3 mb-16">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-white/20" />
+              <span className="text-xs font-medium text-white/40 uppercase tracking-[0.2em]">Platform Metrics</span>
+              <div className="h-px w-12 bg-gradient-to-l from-transparent to-white/20" />
+            </div>
 
-        {/* Enhanced Testimonials Section */}
+            {/* Stats Row */}
+            <div className="flex flex-wrap justify-center items-start gap-x-16 gap-y-12 lg:gap-x-24">
+              {[
+                { target: 50, suffix: "K+", label: "Active Users" },
+                { target: 2, suffix: "M+", label: "Tasks Completed" },
+                { target: 99.9, suffix: "%", label: "Uptime" },
+                { target: 150, suffix: "+", label: "Countries" },
+              ].map((stat, i) => (
+                <div key={i} className="group text-center">
+                  {/* Number */}
+                  <div className="text-5xl sm:text-6xl lg:text-7xl font-display font-extralight text-white tracking-tight mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-fuchsia-400 transition-all duration-500">
+                    <AnimatedCounter target={stat.target} suffix={stat.suffix} duration={2000} />
+                  </div>
+
+                  {/* Label */}
+                  <p className="text-white/40 text-sm font-medium tracking-wide group-hover:text-white/60 transition-colors duration-300">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works - Ultra Premium Design */}
+        <section className="py-32 relative overflow-hidden">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Premium Section Header */}
+            <div className="text-center mb-24">
+              <p className="text-violet-400 text-sm font-medium tracking-[0.3em] uppercase mb-4">Process</p>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white mb-6 tracking-tight">
+                {t('timeline.title')}
+              </h2>
+              <p className="text-white/40 max-w-lg mx-auto text-lg font-light">
+                {t('timeline.subtitle')}
+              </p>
+            </div>
+
+            {/* Premium Steps - Bento Grid Style */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  num: "01",
+                  title: t('timeline.steps.step1.title'),
+                  desc: t('timeline.steps.step1.description'),
+                  icon: UserGroupIcon,
+                  accent: "violet",
+                  size: "normal"
+                },
+                {
+                  num: "02",
+                  title: t('timeline.steps.step2.title'),
+                  desc: t('timeline.steps.step2.description'),
+                  icon: ClipboardDocumentListIcon,
+                  accent: "fuchsia",
+                  size: "normal"
+                },
+                {
+                  num: "03",
+                  title: t('timeline.steps.step3.title'),
+                  desc: t('timeline.steps.step3.description'),
+                  icon: SparklesIcon,
+                  accent: "cyan",
+                  size: "normal"
+                },
+                {
+                  num: "04",
+                  title: t('timeline.steps.step4.title'),
+                  desc: t('timeline.steps.step4.description'),
+                  icon: CheckCircleIcon,
+                  accent: "emerald",
+                  size: "normal"
+                },
+              ].map((step, i) => (
+                <div
+                  key={i}
+                  className="group relative"
+                >
+                  {/* Card */}
+                  <div className={`relative h-full p-8 sm:p-10 rounded-3xl border transition-all duration-700 overflow-hidden
+                    bg-gradient-to-br from-white/[0.03] to-transparent
+                    border-white/[0.06]
+                    hover:border-white/[0.12]
+                    hover:bg-gradient-to-br hover:from-white/[0.05] hover:to-transparent
+                  `}>
+                    {/* Subtle Corner Glow on Hover */}
+                    <div className={`absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl transition-opacity duration-700 opacity-0 group-hover:opacity-100 ${
+                      step.accent === 'violet' ? 'bg-violet-500/20' :
+                      step.accent === 'fuchsia' ? 'bg-fuchsia-500/20' :
+                      step.accent === 'cyan' ? 'bg-cyan-500/20' :
+                      'bg-emerald-500/20'
+                    }`} />
+
+                    {/* Top Row - Number & Icon */}
+                    <div className="flex items-start justify-between mb-8">
+                      {/* Step Number */}
+                      <span className={`text-6xl sm:text-7xl font-display font-bold tracking-tighter transition-colors duration-500 ${
+                        step.accent === 'violet' ? 'text-violet-500/20 group-hover:text-violet-500/40' :
+                        step.accent === 'fuchsia' ? 'text-fuchsia-500/20 group-hover:text-fuchsia-500/40' :
+                        step.accent === 'cyan' ? 'text-cyan-500/20 group-hover:text-cyan-500/40' :
+                        'text-emerald-500/20 group-hover:text-emerald-500/40'
+                      }`}>
+                        {step.num}
+                      </span>
+
+                      {/* Icon Container */}
+                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                        step.accent === 'violet' ? 'bg-violet-500/10 group-hover:bg-violet-500/20' :
+                        step.accent === 'fuchsia' ? 'bg-fuchsia-500/10 group-hover:bg-fuchsia-500/20' :
+                        step.accent === 'cyan' ? 'bg-cyan-500/10 group-hover:bg-cyan-500/20' :
+                        'bg-emerald-500/10 group-hover:bg-emerald-500/20'
+                      }`}>
+                        <step.icon className={`h-7 w-7 transition-colors duration-500 ${
+                          step.accent === 'violet' ? 'text-violet-400' :
+                          step.accent === 'fuchsia' ? 'text-fuchsia-400' :
+                          step.accent === 'cyan' ? 'text-cyan-400' :
+                          'text-emerald-400'
+                        }`} />
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative">
+                      <h3 className="text-2xl sm:text-3xl font-display font-semibold text-white mb-4 tracking-tight group-hover:text-white transition-colors duration-300">
+                        {step.title}
+                      </h3>
+                      <p className="text-white/40 text-base sm:text-lg leading-relaxed font-light group-hover:text-white/50 transition-colors duration-300">
+                        {step.desc}
+                      </p>
+                    </div>
+
+                    {/* Bottom Accent Line */}
+                    <div className={`absolute bottom-0 left-8 right-8 h-px transition-all duration-700 ${
+                      step.accent === 'violet' ? 'bg-gradient-to-r from-transparent via-violet-500/30 to-transparent group-hover:via-violet-500/60' :
+                      step.accent === 'fuchsia' ? 'bg-gradient-to-r from-transparent via-fuchsia-500/30 to-transparent group-hover:via-fuchsia-500/60' :
+                      step.accent === 'cyan' ? 'bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent group-hover:via-cyan-500/60' :
+                      'bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent group-hover:via-emerald-500/60'
+                    }`} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Trust Badges Section */}
+        <section className="max-w-6xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-3">
+              {t('trustBadges.title')}
+            </h2>
+            <p className="text-white/60 max-w-xl mx-auto text-sm">
+              {t('trustBadges.subtitle')}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { title: t('trustBadges.badges.encryption'), desc: t('trustBadges.badges.encryptionDesc'), icon: "🔐" },
+              { title: t('trustBadges.badges.gdpr'), desc: t('trustBadges.badges.gdprDesc'), icon: "🇪🇺" },
+              { title: t('trustBadges.badges.uptime'), desc: t('trustBadges.badges.uptimeDesc'), icon: "⚡" },
+              { title: t('trustBadges.badges.support'), desc: t('trustBadges.badges.supportDesc'), icon: "💬" },
+              { title: t('trustBadges.badges.soc2'), desc: t('trustBadges.badges.soc2Desc'), icon: "✅" },
+              { title: t('trustBadges.badges.iso'), desc: t('trustBadges.badges.isoDesc'), icon: "🏆" },
+            ].map((badge, i) => (
+              <div
+                key={i}
+                className="group bg-gradient-to-br from-white/[0.04] to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-xl p-4 text-center hover:border-violet-500/30 hover:bg-white/[0.06] transition-all duration-300"
+              >
+                <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                  {badge.icon}
+                </div>
+                <h4 className="text-sm font-display font-bold text-white mb-1 group-hover:text-violet-200 transition-colors">
+                  {badge.title}
+                </h4>
+                <p className="text-white/50 text-xs leading-snug">
+                  {badge.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Enhanced Testimonials Section with Carousel */}
         <section className="max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
@@ -685,7 +882,70 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Carousel for Mobile */}
+          <div className="lg:hidden relative overflow-hidden">
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${activeTestimonial * 100}%)` }}
+            >
+              {[
+                {
+                  name: "Sarah Johnson",
+                  role: t('testimonials.roles.productManager'),
+                  content: t('testimonials.content.sarah'),
+                  avatar: "SJ",
+                },
+                {
+                  name: "Michael Chen",
+                  role: t('testimonials.roles.developer'),
+                  content: t('testimonials.content.michael'),
+                  avatar: "MC",
+                },
+                {
+                  name: "Emma Rodriguez",
+                  role: t('testimonials.roles.creativeDirector'),
+                  content: t('testimonials.content.emma'),
+                  avatar: "ER",
+                }
+              ].map((testimonial, i) => (
+                <div key={i} className="w-full flex-shrink-0 px-2">
+                  <div className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] backdrop-blur-xl border border-white/15 rounded-2xl p-6">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="h-12 w-12 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold">
+                        {testimonial.avatar}
+                      </div>
+                      <div>
+                        <h4 className="font-display font-bold text-white">{testimonial.name}</h4>
+                        <p className="text-sm text-white/70">{testimonial.role}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-1 mb-3">
+                      {[...Array(5)].map((_, starIndex) => (
+                        <svg key={starIndex} className="h-4 w-4 text-amber-400 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="text-white/90 text-sm leading-relaxed">"{testimonial.content}"</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Carousel Dots */}
+            <div className="flex justify-center gap-2 mt-6">
+              {[0, 1, 2].map((i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveTestimonial(i)}
+                  className={`h-2 rounded-full transition-all duration-300 ${activeTestimonial === i ? 'w-8 bg-violet-500' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Grid for Desktop */}
+          <div className="hidden lg:grid grid-cols-1 lg:grid-cols-3 gap-8">
             {[
               {
                 name: "Sarah Johnson",
