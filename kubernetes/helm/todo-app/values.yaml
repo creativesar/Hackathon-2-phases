@@ -1,0 +1,46 @@
+# Default values for todo-app.
+
+global:
+  environment: dev
+
+frontend:
+  replicaCount: 2
+  image:
+    repository: creativesar/todo_frontend
+    tag: latest
+    pullPolicy: Never
+  service:
+    type: ClusterIP
+    port: 3000
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+backend:
+  replicaCount: 2
+  image:
+    repository: creativesar/todo_backend
+    tag: latest
+    pullPolicy: Never
+  service:
+    type: ClusterIP
+    port: 8000
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+ingress:
+  enabled: true
+  className: "nginx"
+  host: todo.local
+
+config:
+  api_url: "http://todo.local/api"

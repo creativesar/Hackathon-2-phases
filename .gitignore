@@ -109,3 +109,5 @@ alembic/versions/__pycache__/
 .uv/
 .pytest_cache/
 .pytest_cache/
+helm/todo-app/secrets.yaml
+bin/kind-windows-amd64.exe

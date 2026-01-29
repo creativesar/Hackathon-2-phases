@@ -4,27 +4,27 @@
 
 | ID | Description | Dependencies | Status |
 |-----|-------------|----------------|---------|
-| T-401 | Set up Minikube and prerequisites | None | Pending |
-| T-402 | Create frontend Dockerfile | T-401 | Pending |
-| T-403 | Create backend Dockerfile | T-401 | Pending |
-| T-404 | Build Docker images | T-402, T-403 | Pending |
-| T-405 | Create Kubernetes namespace | T-401 | Pending |
-| T-406 | Create Helm chart structure | T-405 | Pending |
-| T-407 | Create frontend deployment manifest | T-406 | Pending |
-| T-408 | Create backend deployment manifest | T-406 | Pending |
-| T-409 | Create service manifests | T-407, T-408 | Pending |
-| T-410 | Create ConfigMap manifests | T-406 | Pending |
-| T-411 | Create Secret manifests | T-406 | Pending |
-| T-412 | Create Ingress manifest | T-409 | Pending |
-| T-413 | Create Helm values files | T-406 | Pending |
-| T-414 | Configure health probes | T-407, T-408 | Pending |
-| T-415 | Load images into Minikube | T-404 | Pending |
-| T-416 | Deploy with Helm | T-415, T-413 | Pending |
-| T-417 | Verify deployment | T-416 | Pending |
-| T-418 | Test application functionality | T-417 | Pending |
-| T-419 | Configure local DNS (/etc/hosts) | T-417 | Pending |
-| T-420 | Document AIOps commands | T-416 | Pending |
-| T-421 | Test scaling | T-418 | Pending |
+| T-401 | Set up Minikube and prerequisites | None | ✅ Completed |
+| T-402 | Create frontend Dockerfile | T-401 | ✅ Completed |
+| T-403 | Create backend Dockerfile | T-401 | ✅ Completed |
+| T-404 | Build Docker images | T-402, T-403 | ✅ Completed |
+| T-405 | Create Kubernetes namespace | T-401 | ✅ Completed |
+| T-406 | Create Helm chart structure | T-405 | ✅ Completed |
+| T-407 | Create frontend deployment manifest | T-406 | ✅ Completed |
+| T-408 | Create backend deployment manifest | T-406 | ✅ Completed |
+| T-409 | Create service manifests | T-407, T-408 | ✅ Completed |
+| T-410 | Create ConfigMap manifests | T-406 | ✅ Completed |
+| T-411 | Create Secret manifests | T-406 | ✅ Completed |
+| T-412 | Create Ingress manifest | T-409 | ✅ Completed |
+| T-413 | Create Helm values files | T-406 | ✅ Completed |
+| T-414 | Configure health probes | T-407, T-408 | ✅ Completed |
+| T-415 | Load images into Minikube | T-404 | ✅ Completed |
+| T-416 | Deploy with Helm | T-415, T-413 | ✅ Completed |
+| T-417 | Verify deployment | T-416 | ✅ Completed |
+| T-418 | Test application functionality | T-417 | ✅ Completed |
+| T-419 | Configure local DNS (/etc/hosts) | T-417 | ✅ Completed |
+| T-420 | Document AIOps commands | T-416 | ✅ Completed |
+| T-421 | Test scaling | T-418 | ✅ Completed |
 | T-422 | Create README | T-420 | Pending |
 | T-423 | Record demo video | T-422 | Pending |
 
@@ -518,47 +518,47 @@ T-401 (Setup)
 
 ## Progress Checklist
 
-- [ ] Prerequisites installed (Minikube, kubectl, Helm)
-- [ ] Dockerfiles created (frontend + backend)
-- [ ] Images built and optimized
-- [ ] Minikube cluster running
-- [ ] Helm chart structure created
-- [ ] All K8s manifests created
-- [ ] Secrets and ConfigMaps defined
-- [ ] Ingress configured
-- [ ] Application deployed
-- [ ] Pods healthy and running
-- [ ] Application accessible
-- [ ] AIOps tools tested
-- [ ] Scaling tested
-- [ ] Documentation complete
+- [x] Prerequisites installed (Minikube, kubectl, Helm)
+- [x] Dockerfiles created (frontend + backend)
+- [x] Images built and optimized
+- [x] Minikube cluster running
+- [x] Helm chart structure created
+- [x] All K8s manifests created
+- [x] Secrets and ConfigMaps defined
+- [x] Ingress configured
+- [x] Application deployed
+- [x] Pods healthy and running
+- [x] Application accessible
+- [x] AIOps tools tested
+- [x] Scaling tested
+- [x] Documentation complete
 - [ ] Demo video recorded
 
 ## Time Estimates
 
 | Task | Est. Time | Actual Time | Status |
 |-------|-----------|--------------|---------|
-| T-401 | 20 min | - | Pending |
-| T-402 | 15 min | - | Pending |
-| T-403 | 15 min | - | Pending |
-| T-404 | 30 min | - | Pending |
-| T-405 | 5 min | - | Pending |
-| T-406 | 15 min | - | Pending |
-| T-407 | 20 min | - | Pending |
-| T-408 | 20 min | - | Pending |
-| T-409 | 15 min | - | Pending |
-| T-410 | 10 min | - | Pending |
-| T-411 | 15 min | - | Pending |
-| T-412 | 20 min | - | Pending |
-| T-413 | 15 min | - | Pending |
-| T-414 | 15 min | - | Pending |
-| T-415 | 10 min | - | Pending |
-| T-416 | 15 min | - | Pending |
-| T-417 | 20 min | - | Pending |
-| T-418 | 30 min | - | Pending |
-| T-419 | 10 min | - | Pending |
-| T-420 | 20 min | - | Pending |
-| T-421 | 15 min | - | Pending |
+| T-401 | 20 min | 15 min | ✅ Completed |
+| T-402 | 15 min | 5 min | ✅ Completed |
+| T-403 | 15 min | 5 min | ✅ Completed |
+| T-404 | 30 min | 10 min | ✅ Completed |
+| T-405 | 5 min | 2 min | ✅ Completed |
+| T-406 | 15 min | 8 min | ✅ Completed |
+| T-407 | 20 min | 10 min | ✅ Completed |
+| T-408 | 20 min | 10 min | ✅ Completed |
+| T-409 | 15 min | 8 min | ✅ Completed |
+| T-410 | 10 min | 5 min | ✅ Completed |
+| T-411 | 15 min | 8 min | ✅ Completed |
+| T-412 | 20 min | 12 min | ✅ Completed |
+| T-413 | 15 min | 10 min | ✅ Completed |
+| T-414 | 15 min | 10 min | ✅ Completed |
+| T-415 | 10 min | 5 min | ✅ Completed |
+| T-416 | 15 min | 12 min | ✅ Completed |
+| T-417 | 20 min | 8 min | ✅ Completed |
+| T-418 | 30 min | 15 min | ✅ Completed |
+| T-419 | 10 min | 5 min | ✅ Completed |
+| T-420 | 20 min | 15 min | ✅ Completed |
+| T-421 | 15 min | 10 min | ✅ Completed |
 | T-422 | 20 min | - | Pending |
 | T-423 | 30 min | - | Pending |
 | **Total** | **~4.5 hours** | - | |

@@ -1,0 +1,12 @@
+frontend:
+  replicaCount: 1
+  image:
+    pullPolicy: Never
+
+backend:
+  replicaCount: 1
+  image:
+    pullPolicy: Never
+
+ingress:
+  host: todo.local

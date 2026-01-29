@@ -65,6 +65,33 @@ When user requests new features:
 
 ---
 
+## Agent Skills & Capabilities
+
+This project leverages specialized agent skills. Use these skills when their specific domain expertise is required.
+
+### Core Roles
+- **cloud-architect**: Expert high-level cloud decisions (AKS/GKE/OKE), capacity planning, and critical infrastructure choices.
+- **k8s-platform-engineer**: Kubernetes operations specialist (Helm charts, manifests, scaling, secrets).
+- **dapr-backend-developer**: Dapr ecosystem specialist (Pub/Sub, Bindings, State, Service Invocation) using Python/FastAPI.
+
+### Functional Skills
+- **kafka-dapr**: Event-Driven Architecture, Kafka topic design, schema definition, and Dapr Pub/Sub configuration.
+- **ci-cd-gen**: Automated pipeline generation (GitHub Actions) for build, test, and cloud deployment.
+- **monitor-setup**: Observability stack setup (Prometheus, Grafana dashboards, alerting rules).
+- **cloud-blueprints**: Generation of reusable, spec-driven deployment blueprints for entire stacks.
+
+### Standard Skills
+- **better-auth-integration**: Authentication implementation.
+- **fastapi-stack**: Backend development with FastAPI.
+- **kubernetes-deployment**: General K8s deployment tasks.
+- **mcp-tools**: Model Context Protocol tool creation.
+- **neon-database**: Database schema and query management.
+- **nextjs-stack**: Frontend development with Next.js.
+- **openai-agents**: AI agent implementation.
+- **spec-kit-workflow**: SDD workflow management.
+
+---
+
 ## Monorepo Structure
 
 ```
@@ -371,5 +398,5 @@ Example:
 
 ---
 
-**Last Updated**: 2026-01-03
+**Last Updated**: 2026-01-30
 **Spec-Kit Version**: Plus
