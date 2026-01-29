@@ -232,7 +232,8 @@
       "Bash(kubectl get:*)",
       "Bash(kubectl config:*)",
       "Bash(choco list virtualbox --local-only)",
-      "Bash(choco list virtualbox)"
+      "Bash(choco list virtualbox)",
+      "Bash(git rm:*)"
     ]
   }
 }
