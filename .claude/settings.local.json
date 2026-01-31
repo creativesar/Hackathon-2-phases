@@ -240,7 +240,8 @@
       "Bash(docker login:*)",
       "Bash(docker push:*)",
       "Bash(docker-compose restart:*)",
-      "Bash(docker exec:*)"
+      "Bash(docker exec:*)",
+      "Bash(git remote:*)"
     ]
   }
 }

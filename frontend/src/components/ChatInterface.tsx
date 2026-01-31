@@ -51,6 +51,7 @@ export default function ChatInterface() {
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
   const [voiceSupported, setVoiceSupported] = useState(false);
+  const [voiceLang, setVoiceLang] = useState<'ur-PK' | 'en-US' | 'hi-IN'>('ur-PK'); // Default Urdu
 
   // User state
   const [user, setUser] = useState<{ id: string; email: string; name?: string } | null>(null);
@@ -75,38 +76,9 @@ export default function ChatInterface() {
       const recognitionInstance = new SpeechRecognition();
       recognitionInstance.continuous = true; // Keep listening until user manually stops
       recognitionInstance.interimResults = true; // Show real-time transcription
-      recognitionInstance.lang = 'en-US';
-      recognitionInstance.maxAlternatives = 1;
-
-      let finalTranscript = '';
-
-      recognitionInstance.onresult = (event: any) => {
-        let interimTranscript = '';
-
-        // Process all results
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            finalTranscript += transcript + ' ';
-          } else {
-            interimTranscript += transcript;
-          }
-        }
-
-        // Show combined transcript (final + interim) in input field
-        setInput((finalTranscript + interimTranscript).trim());
-      };
-
-      recognitionInstance.onerror = (event: any) => {
-        console.error('Speech recognition error', event.error);
-        setIsListening(false);
-        finalTranscript = '';
-      };
-
-      recognitionInstance.onend = () => {
-        setIsListening(false);
-        finalTranscript = '';
-      };
+      // Support multiple languages - Urdu, English, Hindi (auto-detect)
+      recognitionInstance.lang = 'ur-PK'; // Primary: Urdu Pakistan
+      recognitionInstance.maxAlternatives = 3; // Get multiple alternatives for better accuracy
 
       setRecognition(recognitionInstance);
     }
@@ -203,6 +175,9 @@ export default function ChatInterface() {
     }
   };
 
+  // Track transcript across recognition sessions
+  const transcriptRef = useRef<string>('');
+
   const startListening = () => {
     if (!voiceSupported || !recognition) {
       showToast("Voice recognition not supported in your browser", "error");
@@ -214,6 +189,54 @@ export default function ChatInterface() {
       setIsListening(false);
       return;
     }
+
+    // Reset transcript when starting new session
+    transcriptRef.current = '';
+
+    // Set language before starting
+    recognition.lang = voiceLang;
+
+    // Set up event handlers fresh each time
+    recognition.onresult = (event: any) => {
+      let interimTranscript = '';
+      let finalTranscript = transcriptRef.current;
+
+      // Process all results from current session
+      for (let i = 0; i < event.results.length; i++) {
+        const result = event.results[i];
+        // Get best alternative (first one)
+        const transcript = result[0].transcript;
+
+        if (result.isFinal) {
+          finalTranscript = transcript;
+          transcriptRef.current = finalTranscript;
+        } else {
+          interimTranscript = transcript;
+        }
+      }
+
+      // Show the transcript - prefer final, fallback to interim
+      const displayText = finalTranscript || interimTranscript;
+      if (displayText) {
+        setInput(displayText.trim());
+      }
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error('Speech recognition error:', event.error);
+      setIsListening(false);
+      if (event.error === 'no-speech') {
+        showToast("No speech detected. Please try again.", "error");
+      } else if (event.error === 'audio-capture') {
+        showToast("Microphone not found. Please check your device.", "error");
+      } else if (event.error === 'not-allowed') {
+        showToast("Microphone access denied. Please allow microphone.", "error");
+      }
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
 
     try {
       recognition.start();
@@ -511,27 +534,51 @@ export default function ChatInterface() {
                   `}
                 />
                 {voiceSupported && (
-                  <button
-                    type="button"
-                    onClick={startListening}
-                    disabled={isLoading}
-                    className={`
-                      p-3 rounded-xl flex items-center justify-center
-                      transition-all duration-300
-                      ${isListening
-                        ? 'bg-red-500/20 border border-red-500/30 text-red-400 hover:bg-red-500/30'
-                        : 'bg-white/[0.05] border border-white/10 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300 hover:border-violet-500/30'
-                      }
-                      disabled:opacity-50 disabled:cursor-not-allowed
-                    `}
-                    aria-label={isListening ? "Stop listening" : "Start voice input"}
-                  >
-                    {isListening ? (
-                      <StopIcon className="h-5 w-5 animate-pulse" />
-                    ) : (
-                      <MicrophoneIcon className="h-5 w-5" />
-                    )}
-                  </button>
+                  <div className="flex items-center gap-1">
+                    {/* Language selector */}
+                    <select
+                      value={voiceLang}
+                      onChange={(e) => setVoiceLang(e.target.value as 'ur-PK' | 'en-US' | 'hi-IN')}
+                      disabled={isListening || isLoading}
+                      className="
+                        px-2 py-3 rounded-xl text-sm
+                        bg-white/[0.05] border border-white/10
+                        text-white/80
+                        focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20
+                        disabled:opacity-50 disabled:cursor-not-allowed
+                        transition-all duration-300
+                        cursor-pointer
+                      "
+                      aria-label="Select voice language"
+                    >
+                      <option value="ur-PK" className="bg-gray-900">اردو</option>
+                      <option value="en-US" className="bg-gray-900">English</option>
+                      <option value="hi-IN" className="bg-gray-900">हिंदी</option>
+                    </select>
+                    {/* Mic button */}
+                    <button
+                      type="button"
+                      onClick={startListening}
+                      disabled={isLoading}
+                      className={`
+                        p-3 rounded-xl flex items-center justify-center
+                        transition-all duration-300
+                        ${isListening
+                          ? 'bg-red-500/20 border border-red-500/30 text-red-400 hover:bg-red-500/30 animate-pulse'
+                          : 'bg-white/[0.05] border border-white/10 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300 hover:border-violet-500/30'
+                        }
+                        disabled:opacity-50 disabled:cursor-not-allowed
+                      `}
+                      aria-label={isListening ? "Stop listening" : "Start voice input"}
+                      title={isListening ? "Click to stop" : `Voice input (${voiceLang === 'ur-PK' ? 'Urdu' : voiceLang === 'hi-IN' ? 'Hindi' : 'English'})`}
+                    >
+                      {isListening ? (
+                        <StopIcon className="h-5 w-5" />
+                      ) : (
+                        <MicrophoneIcon className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
                 )}
               </div>
               <button
