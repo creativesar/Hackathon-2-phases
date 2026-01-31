@@ -234,7 +234,13 @@
       "Bash(choco list virtualbox --local-only)",
       "Bash(choco list virtualbox)",
       "Bash(git rm:*)",
-      "Bash(gh auth login:*)"
+      "Bash(gh auth login:*)",
+      "Bash(docker-compose down:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker login:*)",
+      "Bash(docker push:*)",
+      "Bash(docker-compose restart:*)",
+      "Bash(docker exec:*)"
     ]
   }
 }

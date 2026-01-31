@@ -73,23 +73,39 @@ export default function ChatInterface() {
       setVoiceSupported(true);
 
       const recognitionInstance = new SpeechRecognition();
-      recognitionInstance.continuous = false;
-      recognitionInstance.interimResults = false;
+      recognitionInstance.continuous = true; // Keep listening until user manually stops
+      recognitionInstance.interimResults = true; // Show real-time transcription
       recognitionInstance.lang = 'en-US';
+      recognitionInstance.maxAlternatives = 1;
+
+      let finalTranscript = '';
 
       recognitionInstance.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setInput(transcript);
-        setIsListening(false);
+        let interimTranscript = '';
+
+        // Process all results
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + ' ';
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        // Show combined transcript (final + interim) in input field
+        setInput((finalTranscript + interimTranscript).trim());
       };
 
       recognitionInstance.onerror = (event: any) => {
         console.error('Speech recognition error', event.error);
         setIsListening(false);
+        finalTranscript = '';
       };
 
       recognitionInstance.onend = () => {
         setIsListening(false);
+        finalTranscript = '';
       };
 
       setRecognition(recognitionInstance);
@@ -479,9 +495,10 @@ export default function ChatInterface() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={t("chat.typePlaceholder")}
-                  disabled={isLoading || isListening}
-                  className="
+                  placeholder={isListening ? "🎤 Listening... click stop when done" : t("chat.typePlaceholder")}
+                  disabled={isLoading}
+                  readOnly={isListening}
+                  className={`
                     flex-1 px-4 py-3 rounded-xl
                     bg-white/[0.03] backdrop-blur
                     text-white placeholder:text-white/30
@@ -490,7 +507,8 @@ export default function ChatInterface() {
                     focus:bg-white/[0.05]
                     disabled:opacity-50 disabled:cursor-not-allowed
                     transition-all duration-300
-                  "
+                    ${isListening ? 'border-red-500/30 bg-red-500/5 animate-pulse' : ''}
+                  `}
                 />
                 {voiceSupported && (
                   <button
