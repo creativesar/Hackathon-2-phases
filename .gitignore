@@ -110,4 +110,23 @@ alembic/versions/__pycache__/
 .pytest_cache/
 .pytest_cache/
 helm/todo-app/secrets.yaml
+helm/todo-app/my-secrets.yaml
+kubernetes/helm/todo-app/my-secrets.yaml
+**/my-secrets.yaml
 bin/kind-windows-amd64.exe
+
+# OKE/Cloud Configuration (contains sensitive info)
+oke-env.sh
+**/oke-env.sh
+CLUSTER-INFO.md
+**/CLUSTER-INFO.md
+
+# OCI CLI
+.oci/
+*.pem
+*.key
+
+# Kubernetes
+kubeconfig
+kubeconfig.*
+.kube/config.backup
