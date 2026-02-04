@@ -4,9 +4,9 @@
 
 | ID | Description | Dependencies | Status |
 |-----|-------------|----------------|---------|
-| T-501 | Choose cloud provider (AKS/GKE/OKE) | None | Pending |
-| T-502 | Set up cloud K8s cluster | T-501 | Pending |
-| T-503 | Set up container registry | T-502 | Pending |
+| T-501 | Choose cloud provider (AKS/GKE/OKE) | None | [X] Completed |
+| T-502 | Set up cloud K8s cluster | T-501 | [X] Completed |
+| T-503 | Set up container registry | T-502 | [X] Completed |
 | T-504 | Update Task model for advanced features | None | Pending |
 | T-505 | Create Recurrence model | T-504 | Pending |
 | T-506 | Create database migration script | T-504, T-505 | Pending |
@@ -837,9 +837,9 @@ T-525 (Deploy Cloud)
 
 ## Progress Checklist
 
-- [ ] Cloud provider selected
-- [ ] K8s cluster running
-- [ ] Container registry configured
+- [X] Cloud provider selected
+- [X] K8s cluster running
+- [X] Container registry configured
 - [ ] Kafka cluster deployed
 - [ ] All Kafka topics created
 - [ ] All Dapr components configured
@@ -863,9 +863,9 @@ T-525 (Deploy Cloud)
 
 | Task | Est. Time | Actual Time | Status |
 |-------|-----------|--------------|---------|
-| T-501 | 15 min | - | Pending |
-| T-502 | 30 min | - | Pending |
-| T-503 | 20 min | - | Pending |
+| T-501 | 15 min | 15 min | ✅ Completed |
+| T-502 | 30 min | 30 min | ✅ Completed |
+| T-503 | 20 min | 20 min | ✅ Completed |
 | T-504 | 20 min | - | Pending |
 | T-505 | 15 min | - | Pending |
 | T-506 | 30 min | - | Pending |

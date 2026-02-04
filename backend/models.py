@@ -25,6 +25,11 @@ class Task(SQLModel, table=True):
     """
     SQLModel representation of tasks table.
     Also serves as Pydantic model for API validation.
+
+    Phase 5 Advanced Features:
+    - due_date: Optional deadline for task completion
+    - recurrence: Pattern for recurring tasks ("daily", "weekly", "monthly")
+    - reminder_sent: Flag to track if reminder notification has been sent
     """
     __tablename__ = "tasks"
 
@@ -33,6 +38,33 @@ class Task(SQLModel, table=True):
     title: str = Field(max_length=200, min_length=1)
     description: str = Field(max_length=1000, min_length=1)
     completed: bool = Field(default=False)
+
+    # Phase 5: Advanced features (FR-4, FR-5)
+    due_date: Optional[datetime] = Field(default=None, description="Task deadline for reminders and scheduling")
+    recurrence: Optional[str] = Field(default=None, max_length=20, description="Recurrence pattern: 'daily', 'weekly', 'monthly', or None")
+    reminder_sent: bool = Field(default=False, description="Flag indicating if due date reminder has been sent")
+
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class TaskRecurrence(SQLModel, table=True):
+    """
+    SQLModel representation of task_recurrences table.
+    Tracks recurring task instances and schedules next occurrence.
+
+    Phase 5: Recurring Tasks (FR-4)
+    - Stores recurrence pattern and next scheduled date
+    - Used by Recurring Task Service to auto-create tasks
+    - Maintains history of task generation
+    """
+    __tablename__ = "task_recurrences"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    task_id: int = Field(foreign_key="tasks.id", index=True, description="Original task that defines the recurrence")
+    recurrence_type: str = Field(max_length=20, description="Recurrence pattern: 'daily', 'weekly', 'monthly'")
+    next_due_date: datetime = Field(description="Next scheduled date for task creation")
+    last_created_at: datetime = Field(default_factory=datetime.utcnow, description="Timestamp of last auto-created task")
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
